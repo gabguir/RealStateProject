@@ -90,11 +90,12 @@
               Easiest way to find your dream home
             </h1>
             <form
-              action="{% url 'search' %}" method="GET" 
+              action="{% url 'search' %}" method="POST" 
               class="narrow-w form-search d-flex align-items-stretch mb-3"
               data-aos="fade-up"
               data-aos-delay="200"
             >
+            {% csrf_token %}
               <input
                 type="text"
                 name="location"

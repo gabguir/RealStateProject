@@ -30,12 +30,12 @@ def addproperty(request):
     return render(request, "RealStateApp/addproperty.html", {"form":form})
 
 def search(request):
-    if request.GET.get['location']:
 
-        location=request.GET.get['location']
+    if request.method=="POST":
+        location = request.POST['location']
         #Search for all properties on specified location
-        Property=property.objects.filter(location=location)
-        return render(request, "RealStateApp/searchresult.html", {"Property":property.address,"Price":property.price, "Location":location})
+        Property=property.objects.filter(location__contains=location)
+        return render(request, "RealStateApp/searchresult.html", {"location":location, "property":property})
     else:
         return render(request, "RealStateApp/base.html", {"message":"Enter Location"})
     

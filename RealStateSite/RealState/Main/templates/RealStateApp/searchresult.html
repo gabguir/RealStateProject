@@ -4,17 +4,13 @@
 
 {% block content %}
 
-{% if Property %}
-
-<ul>
-    {% for location in property %}
-    <p>Found:</p>
-        <li>{{property.address}}</li>
-        <li>{{property.price}}</li>
-        <li>{{property.location}}</li>
-        <br>
+{% if location %}
+    <h1> You searched for: {{ location }} </h1>
+    <br/> 
+    {% for location in Property %}
+        {{ property }} - {{property.address}} <br/>
     {% endfor %}
-</ul>
+
 
 {% else %}
 <p>No Result</p>

@@ -1,0 +1,18 @@
+{% comment %} {% extends "base.html" %} {% endcomment %}
+
+{% comment %} {% load static %} {% endcomment %}
+
+{% block titulo %}
+<h1 class="mb-5">Add Property</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<form action="{% url 'addproperty' %}" method="POST"> {% csrf_token %}
+
+        <input type="text" name="address">
+        <input type="number" name="price">
+        <input type="text" name="location">
+    
+        <input type="submit" value="submit">
+</form>
+{% endblock %}

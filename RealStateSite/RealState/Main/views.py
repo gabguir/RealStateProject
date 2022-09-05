@@ -35,7 +35,7 @@ def search(request):
         location = request.POST['location']
         #Search for all properties on specified location
         Property=property.objects.filter(location__contains=location)
-        return render(request, "RealStateApp/searchresult.html", {"location":location, "property":property})
+        return render(request, "RealStateApp/searchresult.html", {"location":location, "property":Property})
     else:
         return render(request, "RealStateApp/base.html", {"message":"Enter Location"})
     

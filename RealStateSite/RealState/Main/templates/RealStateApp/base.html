@@ -90,17 +90,18 @@
               Easiest way to find your dream home
             </h1>
             <form
-              action="{% url 'search' %}" method="GET"
+              action="{% url 'search' %}" method="GET" 
               class="narrow-w form-search d-flex align-items-stretch mb-3"
               data-aos="fade-up"
               data-aos-delay="200"
             >
               <input
                 type="text"
-                location="location"
+                name="location"
                 class="form-control px-4"
                 placeholder="Search on your city"
               />
+              {{property}}
               <button type="submit" class="btn btn-primary">Search</button>
             </form>
           </div>

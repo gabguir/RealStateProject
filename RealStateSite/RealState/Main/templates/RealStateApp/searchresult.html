@@ -1,0 +1,24 @@
+{% block title %}
+<h1 class="mb-5">Property Search</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if Property %}
+
+<ul>
+    {% for location in property %}
+    <p>Found:</p>
+        <li>{{property.address}}</li>
+        <li>{{property.price}}</li>
+        <li>{{property.location}}</li>
+        <br>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>No Result</p>
+
+{% endif %}
+
+{% endblock %}

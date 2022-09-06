@@ -8,10 +8,10 @@ def home(request):
     return render (request, "RealStateApp/base.html")
 
 def agents(request):
-    return render
+    return render (request, "RealStateApp/agents.html")
 
 def about(request):
-    return render
+    return render (request, "RealStateApp/about.html")
 
 def addproperty(request):
 

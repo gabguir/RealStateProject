@@ -10,7 +10,8 @@
 
   
 <ul>{% for location in property %}
-<li> {{ location }} - {{location.address}} - {{location.price}} </li>
+<li><p>Address: {{ location.address }}</p>
+    <p>Price: {{location.price}}</p>  </li>
     {% endfor %}  </ul>  
 
     {% else %}

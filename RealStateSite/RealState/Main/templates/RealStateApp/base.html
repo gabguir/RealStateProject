@@ -42,7 +42,7 @@
       <div class="container">
         <div class="menu-bg-wrap">
           <div class="site-navigation">
-            <a href=" {% static 'RealStateApp/index.html' %} " class="logo m-0 float-start">YourPlace.</a>
+            <a href=" {% url 'base' %} " class="logo m-0 float-start">YourPlace.</a>
 
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
@@ -87,7 +87,7 @@
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center">
             <h1 class="heading" data-aos="fade-up">
-              Easiest way to find your dream home in Palma
+              Easiest way to find your dream home in Spain
             </h1>
             <form
               action="{% url 'search' %}" method="POST" 
@@ -100,7 +100,7 @@
                 type="text"
                 name="location"
                 class="form-control px-4"
-                placeholder="Search on your city"
+                placeholder="Search nearby"
               />
               {{property}}
               <button type="submit" class="btn btn-primary">Search</button>

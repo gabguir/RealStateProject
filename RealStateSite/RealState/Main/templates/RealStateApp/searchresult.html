@@ -13,8 +13,12 @@
 
   
 <ul>{% for location in property %}
-<li><p>Address: {{ location.address }}</p>
-    <p>Price: {{location.price}}</p>  </li>
+    
+    <li>
+    <p style="color:black;">Address: {{ location.address }}</p>
+    <p style="color:black;">Price: {{location.price}}</p>
+    </li>
+    
     {% endfor %}  </ul>  
 
     {% else %}

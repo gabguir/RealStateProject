@@ -5,15 +5,17 @@
 {% block content %}
 
 {% if location %}
-    <h1> You searched for: {{ location }} </h1>
-    <br/> 
-    {% for location in Property %}
-        {{ property }} - {{property.address}} - {{property.price}} <br/>
-    {% endfor %}
+<h2>You searched for: {{ location }}</h2>
 
 
-{% else %}
-<p>No Result</p>
+  
+<ul>{% for location in property %}
+<li> {{ location }} - {{location.address}} - {{location.price}} </li>
+    {% endfor %}  </ul>  
+
+    {% else %}
+    
+    <p>No Result</p>
 
 {% endif %}
 

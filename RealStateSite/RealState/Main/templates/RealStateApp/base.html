@@ -50,9 +50,9 @@
             <a href=" {% url 'base' %} " class="logo m-0 float-start">YourPlace.</a>
             <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
               <li class="active"><a href=" {% url 'base' %} ">Home</a></li>
-              <li><a href=" {% url 'agents' %} ">Agents</a></li>
+              <li><a href=" {% url 'agents' %} ">Agentes</a></li>
               <li><a href=" {% url 'about' %} ">About</a></li>
-              <li class="active"><a href=" {% url 'addproperty' %} ">Add Property</a></li>
+              <li class="active"><a href=" {% url 'addproperty' %} ">Crear Propiedad</a></li>
             </ul>
 
             <a
@@ -89,7 +89,7 @@
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center">
             <h1 class="heading" data-aos="fade-up">
-              Easiest way to find your dream home in Spain
+              Encuentra tu próximo hogar :)
             </h1>
             <form
               action="{% url 'search' %}" method="POST" 
@@ -102,10 +102,10 @@
                 type="text"
                 name="location"
                 class="form-control px-4"
-                placeholder="Search nearby"
+                placeholder="Buscar"
               />
               {{property}}
-              <button type="submit" class="btn btn-primary">Search</button>
+              <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
           </div>
         </div>
@@ -181,8 +181,8 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="widget">
-              <h3>Contact</h3>
-              <address>43 Raymouth Rd. Baltemoer, London 3910</address>
+              <h3>contacto</h3>
+              <address>43 Islas Baleares, España</address>
               <ul class="list-unstyled links">
                 <li><a href=" {% static 'RealStateApp/tel://11234567890' %} ">+1(123)-456-7890</a></li>
                 <li><a href=" {% static 'RealStateApp/tel://11234567890' %} ">+1(123)-456-7890</a></li>
@@ -199,16 +199,16 @@
               <h3>Sources</h3>
               <ul class="list-unstyled float-start links">
                 <li><a href="#">About us</a></li>
-                <li><a href="#">Services</a></li>
+                <li><a href="#">Servicio</a></li>
                 <li><a href="#">Vision</a></li>
-                <li><a href="#">Mission</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Mision</a></li>
+                <li><a href="#">Términos</a></li>
+                <li><a href="#">Privacidad/a></li>
               </ul>
               <ul class="list-unstyled float-start links">
                 <li><a href="#">Partners</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Careers</a></li>
+                <li><a href="#">Negocio</a></li>
+                <li><a href="#">Carreras</a></li>
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Creative</a></li>
@@ -221,9 +221,9 @@
             <div class="widget">
               <h3>Links</h3>
               <ul class="list-unstyled links">
-                <li><a href="#">Our Vision</a></li>
+                <li><a href="#">Propósito</a></li>
                 <li><a href="#">About us</a></li>
-                <li><a href="#">Contact us</a></li>
+                <li><a href="#">contacto</a></li>
               </ul>
 
               <ul class="list-unstyled social">

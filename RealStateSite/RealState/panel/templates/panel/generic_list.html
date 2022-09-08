@@ -1,0 +1,82 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+    {% include 'panel/add_menu.html' %}
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        {% if object_list %}
+          <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Lista de {{ plural|capfirst }}</h5>
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>{{ plural|capfirst }}</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+    
+                {% for item in object_list %}
+                    <tr>
+                      <td> {{ item.id }} </td>
+                      <td>
+                        <a href="{% url url_ver item.id %}"> <strong>{{ item.name }}</strong></a>
+    
+                          {% if item.codigo %}
+                        <div><strong>Código:</strong> {{ item.codigo }}</div>
+                          {% endif %}
+                          {% if item.descripcion %}
+                        <div><strong>Descripción:</strong> {{ item.descripcion }} </div>
+                          {% endif %}
+                          {% if item.deleted != None %}
+                        <div><small><strong>Desactivado en:</strong> {{item.deleted}} </small></div>
+                          {% endif %}
+    
+                      </td>
+                      <td>
+                        {% include 'panel/acciones_listar.html' %}
+                      </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+              </div>
+          </div>
+        {% else %}
+
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros.
+          </div>
+
+        {% endif %}
+
+      </div> <!-- end col-12-->
+      {% include 'panel/add_menu.html' %}
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

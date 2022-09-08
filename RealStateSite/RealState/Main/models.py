@@ -2,10 +2,19 @@ from django.db import models
 from django.utils import timezone
 import calendar, datetime
 
-
-# Create your models here.
+#=======================================================================================================================================
+# Modelos:
+# Property
+# Agent
+# Customer
+# Page
+# Article
+# Category
+# Image
+#=======================================================================================================================================
 
 class Property(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Nombre')
     address = models.CharField(max_length=50, verbose_name='Dirección')
     price = models.IntegerField(verbose_name='Precio')
     location = models.CharField(max_length=50, verbose_name='Localización')
@@ -23,8 +32,8 @@ class Property(models.Model):
 class Agent(models.Model):
     name = models.CharField(max_length=50, verbose_name='Nombre')
     email = models.EmailField(max_length=254, verbose_name='Correo electrónico')
-    description = models.TextField(null=True, blank=True, default='', verbose_name='Descripción')
     image = models.ImageField(null=True, blank=True, upload_to='agent/', default='', verbose_name='Imagen')
+    description = models.TextField(null=True, blank=True, default='', verbose_name='Descripción')
     url_twitter = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Twitter')
     url_facebook = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Facebook')
     url_linkedin = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Linkedin')
@@ -64,9 +73,9 @@ class Page(models.Model):
     subtitle = models.CharField(max_length=250, null=True, blank=True, verbose_name='Subtítulo')
     abstract = models.TextField(null=True, blank=True, verbose_name='Resumen')
 
-    date = models.DateTimeField(max_length=250, verbose_name='Fecha')
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha')
     content = models.TextField(verbose_name='Contenido')
-    draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
+    #draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
     
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
@@ -85,12 +94,11 @@ class Article(models.Model):
     subtitle = models.CharField(max_length=250, null=True, blank=True, verbose_name='Subtítulo')
     abstract = models.TextField(null=True, blank=True, verbose_name='Resumen')
 
-    date = models.DateTimeField(max_length=250, null=True, blank=True, verbose_name='Fecha')
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha')
     content = models.TextField(null=True, blank=True, verbose_name='Contenido')
     draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
-    
-    #fk_autor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Autor') 
     fk_categoria = models.ForeignKey('Category', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Categoría') 
+    #fk_autor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Autor') 
 
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
@@ -105,6 +113,7 @@ class Article(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=250, verbose_name='Nombre')
+    description = models.TextField(null=True, blank=True, default='', verbose_name='Descripción')
 
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
@@ -119,8 +128,8 @@ class Category(models.Model):
     
 class Image(models.Model):
     name = models.CharField(max_length=250, verbose_name='Nombre')
-    pic = models.ImageField(null=True, blank=True, upload_to='blog/', default='', verbose_name='Imagen')
-    date = models.DateTimeField(max_length=250, null=True, blank=True, verbose_name='Fecha de publicación')
+    pic = models.ImageField(null=True, blank=True, upload_to='image/', default='', verbose_name='Imagen')
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha de publicación')
 
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''

@@ -26,7 +26,11 @@ urlpatterns = [
     path('agents/', agents, name="agents"),
     path('about/', about, name="about"),
     path('addproperty/', addproperty, name="addproperty"),
-    path('search/', search, name="search")
+    path('search/', search, name="search"),
+    
+    # inclusión de urls de panel
+    path('panel/', include('panel.urls')),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

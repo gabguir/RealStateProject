@@ -93,9 +93,9 @@ class Article(models.Model):
     title = models.CharField(max_length=250, default='Sin título', verbose_name='Título')
     subtitle = models.CharField(max_length=250, null=True, blank=True, verbose_name='Subtítulo')
     abstract = models.TextField(null=True, blank=True, verbose_name='Resumen')
-
     date = models.DateField(null=True, blank=True, verbose_name='Fecha')
     content = models.TextField(null=True, blank=True, verbose_name='Contenido')
+    image = models.ImageField(null=True, blank=True, upload_to='article/', default='', verbose_name='Imagen')
     draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
     fk_categoria = models.ForeignKey('Category', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Categoría') 
     #fk_autor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Autor') 

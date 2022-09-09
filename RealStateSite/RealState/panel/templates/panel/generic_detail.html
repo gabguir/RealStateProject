@@ -36,8 +36,11 @@
 
                   {% if item.image %}
                     <div class="text-center">
-                      <img class="img img-thumbnail" src="{{ item.image.url }}" width="250" alt="{{ item.name }}" /><br /><br />
-                      <span class="text-center"><strong>URL:</strong> {{ item.image.url }}</span>
+                      <a href="{{ item.image.url }}" target="_blank">
+                        <img class="img img-thumbnail" src="{{ item.image.url }}" width="250" alt="{{ item.name }}" />
+                      </a><br /><br />
+                      <span class="text-center"><strong>URL:</strong> 
+                        <a href="{{ item.image.url }}" target="_blank">{{ item.image.url }}</a></span>
                     </div><br />
                   {% endif %}
                   {% if item.pic %}

@@ -144,6 +144,7 @@ class Article_Form(ModelForm):
             'abstract',
             'date',
             'content',
+            'image',
             'draft',
             'fk_categoria',
         ]
@@ -166,6 +167,10 @@ class Article_Form(ModelForm):
             }),
             'draft': forms.CheckboxInput(attrs={
                 "class": "form-check",
+                #"placeholder": ""
+            }),
+            'image': forms.FileInput(attrs={
+                "class": "form-control",
                 #"placeholder": ""
             }),
         }

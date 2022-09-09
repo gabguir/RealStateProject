@@ -138,7 +138,7 @@ def crear_inmueble(request, *args, **kwargs):
         'url_eliminar' : 'eliminar_inmueble',
         'form': form
     }
-    return render(request, 'panel/generic_form.html', context)
+    return render(request, 'panel/generic_file_form.html', context)
     
     
 def modificar_inmueble(request, id, *args, **kwargs):
@@ -504,7 +504,7 @@ def crear_pagina(request, *args, **kwargs):
         'url_eliminar' : 'eliminar_pagina',
         'form': form
     }
-    return render(request, 'panel/generic_form.html', context)
+    return render(request, 'panel/generic_file_form.html', context)
     
     
 def modificar_pagina(request, id, *args, **kwargs):
@@ -797,7 +797,7 @@ def crear_categoria(request, *args, **kwargs):
         'url_eliminar' : 'eliminar_categoria',
         'form': form
     }
-    return render(request, 'panel/generic_file_form.html', context)
+    return render(request, 'panel/generic_form.html', context)
     
     
 def modificar_categoria(request, id, *args, **kwargs):
@@ -825,7 +825,7 @@ def modificar_categoria(request, id, *args, **kwargs):
         'item': itemObj,
         'form': form,
     }
-    return render(request, 'panel/generic_file_form.html', context)
+    return render(request, 'panel/generic_form.html', context)
 
 
 def eliminar_categoria(request, id, *args, **kwargs):

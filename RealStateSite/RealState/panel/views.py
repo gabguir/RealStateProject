@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, request
 from django.urls import reverse
+from django.db.models import Q
 
 # Importación de modelos
 from Main.models import Property, Agent, Customer
 from Main.models import Page, Article, Category, Image
+from panel.models import Search
 
 # Importación de forms
 from panel.forms import Property_Form, Agent_Form, Customer_Form
-from panel.forms import Page_Form, Article_Form, Category_Form, Image_Form
+from panel.forms import Page_Form, Article_Form, Category_Form, Image_Form, Search_Form
 
 
 #=======================================================================================================================================
@@ -69,6 +71,93 @@ def app_panel_index(request, *args, **kwargs):
         'object_list' : object_list,
     }
     return render(request, 'panel/app_index.html', context)
+
+
+def resultados_busqueda(request, *args, **kwargs):
+    '''Muestra resultados de búsqueda.'''
+    form = Search_Form()
+    vacio = True
+    termino_busqueda = ''
+    result_inmueble = ''
+    result_agente = ''
+    result_cliente = ''
+    result_pagina = ''
+    result_articulo = ''
+    result_categoria = ''
+    result_imagen = ''
+    
+    if request.method == 'POST':
+        form = Search_Form(request.POST)
+        if form.is_valid():
+            termino_busqueda = form.cleaned_data['name']
+            print(termino_busqueda)
+            form.save()
+
+        if termino_busqueda == '':
+            vacio = True
+        else:
+            vacio = False
+            result_inmueble = Property.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(address__icontains=termino_busqueda) |
+                Q(price__icontains=termino_busqueda) |
+                Q(location__icontains=termino_busqueda) 
+                )
+            result_agente = Agent.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(email__icontains=termino_busqueda) |
+                Q(description__icontains=termino_busqueda) 
+                )
+            result_cliente = Customer.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(email__icontains=termino_busqueda) 
+                )
+            result_pagina = Page.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(title__icontains=termino_busqueda) |
+                Q(subtitle__icontains=termino_busqueda) |
+                Q(abstract__icontains=termino_busqueda) |
+                Q(content__icontains=termino_busqueda)
+                )
+            result_articulo = Article.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(title__icontains=termino_busqueda) |
+                Q(subtitle__icontains=termino_busqueda) |
+                Q(abstract__icontains=termino_busqueda) |
+                Q(content__icontains=termino_busqueda)
+                )
+            result_categoria = Category.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) |  
+                Q(description__icontains=termino_busqueda) 
+                )
+            result_imagen = Image.objects.distinct().filter(
+                Q(name__icontains=termino_busqueda) 
+                )
+
+            print('termino_busqueda: ', termino_busqueda)
+            print('result_inmueble: ', result_inmueble)
+            print('result_agente: ', result_agente)
+            print('result_cliente: ', result_cliente)
+            print('result_pagina: ', result_pagina)
+            print('result_articulo: ', result_articulo)
+            print('result_categoria: ', result_categoria)
+            print('result_imagen: ', result_imagen)
+
+
+    context = {
+        'page': 'Resultados de búsqueda',
+        'icon': 'bi bi-grid',
+        'termino_busqueda': termino_busqueda,
+        'vacio': vacio,
+        'result_inmueble': result_inmueble,
+        'result_agente': result_agente,
+        'result_cliente': result_cliente,
+        'result_pagina': result_pagina,
+        'result_articulo': result_articulo,
+        'result_categoria': result_categoria,
+        'result_imagen': result_imagen,
+    }
+    return render(request, 'panel/search_result.html', context)
 
 
 #=======================================================================================================================================
@@ -963,6 +1052,53 @@ def eliminar_imagen(request, id, *args, **kwargs):
         'url_ver' : 'ver_imagen',
         'url_editar' : 'modificar_imagen',
         'url_eliminar' : 'eliminar_imagen',
+        'item': itemObj,
+    }
+    return render(request, 'panel/generic_delete_object.html', context)
+
+
+
+#=======================================================================================================================================
+# Vistas para Búsquedas
+#=======================================================================================================================================
+
+def listar_busquedas(request, *args, **kwargs):
+    '''Lista búsquedas.'''
+    
+    object_list = Search.objects.all() # Lista de objetos
+    
+    context = {
+        'page' : 'Búsquedas',
+        'singular' : 'búsqueda',
+        'plural' : 'búsquedas',
+        'url_activo_index' : 'listar_busquedas',
+        'url_crear' : 'crear_busqueda',
+        'url_ver' : 'ver_busqueda',
+        'url_editar' : 'modificar_busqueda',
+        'url_eliminar' : 'eliminar_busqueda',
+        'object_list': object_list
+    }
+    return render(request, 'panel/generic_list.html', context)
+
+
+def eliminar_busqueda(request, id, *args, **kwargs):
+    '''Eliminar búsqueda.'''
+    
+    itemObj = Search.objects.get(id=id) 
+    
+    if request.method == 'POST':
+        itemObj.delete()
+        return redirect('listar_busquedas')
+
+    context = {
+        'page' : 'Eliminar búsqueda',
+        'singular' : 'búsqueda',
+        'plural' : 'búsquedas',
+        'url_activo_index' : 'listar_busquedas',
+        'url_crear' : 'crear_busqueda',
+        'url_ver' : 'ver_busqueda',
+        'url_editar' : 'modificar_busqueda',
+        'url_eliminar' : 'eliminar_busqueda',
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)

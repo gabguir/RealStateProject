@@ -11,10 +11,8 @@ def buscar_elementos(request, *args, **kwargs):
     buscar = ''
     if request.GET.get('buscar'):
         buscar = request.GET.get('buscar')
-        #print(buscar)
-        #queryset = Persona.objects.filter(activo=True)
-        fk_instalacion_guardia = Instalacion.objects.filter(nombre__icontains=buscar)
-        #fk_tipo_persona = Tipo_Persona.objects.filter(id__iexact=6)
+
+        fk_instalacion_guardia = Instalacion.objects.filter(name__icontains=buscar)
 
         queryset = Persona.objects.distinct().filter(
             Q(nombre_completo__icontains=buscar) |  

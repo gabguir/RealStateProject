@@ -7,6 +7,9 @@ urlpatterns = [
 
 #index
     path('', panel.views.app_panel_index, name='app_panel_index'),
+    path('resultados_busqueda/', panel.views.resultados_busqueda, name='resultados_busqueda'),
+    path('listar_busquedas/', panel.views.listar_busquedas, name='listar_busquedas'),
+    path('eliminar_busqueda/', panel.views.eliminar_busqueda, name='eliminar_busqueda'),
 
 #inmueble 
     path('listar_inmuebles/', panel.views.listar_inmuebles, name='listar_inmuebles'),

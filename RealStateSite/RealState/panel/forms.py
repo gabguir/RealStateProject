@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 from Main.models import Property, Agent, Customer
 from Main.models import Page, Article, Category, Image
+from panel.models import Search
 
 
 #=======================================================================================================================================
@@ -203,7 +204,6 @@ class Image_Form(ModelForm):
         fields = [
             'name',
             'pic',
-            #'date',
         ]
     def __init__(self, *args, **kwargs):
         super(Image_Form, self).__init__(*args, **kwargs)
@@ -211,3 +211,13 @@ class Image_Form(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})
 
+
+
+class Search_Form(ModelForm):
+    class Meta:
+        model = Search
+        fields = [
+            'name',
+        ]
+    # def __init__(self, *args, **kwargs):
+    #     super(Search_Form, self).__init__(*args, **kwargs)

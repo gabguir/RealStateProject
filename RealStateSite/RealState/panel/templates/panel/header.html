@@ -12,8 +12,9 @@
         </div><!-- End Logo -->
 
         <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Buscar" title="Ingrese términos de búsqueda">
+            <form class="search-form d-flex align-items-center" method="POST" action="{% url 'resultados_busqueda' %}">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Buscar" title="Ingrese términos de búsqueda">
                 <button type="submit" title="Buscar"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->

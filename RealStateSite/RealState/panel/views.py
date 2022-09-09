@@ -134,15 +134,14 @@ def resultados_busqueda(request, *args, **kwargs):
                 Q(name__icontains=termino_busqueda) 
                 )
 
-            print('termino_busqueda: ', termino_busqueda)
-            print('result_inmueble: ', result_inmueble)
-            print('result_agente: ', result_agente)
-            print('result_cliente: ', result_cliente)
-            print('result_pagina: ', result_pagina)
-            print('result_articulo: ', result_articulo)
-            print('result_categoria: ', result_categoria)
-            print('result_imagen: ', result_imagen)
-
+            # print('termino_busqueda: ', termino_busqueda)
+            # print('result_inmueble: ', result_inmueble)
+            # print('result_agente: ', result_agente)
+            # print('result_cliente: ', result_cliente)
+            # print('result_pagina: ', result_pagina)
+            # print('result_articulo: ', result_articulo)
+            # print('result_categoria: ', result_categoria)
+            # print('result_imagen: ', result_imagen)
 
     context = {
         'page': 'Resultados de búsqueda',
@@ -158,6 +157,7 @@ def resultados_busqueda(request, *args, **kwargs):
         'result_imagen': result_imagen,
     }
     return render(request, 'panel/search_result.html', context)
+
 
 
 #=======================================================================================================================================
@@ -281,6 +281,8 @@ def eliminar_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_delete_object.html', context)
 
+
+
 #=======================================================================================================================================
 # Vistas para Agentes
 #=======================================================================================================================================
@@ -401,6 +403,8 @@ def eliminar_agente(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
+
+
 
 #=======================================================================================================================================
 # Vistas para Clientes
@@ -526,6 +530,7 @@ def eliminar_cliente(request, id, *args, **kwargs):
     
 
 
+
 #=======================================================================================================================================
 # Vistas para Páginas
 #=======================================================================================================================================
@@ -647,6 +652,8 @@ def eliminar_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_delete_object.html', context)
 
+
+
 #=======================================================================================================================================
 # Vistas para Artículos
 #=======================================================================================================================================
@@ -745,54 +752,54 @@ def modificar_articulo(request, id, *args, **kwargs):
     return render(request, 'panel/generic_file_form.html', context)
 
 
-def activar_articulo(request, id, *args, **kwargs):
-    '''Activar artículo.'''
+# def activar_articulo(request, id, *args, **kwargs):
+#     '''Activar artículo.'''
     
-    itemObj = Article.objects.get(id=id) 
+#     itemObj = Article.objects.get(id=id) 
     
-    if request.method == 'POST':
-        itemObj.draft = '1'
-        itemObj.save()
-        return redirect('listar_articulos')
+#     if request.method == 'POST':
+#         itemObj.draft = '1'
+#         itemObj.save()
+#         return redirect('listar_articulos')
 
-    context = {
-        'page' : 'Activar Artículo',
-        'icon' : 'bx bx-file',
-        'singular' : 'artículo',
-        'plural' : 'artículos',
-        'url_listar' : 'listar_articulos',
-        'url_crear' : 'crear_articulo',
-        'url_ver' : 'ver_articulo',
-        'url_editar' : 'modificar_articulo',
-        'url_eliminar' : 'eliminar_articulo',
-        'item': itemObj,
-    }
-    return render(request, 'panel/generic_activate_object.html', context)
+#     context = {
+#         'page' : 'Activar Artículo',
+#         'icon' : 'bx bx-file',
+#         'singular' : 'artículo',
+#         'plural' : 'artículos',
+#         'url_listar' : 'listar_articulos',
+#         'url_crear' : 'crear_articulo',
+#         'url_ver' : 'ver_articulo',
+#         'url_editar' : 'modificar_articulo',
+#         'url_eliminar' : 'eliminar_articulo',
+#         'item': itemObj,
+#     }
+#     return render(request, 'panel/generic_activate_object.html', context)
 
 
-def desactivar_articulo(request, id, *args, **kwargs):
-    '''Desactivar artículo.'''
+# def desactivar_articulo(request, id, *args, **kwargs):
+#     '''Desactivar artículo.'''
     
-    itemObj = Article.objects.get(id=id) 
+#     itemObj = Article.objects.get(id=id) 
     
-    if request.method == 'POST':
-        itemObj.draft = '0'
-        itemObj.save()
-        return redirect('listar_articulos')
+#     if request.method == 'POST':
+#         itemObj.draft = '0'
+#         itemObj.save()
+#         return redirect('listar_articulos')
 
-    context = {
-        'page' : 'Activar Artículo',
-        'icon' : 'bx bx-file',
-        'singular' : 'artículo',
-        'plural' : 'artículos',
-        'url_listar' : 'listar_articulos',
-        'url_crear' : 'crear_articulo',
-        'url_ver' : 'ver_articulo',
-        'url_editar' : 'modificar_articulo',
-        'url_eliminar' : 'eliminar_articulo',
-        'item': itemObj,
-    }
-    return render(request, 'panel/generic_deactivate_object.html', context)
+#     context = {
+#         'page' : 'Activar Artículo',
+#         'icon' : 'bx bx-file',
+#         'singular' : 'artículo',
+#         'plural' : 'artículos',
+#         'url_listar' : 'listar_articulos',
+#         'url_crear' : 'crear_articulo',
+#         'url_ver' : 'ver_articulo',
+#         'url_editar' : 'modificar_articulo',
+#         'url_eliminar' : 'eliminar_articulo',
+#         'item': itemObj,
+#     }
+#     return render(request, 'panel/generic_deactivate_object.html', context)
     
     
 def eliminar_articulo(request, id, *args, **kwargs):
@@ -818,6 +825,7 @@ def eliminar_articulo(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_delete_object.html', context)
     
+
 
 #=======================================================================================================================================
 # Vistas para Categorías
@@ -939,6 +947,8 @@ def eliminar_categoria(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
+
+
 
 #=======================================================================================================================================
 # Vistas para Imágenes

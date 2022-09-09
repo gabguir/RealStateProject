@@ -23,7 +23,7 @@
         {% if result_inmueble %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Inmuebles</h5>
+              <h5 class="card-title">Lista de Inmuebles para la búsqueda: "{{ termino_busqueda }}"</h5>
 
               <table class="table table-striped">
                 <thead>
@@ -84,7 +84,7 @@
           </div>
         {% else %}
           <div class="alert alert-warning fade show" role="alert">
-            No existen registros para "{{ termino_busqueda }}".
+            No existen registros de inmuebles para "{{ termino_busqueda }}".
           </div>
         {% endif %}
 
@@ -92,7 +92,7 @@
         {% if result_agente %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Agentes</h5>
+              <h5 class="card-title">Lista de Agentes para la búsqueda: "{{ termino_busqueda }}"</h5>
 
               <table class="table table-striped">
                 <thead>
@@ -153,7 +153,7 @@
           </div>
         {% else %}
           <div class="alert alert-warning fade show" role="alert">
-            No existen registros para "{{ termino_busqueda }}".
+            No existen registros de agentes para "{{ termino_busqueda }}".
           </div>
         {% endif %}
 
@@ -161,7 +161,7 @@
         {% if result_pagina %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Páginas</h5>
+              <h5 class="card-title">Lista de Páginas para la búsqueda: "{{ termino_busqueda }}"</h5>
 
               <table class="table table-striped">
                 <thead>
@@ -222,7 +222,7 @@
           </div>
         {% else %}
           <div class="alert alert-warning fade show" role="alert">
-            No existen registros para "{{ termino_busqueda }}".
+            No existen registros de páginas para "{{ termino_busqueda }}".
           </div>
         {% endif %}
 
@@ -231,7 +231,7 @@
         {% if result_articulo %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Artículos</h5>
+              <h5 class="card-title">Lista de Artículos para la búsqueda: "{{ termino_busqueda }}"</h5>
 
               <table class="table table-striped">
                 <thead>
@@ -309,7 +309,7 @@
           </div>
         {% else %}
           <div class="alert alert-warning fade show" role="alert">
-            No existen registros para "{{ termino_busqueda }}".
+            No existen registros de artículos para "{{ termino_busqueda }}".
           </div>
         {% endif %}
 
@@ -318,7 +318,7 @@
         {% if result_imagen %}
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Imágenes</h5>
+              <h5 class="card-title">Lista de Imágenes para la búsqueda: "{{ termino_busqueda }}"</h5>
 
               <table class="table table-striped">
                 <thead>
@@ -379,7 +379,7 @@
           </div>
         {% else %}
           <div class="alert alert-warning fade show" role="alert">
-            No existen registros para "{{ termino_busqueda }}".
+            No existen registros de imágenes para "{{ termino_busqueda }}".
           </div>
         {% endif %}
 

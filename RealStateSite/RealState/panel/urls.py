@@ -1,5 +1,7 @@
 from django.urls import path
+from django.views.i18n import JavaScriptCatalog
 import panel.views
+
 
 urlpatterns = [
 
@@ -54,5 +56,8 @@ urlpatterns = [
     path('ver_imagen/<int:id>/', panel.views.ver_imagen, name='ver_imagen'),
     path('modificar_imagen/<int:id>/', panel.views.modificar_imagen, name='modificar_imagen'),
     path('eliminar_imagen/<int:id>/', panel.views.eliminar_imagen, name='eliminar_imagen'),
+
+    #JS-Catalog para mostrar widget admin para fechas y horas
+    path('jsi18n', JavaScriptCatalog.as_view(), name='js-catalog'),
 
 ]

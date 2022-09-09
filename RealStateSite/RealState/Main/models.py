@@ -94,7 +94,7 @@ class Article(models.Model):
     subtitle = models.CharField(max_length=250, null=True, blank=True, verbose_name='Subtítulo')
     abstract = models.TextField(null=True, blank=True, verbose_name='Resumen')
 
-    date = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha')
+    date = models.DateField(null=True, blank=True, verbose_name='Fecha')
     content = models.TextField(null=True, blank=True, verbose_name='Contenido')
     draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
     fk_categoria = models.ForeignKey('Category', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name='Categoría') 

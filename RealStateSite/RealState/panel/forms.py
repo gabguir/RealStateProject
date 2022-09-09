@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django import forms
+from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 from Main.models import Property, Agent, Customer
 from Main.models import Page, Article, Category, Image
 
@@ -18,6 +19,12 @@ class Property_Form(ModelForm):
             'location',
         ]
         
+    def __init__(self, *args, **kwargs):
+        super(Property_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
+        
         
 class Agent_Form(ModelForm):
     class Meta:
@@ -33,6 +40,12 @@ class Agent_Form(ModelForm):
             'url_instagram',
         ]
         
+    def __init__(self, *args, **kwargs):
+        super(Agent_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
+        
         
 class Customer_Form(ModelForm):
     class Meta:
@@ -41,8 +54,31 @@ class Customer_Form(ModelForm):
             'name',
             'email',
         ]
+        
+    def __init__(self, *args, **kwargs):
+        super(Customer_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
+
 
 class Page_Form(ModelForm):
+    abstract = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": ""
+            }
+        )
+    )
+    content = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": ""
+            }
+        )
+    )
     class Meta:
         model = Page
         fields = [
@@ -52,12 +88,53 @@ class Page_Form(ModelForm):
             'abstract',
             #'date',
             'content',
-            #'draft',
         ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+            'title': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+            'subtitle': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+        }
+    def __init__(self, *args, **kwargs):
+        super(Page_Form, self).__init__(*args, **kwargs)
 
 
 
 class Article_Form(ModelForm):
+    date = forms.DateField(
+        widget=AdminDateWidget()
+        #input_formats=["%Y-%m-%d"],
+        # widget=forms.DateInput(attrs={
+        #     "class": "form-control datetimepicker-input",
+        #     "data-target": "#datetimepicker1"
+        # })
+    )
+    abstract = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": ""
+            }
+        )
+    )
+    content = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": ""
+            }
+        )
+    )
+        
     class Meta:
         model = Article
         fields = [
@@ -65,11 +142,38 @@ class Article_Form(ModelForm):
             'title',
             'subtitle',
             'abstract',
-            #'date',
+            'date',
             'content',
             'draft',
             'fk_categoria',
         ]
+        widgets = {
+            'name': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+            'title': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+            'subtitle': forms.TextInput(attrs={
+                "class": "form-control",
+                #"placeholder": ""
+            }),
+            'date': forms.DateInput(attrs={
+                "class": "form-control datetimepicker-input",
+                "data-target": "#datetimepicker1"
+            }),
+            'draft': forms.CheckboxInput(attrs={
+                "class": "form-check",
+                #"placeholder": ""
+            }),
+        }
+    def __init__(self, *args, **kwargs):
+        super(Article_Form, self).__init__(*args, **kwargs)
+        
+        self.fields['fk_categoria'].widget.attrs.update(
+            {'class': 'custom-select', 'placeholder': ''})
 
 
 
@@ -81,6 +185,11 @@ class Category_Form(ModelForm):
             'description',
         ]
 
+    def __init__(self, *args, **kwargs):
+        super(Category_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
 
 
 class Image_Form(ModelForm):
@@ -91,5 +200,9 @@ class Image_Form(ModelForm):
             'pic',
             #'date',
         ]
+    def __init__(self, *args, **kwargs):
+        super(Image_Form, self).__init__(*args, **kwargs)
 
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
 

@@ -20,57 +20,51 @@ def app_panel_index(request, *args, **kwargs):
     object_list = [
         {
             'object_title' : 'Inmuebles',
-            'object_icon' : 'bx bxs-building-house',
+            'icon' : 'bx bxs-building-house',
             'object_description' : 'Agregar o modificar inmuebles',
             'object_url' : 'listar_inmuebles',
-            # 'object_url' : '#',
         },
         {
             'object_title' : 'Agentes',
-            'object_icon' : 'bx bxs-user-rectangle',
+            'icon' : 'bx bxs-user-rectangle',
             'object_description' : 'Agregar o modificar agentes',
             'object_url' : 'listar_agentes',
-            # 'object_url' : '#',
         },
         {
             'object_title' : 'Clientes',
-            'object_icon' : 'bx bxs-user-pin',
+            'icon' : 'bx bxs-user-pin',
             'object_description' : 'Agregar o modificar clientes',
             'object_url' : 'listar_clientes',
-            # 'object_url' : '#',
         },
         {
             'object_title' : 'Páginas',
-            'object_icon' : 'bx bxs-file',
+            'icon' : 'bx bxs-file',
             'object_description' : 'Agregar o modificar páginas',
             'object_url' : 'listar_paginas',
-            # 'object_url' : '#',
         },
         {
             'object_title' : 'Artículos',
-            'object_icon' : 'bx bx-file',
+            'icon' : 'bx bx-file',
             'object_description' : 'Agregar o modificar articulos',
             'object_url' : 'listar_articulos',
         },
         {
             'object_title' : 'Categorías',
-            'object_icon' : 'bx bxs-extension',
+            'icon' : 'bx bxs-extension',
             'object_description' : 'Agregar o modificar categorías',
             'object_url' : 'listar_categorias',
-            # 'object_url' : '',
         },
         {
             'object_title' : 'Imágenes',
-            'object_icon' : 'bx bxs-image',
+            'icon' : 'bx bxs-image',
             'object_description' : 'Agregar o modificar imágenes',
             'object_url' : 'listar_imagenes',
-            # 'object_url' : '#',
         },
     ]
 
     context = {
         'page' : 'Inicio',
-        'icon' : '',
+        'icon' : 'bi bi-grid',
         'description' : 'Se pueden realizar acciones con los elementos listados a continuación.',
         'object_list' : object_list,
     }
@@ -88,6 +82,7 @@ def listar_inmuebles(request, *args, **kwargs):
     
     context = {
         'page' : 'Inmuebles',
+        'icon' : 'bx bxs-building-house',
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -107,6 +102,7 @@ def ver_inmueble(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de inmueble',
+        'icon' : 'bx bxs-building-house',
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -132,6 +128,7 @@ def crear_inmueble(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear inmueble',
+        'icon' : 'bx bxs-building-house',
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -141,7 +138,7 @@ def crear_inmueble(request, *args, **kwargs):
         'url_eliminar' : 'eliminar_inmueble',
         'form': form
     }
-    return render(request, 'panel/generic_file_form.html', context)
+    return render(request, 'panel/generic_form.html', context)
     
     
 def modificar_inmueble(request, id, *args, **kwargs):
@@ -158,6 +155,7 @@ def modificar_inmueble(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar inmueble',
+        'icon' : 'bx bxs-building-house',
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -182,6 +180,7 @@ def eliminar_inmueble(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar inmueble',
+        'icon' : 'bx bxs-building-house',
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -204,6 +203,7 @@ def listar_agentes(request, *args, **kwargs):
     
     context = {
         'page' : 'Agentes',
+        'icon' : 'bx bxs-user-rectangle',
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -223,6 +223,7 @@ def ver_agente(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de agente',
+        'icon' : 'bx bxs-user-rectangle',
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -248,6 +249,7 @@ def crear_agente(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear agente',
+        'icon' : 'bx bxs-user-rectangle',
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -274,6 +276,7 @@ def modificar_agente(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar agente',
+        'icon' : 'bx bxs-user-rectangle',
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -298,6 +301,7 @@ def eliminar_agente(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar agente',
+        'icon' : 'bx bxs-user-rectangle',
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -321,6 +325,7 @@ def listar_clientes(request, *args, **kwargs):
     
     context = {
         'page' : 'Clientes',
+        'icon' : 'bx bxs-user-pin',
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -340,6 +345,7 @@ def ver_cliente(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de cliente',
+        'icon' : 'bx bxs-user-pin',
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -365,6 +371,7 @@ def crear_cliente(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear cliente',
+        'icon' : 'bx bxs-user-pin',
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -391,6 +398,7 @@ def modificar_cliente(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar cliente',
+        'icon' : 'bx bxs-user-pin',
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -415,6 +423,7 @@ def eliminar_cliente(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar cliente',
+        'icon' : 'bx bxs-user-pin',
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -435,11 +444,11 @@ def eliminar_cliente(request, id, *args, **kwargs):
 def listar_paginas(request, *args, **kwargs):
     '''Lista páginas.'''
     
-    # object_list = Page.objects.filter(draft=False) # Lista de objetos
     object_list = Page.objects.all() # Lista de objetos
     
     context = {
         'page' : 'Páginas',
+        'icon' : 'bx bxs-file',
         'singular' : 'página',
         'plural' : 'páginas',
         'url_listar' : 'listar_paginas',
@@ -459,6 +468,7 @@ def ver_pagina(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de página',
+        'icon' : 'bx bxs-file',
         'singular' : 'página',
         'plural' : 'páginas',
         'url_listar' : 'listar_paginas',
@@ -484,6 +494,7 @@ def crear_pagina(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear página',
+        'icon' : 'bx bxs-file',
         'singular' : 'página',
         'plural' : 'páginas',
         'url_listar' : 'listar_paginas',
@@ -493,14 +504,14 @@ def crear_pagina(request, *args, **kwargs):
         'url_eliminar' : 'eliminar_pagina',
         'form': form
     }
-    return render(request, 'panel/generic_file_form.html', context)
+    return render(request, 'panel/generic_form.html', context)
     
     
 def modificar_pagina(request, id, *args, **kwargs):
     '''Editar página.'''
     
     itemObj = Page.objects.get(id=id) 
-    form = Article_Form(instance=itemObj)
+    form = Page_Form(instance=itemObj)
     
     if request.method == 'POST':
         form = Page_Form(request.POST, request.FILES, instance=itemObj)
@@ -510,6 +521,7 @@ def modificar_pagina(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar página',
+        'icon' : 'bx bxs-file',
         'singular' : 'página',
         'plural' : 'páginas',
         'url_listar' : 'listar_paginas',
@@ -534,6 +546,7 @@ def eliminar_pagina(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar página',
+        'icon' : 'bx bxs-file',
         'singular' : 'página',
         'plural' : 'páginas',
         'url_listar' : 'listar_paginas',
@@ -552,10 +565,11 @@ def eliminar_pagina(request, id, *args, **kwargs):
 def listar_articulos(request, *args, **kwargs):
     '''Lista artículos.'''
     
-    object_list = Article.objects.filter(draft=False) # Lista de objetos
+    object_list = Article.objects.all() # Lista de objetos
     
     context = {
         'page' : 'Artículos',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -575,6 +589,7 @@ def ver_articulo(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -600,6 +615,7 @@ def crear_articulo(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -626,6 +642,7 @@ def modificar_articulo(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -651,6 +668,7 @@ def activar_articulo(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Activar Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -675,6 +693,7 @@ def desactivar_articulo(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Activar Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -698,6 +717,7 @@ def eliminar_articulo(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar Artículo',
+        'icon' : 'bx bx-file',
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -721,6 +741,7 @@ def listar_categorias(request, *args, **kwargs):
     
     context = {
         'page' : 'categorías',
+        'icon' : 'bx bxs-extension',
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -740,6 +761,7 @@ def ver_categoria(request, id, *args, **kwargs):
     
     context = {
         'page' : 'Detalle de categoría',
+        'icon' : 'bx bxs-extension',
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -765,6 +787,7 @@ def crear_categoria(request, *args, **kwargs):
 
     context = {
         'page' : 'Crear categoría',
+        'icon' : 'bx bxs-extension',
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -791,6 +814,7 @@ def modificar_categoria(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Editar categoría',
+        'icon' : 'bx bxs-extension',
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -815,6 +839,7 @@ def eliminar_categoria(request, id, *args, **kwargs):
 
     context = {
         'page' : 'Eliminar categoría',
+        'icon' : 'bx bxs-extension',
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',

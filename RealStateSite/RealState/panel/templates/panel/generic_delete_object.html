@@ -26,10 +26,12 @@
             {{ form.non_field_errors }}
             <form action="" method="POST">
             {% csrf_token %}
-              <div class="text-right">
+              <div class="text-center">
                 <hr />
-                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-default btn-round"><i class="icon md-undo" aria-hidden="true"></i> Atrás </a>
-                <button type="submit" class="btn btn-danger btn-round"><i class="icon md-delete" aria-hidden="true"></i> Eliminar </button>
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-default btn-round">
+                  <i class="bi bi-arrow-left-circle-fill"></i> Atrás </a>
+                <button type="submit" class="btn btn-danger btn-round">
+                  <i class="ri-delete-bin-fill"></i> Eliminar </button>
               </div>
               <input type="hidden" id="url_referer" name="url_referer" value="{{ request.META.HTTP_REFERER }}">
             </form>

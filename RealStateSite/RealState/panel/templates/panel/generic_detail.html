@@ -18,92 +18,117 @@
     <div class="row">
       <div class="col-lg-12">
             <div class="card">
-              <div class="card-body">
 
-                <p class="card-text">{{ description }}</p>
-                <p class="card-text"><strong>{{ singular|capfirst }}:</strong> {{ item.name }}
-                  {% if item.draft == True %}
+              <div class="card-body">
+                <h2 class="card-title"> {{ item.name }} </h2>
+                {% if 'articulo' in request.path %} 
+                <p><strong>Estado:</strong> 
+                  {% if item.draft == False %}
                     <span class="badge badge-success">Activo</span>
                   {% else %}
-                    <span class="badge badge-warning">Inactivo</span>
+                    <span class="badge badge-warning">Borrador</span>
                   {% endif %}
                 </p>
+                  {% if item.fk_categoria %}
+                <p><strong>Categoría:</strong> <span class="badge badge-info">{{ item.fk_categoria }}</span></p>
+                  {% endif %}
+                {% endif %}
+
+                  {% if item.image %}
+                    <div class="text-center">
+                      <img class="img img-thumbnail" src="{{ item.image.url }}" width="250" alt="{{ item.name }}" /><br /><br />
+                      <span class="text-center"><strong>URL:</strong> {{ item.image.url }}</span>
+                    </div><br />
+                  {% endif %}
+                  {% if item.pic %}
+                    <div class="text-center">
+                      <img class="img img-thumbnail" src="{{ item.pic.url }}" width="250" alt="{{ item.name }}" /><br /><br />
+                      <span class="text-center"><strong>URL:</strong> {{ item.pic.url }}</span>
+                    </div><br />
+                  {% endif %}
+
+                  {% if item.name %}
+                <p><strong>Nombre:</strong> {{ item.name }}</p>
+                  {% endif %}
+                  {% if item.date %}
+                <p><strong>Fecha:</strong> {{ item.date }}</p>
+                  {% endif %}
 
 
                 <!-- Property -->
-                  {% if item.codigo %}
-                <div><strong>Dirección:</strong> {{ item.address }}</div>
-                  {% endif %}
-                  {% if item.price %}
-                <div><strong>Precio:</strong> {{ item.price }} </div>
-                  {% endif %}
-                  {% if item.location %}
-                <div><strong>Localización:</strong> {{ item.location }}</div>
+                  {% if item.address %}
+                <p><strong>Dirección:</strong> {{ item.address }}</p>
                   {% endif %}
 
+                  {% if item.price %}
+                <p><strong>Precio:</strong> {{ item.price }}</p>
+                  {% endif %}
+
+                  {% if item.location %}
+                <p><strong>Localización:</strong> {{ item.location }}</p>
+                  {% endif %}
+  
 
                 <!-- Agent -->
-                  {% if item.image %}
-                <div><strong>Imagen:</strong> {{ item.image }} </div>
-                  {% endif %}
                   {% if item.email %}
-                <div><strong>Correo electrónico:</strong> {{ item.email }}</div>
+                <p><strong>Correo electrónico:</strong> {{ item.email }}</p>
                   {% endif %}
                   {% if item.descripcion %}
-                <div><strong>Descripción:</strong> {{ item.descripcion }} </div>
+                <p><strong>Descripción:</strong></p>
+                <div>{{ item.descripcion }} </div><br />
                   {% endif %}
                   {% if item.url_twitter %}
-                <div><strong>Twitter:</strong> {{ item.url_twitter }}</div>
+                <p><strong>Twitter:</strong> <a href="{{ item.url_twitter }}" target="_blank">{{ item.url_twitter }}</a></p>
                   {% endif %}
                   {% if item.url_facebook %}
-                <div><strong>Facebook:</strong> {{ item.url_facebook }} </div>
+                <p><strong>Facebook:</strong> <a href="{{ item.url_facebook }}" target="_blank">{{ item.url_facebook }}</a></p>
                   {% endif %}
                   {% if item.url_linkedin %}
-                <div><strong>Linkedin:</strong> {{ item.url_linkedin }}</div>
+                <p><strong>Linkedin:</strong> <a href="{{ item.url_linkedin }}" target="_blank">{{ item.url_linkedin }}</a></p>
                   {% endif %}
                   {% if item.url_instagram %}
-                <div><strong>Instagram:</strong> {{ item.url_instagram }} </div>
+                <p><strong>Instagram:</strong> <a href="{{ item.url_instagram }}" target="_blank">{{ item.url_instagram }}</a></p>
                   {% endif %}
 
 
                 <!-- Customer 
                   {% if item.email %}
-                <div><strong>Correo electrónico:</strong> {{ item.email }}</div>
-                  {% endif %} -->
+                <p><strong>Correo electrónico:</strong> {{ item.email }}</p>
+                  {% endif %}
 
 
                 <!-- Page & Article -->
                   {% if item.title %}
-                <div><strong>Título:</strong> {{ item.title }}</div>
+                <p><strong>Título:</strong> {{ item.title }}</p>
                   {% endif %}
                   {% if item.subtitle %}
-                <div><strong>Subtítulo:</strong> {{ item.subtitle }} </div>
+                <p><strong>Subtítulo:</strong> {{ item.subtitle }}</p>
                   {% endif %}
                   {% if item.abstract %}
-                <div><strong>Resumen:</strong> {{ item.abstract }}</div>
-                  {% endif %}
-                  {% if item.date %}
-                <div><strong>Fecha:</strong> {{ item.date }}</div>
+                <p><strong>Resumen:</strong></p>
+                <div>{{ item.abstract|safe }}</div>
                   {% endif %}
                   {% if item.content %}
-                <div><strong>Contenido:</strong> {{ item.content }}</div>
+                <p><strong>Contenido:</strong></p>
+                <div>{{ item.content|safe }}</div><br />
                   {% endif %}
+
 
 
                 <!-- Category 
                   {% if item.descripcion %}
-                <div><strong>Descripción:</strong> {{ item.descripcion }} </div>
+                <p><strong>Descripción:</strong></p>
+                <div>{{ item.descripcion }} </div><br />
                   {% endif %} -->
 
 
                 <!-- Image -->
-                  {% if item.pic %}
-                <div><strong>Imagen:</strong> {{ item.pic }}</div>
-                  {% endif %}
-                  <!-- {% if item.date %}
-                <div><strong>Fecha:</strong> {{ item.date }}</div>
-                  {% endif %} -->
 
+                  <!-- {% if item.date %}
+                <p><strong>Fecha:</strong></p>
+                <div>{{ item.date }}</div><br />
+                  {% endif %} -->
+                    <hr />
                   {% include 'panel/acciones_ver.html' %}
               </div>
             </div>

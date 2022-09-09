@@ -1072,13 +1072,10 @@ def listar_busquedas(request, *args, **kwargs):
         'singular' : 'búsqueda',
         'plural' : 'búsquedas',
         'url_activo_index' : 'listar_busquedas',
-        'url_crear' : 'crear_busqueda',
-        'url_ver' : 'ver_busqueda',
-        'url_editar' : 'modificar_busqueda',
         'url_eliminar' : 'eliminar_busqueda',
         'object_list': object_list
     }
-    return render(request, 'panel/generic_list.html', context)
+    return render(request, 'panel/listar_busquedas.html', context)
 
 
 def eliminar_busqueda(request, id, *args, **kwargs):
@@ -1095,9 +1092,6 @@ def eliminar_busqueda(request, id, *args, **kwargs):
         'singular' : 'búsqueda',
         'plural' : 'búsquedas',
         'url_activo_index' : 'listar_busquedas',
-        'url_crear' : 'crear_busqueda',
-        'url_ver' : 'ver_busqueda',
-        'url_editar' : 'modificar_busqueda',
         'url_eliminar' : 'eliminar_busqueda',
         'item': itemObj,
     }

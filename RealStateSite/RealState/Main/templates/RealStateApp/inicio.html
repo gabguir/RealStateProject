@@ -1,0 +1,55 @@
+{% extends "RealStateApp/base.html" %}
+{% load static %}
+
+{% block search %}
+
+    <!-- main background -->
+    <div class="hero">
+        <div class="hero-slide">
+          <div
+            class="img overlay"
+            style="background-image: url(' {% static 'RealStateApp/images/hero_bg_3.jpg' %} ')"
+          ></div>
+          <div
+            class="img overlay"
+            style="background-image: url(' {% static 'RealStateApp/images/hero_bg_2.jpg' %} ')"
+          ></div>
+          <div
+            class="img overlay"
+            style="background-image: url(' {% static 'RealStateApp/images/hero_bg_1.jpg' %} ')"
+          ></div>
+        </div>
+  
+        <div class="container">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-lg-9 text-center">
+              <h1 class="heading" data-aos="fade-up">
+                La forma más fácil de encontrar <br />el hogar de tus sueños en España
+              </h1>
+              <form
+                action="{% url 'search' %}" method="POST" 
+                class="narrow-w form-search d-flex align-items-stretch mb-3"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+              {% csrf_token %}
+                <input
+                  type="text"
+                  name="location"
+                  class="form-control px-4"
+                  placeholder="Search nearby"
+                />
+                {{ property }}
+                <button type="submit" class="btn btn-primary">Buscar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+
+
+
+
+    

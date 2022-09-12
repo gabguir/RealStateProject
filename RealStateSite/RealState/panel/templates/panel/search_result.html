@@ -1,0 +1,399 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <!-- Inmuebles -->
+        {% if result_inmueble %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Inmuebles para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Inmuebles</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_inmueble %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_inmueble' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_inmueble' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      <a href="{% url 'ver_inmueble' item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                        <i class="ri-link-m"></i></a>
+                      <a href="{% url 'modificar_inmueble' item.id %}" class="btn btn-info btn-round btn-icon waves-effect waves-classic" title="'Editar'" data-toggle="tooltip" data-original-title="'Editar'">
+                        <i class="ri-edit-2-fill"></i></a>
+                      <a href="{% url 'eliminar_inmueble' item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="'Eliminar'" data-toggle="tooltip" data-original-title="'Eliminar'">
+                        <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros de inmuebles para "{{ termino_busqueda }}".
+          </div>
+        {% endif %}
+
+        <!-- Agentes -->
+        {% if result_agente %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Agentes para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Agentes</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_agente %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_agente' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_agente' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      <a href="{% url 'ver_agente' item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                        <i class="ri-link-m"></i></a>
+                      <a href="{% url 'modificar_agente' item.id %}" class="btn btn-info btn-round btn-icon waves-effect waves-classic" title="'Editar'" data-toggle="tooltip" data-original-title="'Editar'">
+                        <i class="ri-edit-2-fill"></i></a>
+                      <a href="{% url 'eliminar_agente' item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="'Eliminar'" data-toggle="tooltip" data-original-title="'Eliminar'">
+                        <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros de agentes para "{{ termino_busqueda }}".
+          </div>
+        {% endif %}
+
+        <!-- Páginas -->
+        {% if result_pagina %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Páginas para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Páginas</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_pagina %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_pagina' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_pagina' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      <a href="{% url 'ver_pagina' item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                        <i class="ri-link-m"></i></a>
+                      <a href="{% url 'modificar_pagina' item.id %}" class="btn btn-info btn-round btn-icon waves-effect waves-classic" title="'Editar'" data-toggle="tooltip" data-original-title="'Editar'">
+                        <i class="ri-edit-2-fill"></i></a>
+                      <a href="{% url 'eliminar_pagina' item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="'Eliminar'" data-toggle="tooltip" data-original-title="'Eliminar'">
+                        <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros de páginas para "{{ termino_busqueda }}".
+          </div>
+        {% endif %}
+
+
+        <!-- Artículos -->
+        {% if result_articulo %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Artículos para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Artículos</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_articulo %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_articulo' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+
+                              {% if item.draft == False %}
+                                <span class="badge badge-success">Activo</span>
+                              {% else %}
+                                <span class="badge badge-warning">Borrador</span>
+                              {% endif %}
+                              {% if item.fk_categoria %}
+                                <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                              {% endif %}
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_articulo' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          {% if item.draft == False %}
+                            <span class="badge badge-success">Activo</span>
+                          {% else %}
+                            <span class="badge badge-warning">Borrador</span>
+                          {% endif %}
+                          {% if item.fk_categoria %}
+                            <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                          {% endif %}
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      <a href="{% url 'ver_articulo' item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                        <i class="ri-link-m"></i></a>
+                      <a href="{% url 'modificar_articulo' item.id %}" class="btn btn-info btn-round btn-icon waves-effect waves-classic" title="'Editar'" data-toggle="tooltip" data-original-title="'Editar'">
+                        <i class="ri-edit-2-fill"></i></a>
+                      <a href="{% url 'eliminar_articulo' item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="'Eliminar'" data-toggle="tooltip" data-original-title="'Eliminar'">
+                        <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros de artículos para "{{ termino_busqueda }}".
+          </div>
+        {% endif %}
+
+
+        <!-- Imágenes -->
+        {% if result_imagen %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Imágenes para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Imágenes</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_imagen %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_imagen' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_imagen' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      <a href="{% url 'ver_imagen' item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                        <i class="ri-link-m"></i></a>
+                      <a href="{% url 'modificar_imagen' item.id %}" class="btn btn-info btn-round btn-icon waves-effect waves-classic" title="'Editar'" data-toggle="tooltip" data-original-title="'Editar'">
+                        <i class="ri-edit-2-fill"></i></a>
+                      <a href="{% url 'eliminar_imagen' item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="'Eliminar'" data-toggle="tooltip" data-original-title="'Eliminar'">
+                        <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros de imágenes para "{{ termino_busqueda }}".
+          </div>
+        {% endif %}
+
+
+
+      </div> <!-- end col-12-->
+
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

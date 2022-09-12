@@ -27,7 +27,7 @@
     <link rel="stylesheet" href=" {% static 'RealStateApp/css/style.css' %} " />
 
     <title>
-      Property &mdash; Free Bootstrap 5 Website Template by Untree.co
+      YourPlace
     </title>
 </head>
   
@@ -42,34 +42,12 @@
       <div class="site-mobile-menu-body"></div>
     </div>
 
-    <!-- navigator -->
-    <nav class="site-nav">
-      <div class="container">
-        <div class="menu-bg-wrap">
-          <div class="site-navigation">
-            <a href=" {% url 'base' %} " class="logo m-0 float-start">YourPlace.</a>
-            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-              <li class="active"><a href=" {% url 'base' %} ">Home</a></li>
-              <li><a href=" {% url 'agents' %} ">Agentes</a></li>
-              <li><a href=" {% url 'about' %} ">About</a></li>
-              <li class="active"><a href=" {% url 'addproperty' %} ">Crear Propiedad</a></li>
-            </ul>
-
-            <a
-              href="#"
-              class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
-              data-toggle="collapse"
-              data-target="#main-navbar"
-            >
-              <span></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
+    {% include 'RealStateApp/nav.html' %}
 
     <!-- main background -->
-    <div class="hero">
+    {% block search %}
+    {% endblock %}
+    <!--div class="hero">
       <div class="hero-slide">
         <div
           class="img overlay"
@@ -104,13 +82,13 @@
                 class="form-control px-4"
                 placeholder="Buscar"
               />
-              {{property}}
+              {{ property }}
               <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
           </div>
         </div>
       </div>
-    </div>
+    </div-->
 
     <div class="section">
       <div class="container">
@@ -223,7 +201,7 @@
               <ul class="list-unstyled links">
                 <li><a href="#">Propósito</a></li>
                 <li><a href="#">About us</a></li>
-                <li><a href="#">contacto</a></li>
+                <li><a href="#">Contacto</a></li>
               </ul>
 
               <ul class="list-unstyled social">

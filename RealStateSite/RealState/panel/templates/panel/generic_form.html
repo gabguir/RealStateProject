@@ -33,6 +33,7 @@
           
             <form action="" method="POST">
               {% csrf_token %}
+              {{ form.media }}
               {{ form.as_table }}
               <hr />
               <div class="text-center">

@@ -43,6 +43,7 @@
             {{ form.non_field_errors }}
             <form action="" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
+              {{ form.media }}
               {{ form.as_p }}
               <hr />
               <div class="text-center">

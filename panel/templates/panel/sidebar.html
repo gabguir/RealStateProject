@@ -69,6 +69,21 @@
       </li><!-- End Mensajes Nav -->
 
 
+      <li class="nav-heading">Búsquedas</li>
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'frontend' in request.path %} collapsed {% endif %}" href="{% url 'listar_busquedas_frontend'%}">
+          <i class="bi bi-search"></i>
+          <span>Búsqueda de sitio web</span>
+        </a>
+      </li><!-- End Búsqueda de sitio web Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'backend' in request.path %} collapsed {% endif %}" href="{% url 'listar_busquedas_backend'%}">
+          <i class="bi bi-search"></i>
+          <span>Búsqueda de panel admin</span>
+        </a>
+      </li><!-- End Búsqueda de panel admin Nav -->
 
 
       <li class="nav-heading">Configuración</li>

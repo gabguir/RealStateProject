@@ -8,14 +8,14 @@ from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
 from customer.models import Customer_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
-from panel.models import Page_Model, Backend_Search_Model, Message_Model
+from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Model
 
 # Importación de forms
 from agent.forms import Agent_Form
 from blog.forms import Article_Form, Category_Form
 from customer.forms import Customer_Form
 from realstate.forms import Realstate_Form, Realstate_Type_Form
-from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Model, Message_Form
+from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Form
 
 #=======================================================================================================================================
 # Vista de inicio
@@ -79,7 +79,7 @@ def app_panel_index(request, *args, **kwargs):
 
 def resultados_busqueda(request, *args, **kwargs):
     '''Muestra resultados de búsqueda.'''
-    form = Search_Form()
+    form = Backend_Search_Form()
     vacio = True
     termino_busqueda = ''
     result_inmueble = ''
@@ -91,7 +91,7 @@ def resultados_busqueda(request, *args, **kwargs):
     result_imagen = ''
     
     if request.method == 'POST':
-        form = Search_Form(request.POST)
+        form = Backend_Search_Form(request.POST)
         if form.is_valid():
             termino_busqueda = form.cleaned_data['name']
             print(termino_busqueda)
@@ -101,22 +101,22 @@ def resultados_busqueda(request, *args, **kwargs):
             vacio = True
         else:
             vacio = False
-            result_inmueble = Property.objects.distinct().filter(
+            result_inmueble = Realstate_Model.objects.distinct().filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(address__icontains=termino_busqueda) |
                 Q(price__icontains=termino_busqueda) |
                 Q(location__icontains=termino_busqueda) 
                 )
-            result_agente = Agent.objects.distinct().filter(
+            result_agente = Agent_Model.objects.distinct().filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(email__icontains=termino_busqueda) |
                 Q(description__icontains=termino_busqueda) 
                 )
-            result_cliente = Customer.objects.distinct().filter(
+            result_cliente = Customer_Model.objects.distinct().filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(email__icontains=termino_busqueda) 
                 )
-            result_pagina = Page.objects.distinct().filter(
+            result_pagina = Page_Model.objects.distinct().filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(title__icontains=termino_busqueda) |
                 Q(subtitle__icontains=termino_busqueda) |
@@ -130,13 +130,11 @@ def resultados_busqueda(request, *args, **kwargs):
                 Q(abstract__icontains=termino_busqueda) |
                 Q(content__icontains=termino_busqueda)
                 )
-            result_categoria = Category.objects.distinct().filter(
+            result_categoria = Category_Model.objects.distinct().filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(description__icontains=termino_busqueda) 
                 )
-            result_imagen = Image.objects.distinct().filter(
-                Q(name__icontains=termino_busqueda) 
-                )
+
 
             # print('termino_busqueda: ', termino_busqueda)
             # print('result_inmueble: ', result_inmueble)
@@ -158,7 +156,6 @@ def resultados_busqueda(request, *args, **kwargs):
         'result_pagina': result_pagina,
         'result_articulo': result_articulo,
         'result_categoria': result_categoria,
-        'result_imagen': result_imagen,
     }
     return render(request, 'panel/search_result.html', context)
 
@@ -368,7 +365,7 @@ def eliminar_mensaje(request, id, *args, **kwargs):
 def listar_busquedas_frontend(request, *args, **kwargs):
     '''Lista búsquedas.'''
     
-    object_list = FrontEnd_Search_Model.objects.all() # Lista de objetos
+    object_list = Frontend_Search_Model.objects.all() # Lista de objetos
     
     context = {
         'page' : 'Búsquedas de artículos en el sitio web',
@@ -400,7 +397,7 @@ def listar_busquedas_backend(request, *args, **kwargs):
 def eliminar_busqueda_frontend(request, id, *args, **kwargs):
     '''Eliminar búsqueda.'''
     
-    itemObj = FrontEnd_Search_Model.objects.get(id=id) 
+    itemObj = Frontend_Search_Model.objects.get(id=id) 
     
     if request.method == 'POST':
         itemObj.delete()

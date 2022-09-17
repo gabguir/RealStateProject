@@ -209,7 +209,7 @@ def resultados_busqueda_inmuebles(request, *args, **kwargs):
         if form.is_valid():
             termino_busqueda = form.cleaned_data['name']
             print(termino_busqueda)
-            #form.save()
+            form.save()
 
         if termino_busqueda == '':
             vacio = True

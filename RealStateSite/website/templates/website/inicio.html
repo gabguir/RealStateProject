@@ -1,0 +1,255 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+		<!-- buscador de inmuebles-->
+        <div class="hero">
+
+
+            <div class="hero-slide">
+                <div class="img overlay" style="background-image: url('{% static 'images/hero_bg_3.jpg' %}')"></div>
+                <div class="img overlay" style="background-image: url('{% static 'images/hero_bg_2.jpg' %}')"></div>
+                <div class="img overlay" style="background-image: url('{% static 'images/hero_bg_1.jpg' %}')"></div>
+            </div>
+
+            <!-- Buscador -->
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center">
+                        <h1 class="heading" data-aos="fade-up">Encuentra tu próximo hogar aquí!</h1>
+
+                        <!-- Form buscar -->
+                        {% include 'website/form_buscar.html' %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<!-- carrusel de propiedades -->
+        {% if inmuebles %}
+        <div class="section">
+            <div class="container">
+                <div class="row mb-5 align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="font-weight-bold text-primary heading">Últimas Propiedades</h2>
+                    </div>
+                    <div class="col-lg-6 text-lg-end">
+                        <p><a href="{% url 'realstates' %}" class="btn btn-primary text-white py-3 px-4">
+                            <i class="bi bi-house"></i>
+                            Ver todas las propiedades
+                        </a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="property-slider-wrap">
+                            <div class="property-slider">
+
+                                {% for item in inmuebles %}
+                                <div class="property-item">
+
+                                    <a href="{% url 'realstates_detail' item.id %}" class="img">
+                                        <img src="{{ item.image_main.url }}" alt="Image" class="img-fluid">
+                                    </a>
+    
+                                    <div class="property-content">
+                                        <div class="price mb-2"><span>${{ item.price }}</span></div>
+                                        <div>
+                                            <span class="d-block mb-2 text-black-50">{{ item.address }}</span>
+                                            <span class="city d-block mb-3">{{ item.location }}</span>
+    
+                                            <div class="specs d-flex mb-4">
+                                                <span class="d-block d-flex align-items-center me-3">
+                                                    <span class="icon-bed me-2"></span>
+                                                    <span class="caption">{{ item.room_qty }} habitaciones</span>
+                                                </span>
+                                                <span class="d-block d-flex align-items-center">
+                                                    <span class="icon-bath me-2"></span>
+                                                    <span class="caption">{{ item.bath_qty }} baños</span>
+                                                </span>
+                                            </div>
+    
+                                            <a href="{% url 'realstates_detail' item.id %}" class="btn btn-primary py-2 px-3">
+                                                <i class="bi bi-card-checklist"></i>
+                                                Ver detalles
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div> <!-- .item -->
+                                {% endfor %}
+
+
+                            </div>
+
+
+                            <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+                                <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">
+                                    <i class="bi bi-arrow-left-circle"></i>
+                                    Anterior
+                                </span>
+                                <span class="next" data-controls="next" aria-controls="property" tabindex="-1">
+                                    Siguiente 
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+		<!-- carrusel de artículos -->
+        {% if articulos %}
+        <div class="section section-properties">
+            <div class="container">
+                <div class="row mb-5 align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="font-weight-bold text-primary heading">Últimos Artículos</h2>
+                    </div>
+                    <div class="col-lg-6 text-lg-end">
+                        <p><a href="{% url 'blog' %}" target="_blank" class="btn btn-primary text-white py-3 px-4">
+                            <i class="bi bi-file-richtext"></i>
+                            Ver todos los artículos
+                        </a></p>
+                    </div>
+                </div>
+                <div class="row">
+
+                    {% for item in articulos %}
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="property-item mb-30">
+    
+                            <a href="{% url 'blog_detail' item.id %}" class="img">
+                                <img src="{{ item.image_main.url}}" alt="Image" class="img-fluid" />
+                            </a>
+    
+                            <div class="property-content">
+                                <div class="price mb-2">
+                                    <span>
+                                        <a href="{% url 'blog_detail' item.id %}">{{ item.title }}</a>
+                                    </span>
+                                </div>
+                                <div>
+                                    <!--div class="city d-block mb-3">{{ item.title }}</div-->
+                                    <div class="d-block mb-2 text-black-50">{{ item.abstract|safe }}</div>
+    
+                                    <div class="specs d-flex mb-4">
+                                        <!--span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">{{ autor }}</span>
+                                        </span-->
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="bi bi-calendar3"></span> &nbsp;&nbsp;
+                                            <span class="caption">{{ item.date }}</span>
+                                        </span>
+                                    </div>
+
+                                <div class="text-center">
+                                    <a href="{% url 'blog_detail' item.id %}" class="btn btn-primary py-2 px-3">
+                                        <i class="bi bi-file-richtext"></i>
+                                        Leer artículo
+                                    </a>
+                                </div>
+                        </div>
+                            </div>
+                        </div> <!-- .item -->
+                    </div>
+                    {% endfor %}
+
+
+                    
+                </div>
+                <!--div class="row align-items-center py-5">
+                    <div class="col-lg-3">
+                        Pagination (1 of 10)
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="custom-pagination">
+                            <a href="#">1</a>
+                            <a href="#" class="active">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                        </div>
+                    </div>
+                </div-->
+
+            </div>
+        </div>
+        {% endif %}
+
+		<!-- Agentes -->
+        {% if agentes %}
+        <div class="section section-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center  text-center mb-5">
+                    <div class="col-lg-6 mb-5">
+                        <h2 class="font-weight-bold heading text-primary mb-4">Nuestros Agentes</h2>
+                        {% for pagina in agent_content %}
+                            <p class="text-black-50">
+                                {{ pagina.content|safe }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% for item in agentes %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="h-100 person">
+
+                            <img src="{{ item.image_main.url }}" alt="{{ item.name }}"
+                            class="img-fluid">
+
+                            <div class="person-contents">
+                                <h2 class="mb-0"><a href="#">{{ item.name }}</a></h2>
+                                <span class="meta d-block mb-3">Agente inmobiliario</span>
+                                {{ item.description|safe }}
+
+                                <ul class="social list-unstyled list-inline dark-hover">
+                                    {% if item.url_twitter %}
+                                        <li class="list-inline-item">
+                                            <a href="{{ item.url_twitter }}"><span class="icon-twitter"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_facebook %}
+                                        <li class="list-inline-item">
+                                            <a href="#"><span class="icon-facebook"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_linkedin %}
+                                        <li class="list-inline-item">
+                                            <a href="#"><span class="icon-linkedin"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_instagram %}
+                                        <li class="list-inline-item">
+                                            <a href="#"><span class="icon-instagram"></span></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+		
+	{% endblock content %}
+
+	<!-- Specific Page JS goes HERE  -->
+	{% block javascripts %}{% endblock javascripts %}

@@ -1,8 +1,9 @@
 # Real State Site
 
-_Sitio web de venta/alquiler de inmuebles ubicado en Mallorca desarrollado con Django_
+_Sitio web de venta/alquiler de inmuebles desarrollado con Django_
 
 Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
+
 
 ## Pre-requisitos 📋
 
@@ -16,9 +17,11 @@ _Esta es una lista de los paquetes que deben estar instalados previamente:_
 * Pip
 	- Gestor de instalación de paquetes PIP
 	- [Ayuda - https://tecnonucleous.com/2018/01/28/como-instalar-pip-para-python-en-windows-mac-y-linux/](https://tecnonucleous.com/2018/01/28/como-instalar-pip-para-python-en-windows-mac-y-linux/)
+
 * Virtualenv
 	- Creador de entornos virtuales para Python
 	- [Ayuda - https://techexpert.tips/es/windows-es/instalacion-del-entorno-virtual-de-python-en-windows/](https://techexpert.tips/es/windows-es/instalacion-del-entorno-virtual-de-python-en-windows/)
+
 
 ## Instalación pre-requisitos 🔧
 
@@ -47,6 +50,7 @@ Muchas veces tenemos ese problema común de no poder instalar ciertas librerías
 
 8. Finalmente desactivamos el entorno virtual
 	- `deactivate`
+
 
 ## Instalación Local 🚀
 
@@ -79,6 +83,7 @@ Seguir los siguientes pasos para la instalación local.
 	- `python3 manage.py runserver`
 	- Iniciar en un puerto específico (:9500):`python3 manage.py runserver 9500`
 
+
 ## Datos de contexto 📦
 
 _Datos de contexto para el uso del sitio web_
@@ -89,6 +94,7 @@ _Datos de contexto para el uso del sitio web_
 - [http://localhost:8000/admin/](http://localhost:8000/admin/)
 - Usuario: `admin`
 - Password: `abc123456`
+
 
 ### Funcionalidades
 
@@ -118,8 +124,8 @@ _Estas son las herramientas que hemos utilizado en nuestro proyecto_
 ## Autores ✒️
 
 * **[Gabo Araya](https://github.com/Gabo-araya/)** - *Backend y documentación*
-* **[Gabriel Guiridlan](https://github.com/gabguir/)** - *Backend y documentación*
-* **[Franco Fumiere](#)** - *Backend y documentación*
+* **[Gabriel Guiridlan](https://github.com/gabguir/)** - *Frontend*
+* **[Franco Fumiere](#)** - *Frontend*
 
 
 

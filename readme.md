@@ -124,8 +124,8 @@ _Estas son las herramientas que hemos utilizado en nuestro proyecto_
 ## Autores ✒️
 
 * **[Gabo Araya](https://github.com/Gabo-araya/)** - *Backend y documentación*
-* **[Gabriel Guiridlan](https://github.com/gabguir/)** - *Frontend*
-* **[Franco Fumiere](#)** - *Frontend*
+* **[Gabriel Guiridlan](https://github.com/gabguir/)** - *Frontend y login*
+* **[Franco Fumiere](#)** - *Frontend y login*
 
 
 

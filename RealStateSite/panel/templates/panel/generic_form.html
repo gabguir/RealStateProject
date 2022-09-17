@@ -1,0 +1,76 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+    <script src="{% url 'js-catalog' %}"></script>
+    <script src="{% static '/admin/js/core.js' %}"></script>
+    <!--link rel="stylesheet" href="{% static 'admin/css/base.css' %}"-->
+    <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        
+        
+        <div class="card" >
+          {% if object.image_main %}
+          
+          <div class="card-header card-header-image ml-auto mr-auto" style="max-width: 80%">
+            <a href="#">
+              <img class="img" src="{{ object.image_main.url }}" alt="{{ object.name }}" rel="nofollow">
+            </a>
+          </div>
+          <hr />
+        {% else %}
+          <div class="card-header">
+          </div>
+        {% endif %} 
+          <div class="card-body">
+            {% if error_message %}
+						<div class="alert alert-danger">
+              <i class="bi bi-shield-fill-exclamation"></i>
+							Ocurrió un error. <br /> 
+							Complete todos los campos correctamente.
+						</div>
+            {% endif %}
+            {{ form.non_field_errors }}
+            <form action="" method="POST">
+              {% csrf_token %}
+              {{ form.media }}
+              {{ form.as_p }}
+              <hr />
+              <div class="text-center">
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-outline-secondary btn-round btn-icon waves-effect waves-classic">
+                  <i class="bi bi-arrow-left-circle-fill"></i> Atrás </a>
+                <button type="submit" class="btn btn-success btn-round">
+                  <i class="bi bi-plus-circle-fill"></i> Guardar
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div> <!-- end col-12-->
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

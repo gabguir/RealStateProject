@@ -1,0 +1,119 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %} {{ item.0.title }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <!--/ Section Blog Star /-->
+  <section id="blog" class="blog-mf sect-pt4 route">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="title-box text-center">
+            <h3 class="title-a">
+              Blog
+            </h3>
+            <p class="subtitle-a">
+              {% for pagina in paginas %}
+                {% if pagina.name == 'blog' %}
+                  {{ pagina.content|safe }}
+                {% endif %}
+              {% endfor %}
+            </p>
+            <div class="line-mf"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Buscador -->
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+
+              <!-- Form buscar -->
+              {% include 'blog/form_buscar.html' %}
+
+        </div>
+      </div>
+      <br /><hr />
+
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+        <!-- Artículos encontrados -->
+        {% if result_articulo %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Artículos para la búsqueda: "{{ termino_busqueda }}"</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Artículos</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in result_articulo %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                            <a href="{% url 'ver_articulo' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                              {% if item.date %}
+                                <span class="badge badge-default">{{ item.date }}</span> <br />
+                              {% endif %}
+                              {% if item.fk_categoria %}
+                                <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                              {% endif %}
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <a href="{% url 'ver_articulo' item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+                          {% if item.date %}
+                            <span class="badge badge-default">{{ item.date }}</span> <br />
+                          {% endif %}
+                          {% if item.fk_categoria %}
+                            <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                          {% endif %}
+                      </p>
+                      {% endif %}
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-warning fade show" role="alert">
+            No existen artículos relacionados con "{{ termino_busqueda }}". <br />
+            Ingrese otro término de búsqueda.
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/ Section Blog End /-->
+
+  {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

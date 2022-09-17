@@ -1,0 +1,75 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="hero page-inner overlay" style="background-image: url('{{ page_content.0.image_main.url }}');">
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-lg-9 text-center mt-5">
+					<h1 class="heading" data-aos="fade-up">{{ page }}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+					<div class="contact-info">
+
+						{{ page_content.0.content|safe }}
+
+					</div>
+				</div>
+				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+					<form action="" method="POST" role="form" class="contactForm">
+					{% csrf_token %}
+					{% if success_message%}
+						<div class="alert alert-success">
+							<i class="bi bi-send-check-fill"></i>
+							Su mensaje ha sido enviado. Gracias!
+						</div>
+					{% endif %}
+					{% if error_message%}
+						<div class="alert alert-danger">
+							<i class="bi bi-shield-fill-exclamation"></i>
+							Ocurrió un error. <br /> 
+							Complete todos los campos correctamente.
+						</div>
+					{% endif %}
+						<div class="row">
+							<div class="col-6 mb-3">
+								<input name="name" id="name" type="text" class="form-control" placeholder="Nombre">
+							</div>
+							<div class="col-6 mb-3">
+								<input name="email" id="email" type="email" class="form-control" placeholder="Correo Electrónico">
+							</div>
+							<div class="col-12 mb-3">
+								<input name="subject" id="subject" type="text" class="form-control" placeholder="Asunto">
+							</div>
+							<div class="col-12 mb-3">
+								<textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+							</div>
+
+							<div class="col-12">
+								<input type="submit" value="Enviar mensaje" class="btn btn-primary">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> <!-- /.untree_co-section -->
+
+			
+	{% endblock content %}
+
+	<!-- Specific Page JS goes HERE  -->
+	{% block javascripts %}{% endblock javascripts %}

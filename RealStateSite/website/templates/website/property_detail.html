@@ -1,0 +1,133 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="hero page-inner overlay" style="background-image: url('{{ inmueble.image_main.url }}');">
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-9 text-center mt-5">
+                <h1 class="heading" data-aos="fade-up">{{ inmueble.name }}</h1>
+
+                <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+                    {% if articulo.subtitle %}
+                    <p class="breadcrumb text-center justify-content-center">
+                        {{ articulo.subtitle }}
+                    </p>
+                    {% endif %}
+                </nav>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+	<div class="section">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-7">
+					<div class="img-property-slide-wrap">
+						<div class="img-property-slide">
+							{% if inmueble.image_01 %}
+							<img src="{{ inmueble.image_01.url }}" alt="" class="img-fluid">
+							{% endif %}
+							{% if inmueble.image_02 %}
+							<img src="{{ inmueble.image_02.url }}" alt="" class="img-fluid">
+							{% endif %}
+							{% if inmueble.image_03 %}
+							<img src="{{ inmueble.image_03.url }}" alt="" class="img-fluid">
+							{% endif %}
+							{% if inmueble.image_04 %}
+							<img src="{{ inmueble.image_04.url }}" alt="" class="img-fluid">
+							{% endif %}
+							{% if inmueble.image_05 %}
+							<img src="{{ inmueble.image_05.url }}" alt="" class="img-fluid">
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<h2 class="heading text-primary">{{ inmueble.address }}</h2>
+					<p class="meta">{{ inmueble.location }}</p>
+					<div class="text-black-50">
+
+					</div>
+					<div class="text-black-50">
+						<div class="property-content">
+							<div class="price mb-2"><span>${{ inmueble.price }}</span></div>
+							<div>
+								<span class="d-block mb-2 text-black-50">{{ inmueble.address }}</span>
+								<span class="city d-block mb-3">{{ inmueble.location }}</span>
+	
+								<div class="specs d-flex mb-4">
+									<span class="d-block d-flex align-inmuebles-center me-3">
+										<span class="icon-bed me-2"></span>
+										<span class="caption">{{ inmueble.room_qty }} habitaciones</span>
+									</span>
+									<span class="d-block d-flex align-inmuebles-center">
+										<span class="icon-bath me-2"></span>
+										<span class="caption">{{ inmueble.bath_qty }} baños</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					{% if inmueble.fk_agent %}
+					<div class="d-block agent-box p-5">
+						<div class="img mb-4">
+							<img src="{{ inmueble.fk_agent.image_main.url }}" alt="{{ inmueble.fk_agent.name }}" class="img-fluid">
+						</div>
+						<div class="text">
+							<h3 class="mb-0">{{ inmueble.fk_agent.name }}</h3>
+							<div class="meta mb-3">Agente inmobiliario</div>
+							<div>{{ inmueble.fk_agent.description|safe }}</div>
+							<ul class="list-unstyled social dark-hover d-flex">
+							{% if inmueble.fk_agent.url_twitter %}
+								<li class="list-inline-item">
+									<a href="{{ inmueble.fk_agent.url_twitter }}"><span class="icon-twitter"></span></a>
+								</li>
+							{% endif %}
+							{% if inmueble.fk_agent.url_facebook %}
+								<li class="list-inline-item">
+									<a href="{{ inmueble.fk_agent.url_facebook }}"><span class="icon-facebook"></span></a>
+								</li>
+							{% endif %}
+							{% if inmueble.fk_agent.url_linkedin %}
+								<li class="list-inline-item">
+									<a href="{{ inmueble.fk_agent.url_linkedin }}"><span class="icon-linkedin"></span></a>
+								</li>
+							{% endif %}
+							{% if inmueble.fk_agent.url_instagram %}
+								<li class="list-inline-item">
+									<a href="{{ inmueble.fk_agent.url_instagram }}"><span class="icon-instagram"></span></a>
+								</li>
+							{% endif %}
+							</ul>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	
+	{% endblock content %}
+
+	<!-- Specific Page JS goes HERE  -->
+	{% block javascripts %}{% endblock javascripts %}

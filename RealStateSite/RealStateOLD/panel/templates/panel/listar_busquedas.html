@@ -1,0 +1,102 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+    
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        {% if object_list %}
+          <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Lista de {{ plural|capfirst }}</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>{{ plural|capfirst }}</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in object_list %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+                      {% if item.image or item.pic %}
+                      <div class="row">
+                        <div class="col-md-2">
+                          {% if item.image %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                          {% endif %}
+                        {% if item.pic %}
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.pic.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                          <p>
+                             <strong>{{ item.name }}</strong> <br />
+
+                          </p>
+                        </div>
+                      </div>
+                      {% else %}
+                      <p>
+                        <strong>{{ item.name }}</strong> <br />
+
+                      </p>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                        <a href="{% url url_eliminar item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="Eliminar" data-toggle="tooltip" data-original-title="Eliminar">
+                            <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        {% else %}
+
+          <div class="alert alert-warning fade show" role="alert">
+            No existen registros.
+          </div>
+
+        {% endif %}
+
+      </div> <!-- end col-12-->
+
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

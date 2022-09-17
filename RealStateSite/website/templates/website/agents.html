@@ -1,0 +1,84 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="hero page-inner overlay" style="background-image: url('{{ page_content.0.image_main.url }}');">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center mt-5">
+                        <h1 class="heading" data-aos="fade-up">{{ page }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<!-- Agentes -->
+        <div class="section section-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center  text-center mb-5">
+                    <div class="col-lg-6 mb-5">
+                        <h2 class="font-weight-bold heading text-primary mb-4">Nuestros Agentes</h2>
+                        
+                        {% for pagina in page_content %}
+                            <p class="text-black-50">
+                                {{ pagina.content|safe }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% for item in agentes %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="h-100 person">
+
+                            <img src="{{ item.image_main.url }}" alt="{{ item.name }}"
+                            class="img-fluid">
+
+                            <div class="person-contents">
+                                <h2 class="mb-0"><a href="#">{{ item.name }}</a></h2>
+                                <span class="meta d-block mb-3">Agente inmobiliario</span>
+                                {{ item.description|safe }}
+
+                                <ul class="social list-unstyled list-inline dark-hover">
+                                    {% if item.url_twitter %}
+                                        <li class="list-inline-item">
+                                            <a href="{{ item.url_twitter }}"><span class="icon-twitter"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_facebook %}
+                                        <li class="list-inline-item">
+                                            <a href="{{ item.url_facebook }}"><span class="icon-facebook"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_linkedin %}
+                                        <li class="list-inline-item">
+                                            <a href="{{ item.url_linkedin }}"><span class="icon-linkedin"></span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if item.url_instagram %}
+                                        <li class="list-inline-item">
+                                            <a href="{{ item.url_instagram }}"><span class="icon-instagram"></span></a>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+		
+	{% endblock content %}
+
+	<!-- Specific Page JS goes HERE  -->
+	{% block javascripts %}{% endblock javascripts %}

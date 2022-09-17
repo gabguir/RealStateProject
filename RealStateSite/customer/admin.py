@@ -1,0 +1,1 @@
+# Registro de modelos para /admin/ de Django realizado en panel.admin

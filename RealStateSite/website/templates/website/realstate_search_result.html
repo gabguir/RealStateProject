@@ -1,0 +1,140 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %} {{ item.0.title }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="hero page-inner overlay" style="background-image: url('{{ page_content.0.image_main.url }}');">
+
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-9 text-center mt-5">
+        <h1 class="heading" data-aos="fade-up">{{ page }}</h1>
+          <!-- Buscador -->
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <!-- Form buscar -->
+            {% include 'website/form_buscar.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      {% if inmuebles %}
+      <div class="section">
+        <div class="container">
+          <div class="row mb-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold text-primary heading">Propiedades encontradas:</h2> 
+                <p>Se buscó el término: <strong>"{{ termino_busqueda}}".</strong></p>
+            </div>
+            <div class="col-lg-6 text-lg-end">
+                <p><a href="{% url 'realstates' %}" class="btn btn-primary text-white py-3 px-4">
+                    <i class="bi bi-house"></i>
+                    Ver todas las propiedades
+                </a></p>
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="property-slider-wrap">
+                <div class="property-slider">
+    
+                  {% for item in inmuebles %}
+                  <div class="property-item">
+    
+                    <a href="{% url 'realstates_detail' item.id %}" class="img">
+                      <img src="{{ item.image_main.url }}" alt="Image" class="img-fluid">
+                    </a>
+    
+                    <div class="property-content">
+                      <div class="price mb-2"><span>${{ item.price }}</span></div>
+                      <div>
+                        <span class="d-block mb-2 text-black-50">{{ item.address }}</span>
+                        <span class="city d-block mb-3">{{ item.location }}</span>
+    
+                        <div class="specs d-flex mb-4">
+                          <span class="d-block d-flex align-items-center me-3">
+                            <span class="icon-bed me-2"></span>
+                            <span class="caption">{{ item.room_qty }} habitaciones</span>
+                          </span>
+                          <span class="d-block d-flex align-items-center">
+                            <span class="icon-bath me-2"></span>
+                            <span class="caption">{{ item.bath_qty }} baños</span>
+                          </span>
+                        </div>
+    
+                        <a href="{% url 'realstates_detail' item.id %}" class="btn btn-primary py-2 px-3">
+                          <i class="bi bi-card-checklist"></i>
+                          Ver detalles
+                        </a>
+                      </div>
+                    </div>
+                  </div> <!-- .item -->
+                  {% endfor %}
+    
+    
+                </div>
+    
+    
+                <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+                  <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">
+                    <i class="bi bi-arrow-left-circle"></i>
+                    Anterior
+                  </span>
+                  <span class="next" data-controls="next" aria-controls="property" tabindex="-1">
+                    Siguiente 
+                    <i class="bi bi-arrow-right-circle"></i>
+                  </span>
+                </div>
+    
+              </div>
+            </div>
+    
+          </div>
+          <div class="row align-items-center py-5">
+            <div class="col-lg-3">
+              Pagination (1 of 10)
+            </div>
+            <div class="col-lg-6 text-center">
+              <div class="custom-pagination">
+                <a href="#">1</a>
+                <a href="#" class="active">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="section">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="alert alert-warning fade show" role="alert">
+                No existen propiedades relacionados con "{{ termino_busqueda }}". <br />
+                Ingrese otro término de búsqueda.
+              </div>
+      
+            </div>
+    
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+
+  {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

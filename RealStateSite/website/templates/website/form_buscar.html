@@ -1,0 +1,8 @@
+{% load static %}
+                        <form action="{% url 'resultados_busqueda_inmuebles' %}" method="POST" class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+                            {% csrf_token %}
+                            <input type="text" id="name" name="name" class="form-control px-4" placeholder="Ingrese una ciudad">
+                            <button type="submit" class="btn btn-primary">
+                                Buscar 
+                            </button>
+                        </form>

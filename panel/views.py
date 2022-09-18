@@ -3,6 +3,18 @@ from django.http import HttpResponse, request
 from django.urls import reverse
 from django.db.models import Q
 
+# importación de funcionalidad para creación de usuarios
+#from django.contrib.auth.forms import UserCreationForm
+
+# importación de funcionalidad para login
+from django.contrib.auth import authenticate, login, logout
+#from django.contrib.auth.decorators import login_required
+#from django.contrib import messages
+#from django.contrib.auth.models import Group
+
+# importar custom decorators
+#from login.decorators import authenticated_user, allowed_users
+
 # Importar modelos desde apps de backend
 from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
@@ -15,7 +27,7 @@ from agent.forms import Agent_Form
 from blog.forms import Article_Form, Category_Form
 from customer.forms import Customer_Form
 from realstate.forms import Realstate_Form, Realstate_Type_Form
-from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Form
+from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Form, CustomUserCreationForm
 
 #=======================================================================================================================================
 # Vista de inicio
@@ -23,56 +35,112 @@ from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Me
 
 def app_panel_index(request, *args, **kwargs):
     '''Lista de elementos con las que se pueden realizar acciones.'''
-    object_list = [
+    elementos = [
         {
             'object_title' : 'Inmuebles',
-            'icon' : 'bx bxs-building-house',
-            'object_description' : 'Agregar o modificar inmuebles',
-            'object_url' : 'listar_inmuebles',
+            'icon' : 'bi bi-house-heart',
+            'object_description' : 'Agregar, modificar o eliminar inmuebles.',
+            'url_listar' : 'listar_inmuebles',
+            'url_crear' : 'crear_inmueble',
+        },
+        {
+            'object_title' : 'Tipo de inmueble',
+            'icon' : 'bi bi-building',
+            'object_description' : 'Agregar, modificar o eliminar tipos de inmueble.',
+            'url_listar' : 'listar_tipo_inmuebles',
+            'url_crear' : 'crear_tipo_inmueble',
         },
         {
             'object_title' : 'Agentes',
-            'icon' : 'bx bxs-user-rectangle',
-            'object_description' : 'Agregar o modificar agentes',
-            'object_url' : 'listar_agentes',
+            'icon' : 'bi bi-person',
+            'object_description' : 'Agregar, modificar o eliminar agentes.',
+            'url_listar' : 'listar_agentes',
+            'url_crear' : 'crear_agente',
         },
         {
             'object_title' : 'Clientes',
-            'icon' : 'bx bxs-user-pin',
-            'object_description' : 'Agregar o modificar clientes',
-            'object_url' : 'listar_clientes',
+            'icon' : 'bi bi-people',
+            'object_description' : 'Agregar, modificar o eliminar clientes.',
+            'url_listar' : 'listar_clientes',
+            'url_crear' : 'crear_cliente',
         },
         {
             'object_title' : 'Páginas',
             'icon' : 'bx bxs-file',
-            'object_description' : 'Agregar o modificar páginas',
-            'object_url' : 'listar_paginas',
+            'object_description' : 'Agregar, modificar o eliminar páginas.',
+            'url_listar' : 'listar_paginas',
+            'url_crear' : 'crear_pagina',
         },
         {
             'object_title' : 'Artículos',
-            'icon' : 'bx bx-file',
-            'object_description' : 'Agregar o modificar articulos',
-            'object_url' : 'listar_articulos',
+            'icon' : 'bi bi-file-richtext',
+            'object_description' : 'Agregar, modificar o eliminar articulos.',
+            'url_listar' : 'listar_articulos',
+            'url_crear' : 'crear_articulo',
         },
         {
             'object_title' : 'Categorías',
-            'icon' : 'bx bxs-extension',
-            'object_description' : 'Agregar o modificar categorías',
-            'object_url' : 'listar_categorias',
+            'icon' : 'bi bi-tags',
+            'object_description' : 'Agregar, modificar o eliminar categorías.',
+            'url_listar' : 'listar_categorias',
+            'url_crear' : 'crear_categoria',
         },
-        # {
-        #     'object_title' : 'Imágenes',
-        #     'icon' : 'bx bxs-image',
-        #     'object_description' : 'Agregar o modificar imágenes',
-        #     'object_url' : 'listar_imagenes',
-        # },
     ]
+    funcionalidades = [
+        {
+            'object_title' : 'Mensajes',
+            'icon' : 'bi bi-envelope-paper-heart',
+            'object_description' : 'Revisar o eliminar mensajes.',
+            'url_listar' : 'listar_mensajes',
+        },
+        
+        {
+            'object_title' : 'Búsqueda de sitio web',
+            'icon' : 'bi bi-search',
+            'object_description' : 'Revisar o eliminar búsquedas realizadas en el sitio web.',
+            'url_listar' : 'listar_busquedas_frontend',
+        },
+        {
+            'object_title' : 'Búsqueda de panel admin',
+            'icon' : 'bi bi-search',
+            'object_description' : 'Revisar o eliminar búsquedas realizadas en el panel de administración.',
+            'url_listar' : 'listar_busquedas_backend',
+        },
+    ]
+
+    count_inmuebles = Realstate_Model.objects.all().count()
+    count_inmuebles_activos = Realstate_Model.objects.filter(draft=False).count()
+    count_inmuebles_inactivos = Realstate_Model.objects.filter(draft=True).count()
+    count_clientes = Customer_Model.objects.all().count()
+    count_agentes = Agent_Model.objects.all().count()
+    count_articulos = Article_Model.objects.all().count()
+    count_articulos_activos = Article_Model.objects.filter(draft=False).count()
+    count_articulos_inactivos = Article_Model.objects.filter(draft=True).count()
+    count_categorias = Category_Model.objects.all().count()
+    count_mensajes = Message_Model.objects.all().count()
+
+    inmuebles_activos = Realstate_Model.objects.filter(draft=False)
+    articulos_activos = Article_Model.objects.filter(draft=False)
+    mensajes = Message_Model.objects.all()
 
     context = {
         'page' : 'Inicio',
         'icon' : 'bi bi-grid',
-        'description' : 'Se pueden realizar acciones con los elementos listados a continuación.',
-        'object_list' : object_list,
+        'count_inmuebles': count_inmuebles,
+        'count_inmuebles_activos': count_inmuebles_activos,
+        'count_inmuebles_inactivos': count_inmuebles_inactivos,
+        'count_clientes': count_clientes,
+        'count_agentes': count_agentes,
+        'count_articulos': count_articulos,
+        'count_articulos_activos': count_articulos_activos,
+        'count_articulos_inactivos': count_articulos_inactivos,
+        'count_categorias': count_categorias,
+        'count_mensajes': count_mensajes,
+        'inmuebles': inmuebles_activos,
+        'articulos': articulos_activos,
+        'mensajes': mensajes,
+        'elementos' : elementos,
+        'funcionalidades' : funcionalidades,
     }
     return render(request, 'panel/app_index.html', context)
 
@@ -160,6 +228,55 @@ def resultados_busqueda(request, *args, **kwargs):
     return render(request, 'panel/search_result.html', context)
 
 
+
+#=======================================================================================================================================
+# Login
+#=======================================================================================================================================
+
+
+def test(request, *args, **kwargs):
+    '''Test'''
+    
+    context = {
+        'page' : 'Login',
+        #'object_list': object_list,
+    }
+    #return render(request, 'panel/error_404.html', context)
+    return render(request, 'login/register_user.html', context)
+
+
+
+#@authenticated_user
+def entrar(request, *args, **kwargs):
+    '''Página de Login de la plataforma. '''
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # autenticar al usuario
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # loguear al ususario con el usuario recién creado
+            login(request, user)
+            return redirect('inicio')
+
+        else:
+            messages.info(request, 'Ocurrió un error: usuario o password incorrecto.')
+
+    context = {
+        'page': 'Acceso',
+    }
+    
+
+    return render(request, 'login/login.html', context)
+
+
+
+def salir(request, *args, **kwargs):
+    logout(request)
+    return redirect('entrar')
 
 
 #=======================================================================================================================================

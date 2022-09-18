@@ -1,6 +1,7 @@
 from django.urls import path, include
-from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+from django.views.i18n import JavaScriptCatalog
 import panel.views
 
 
@@ -31,6 +32,10 @@ urlpatterns = [
 #JS-Catalog para mostrar widget admin para fechas y horas
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catalog'),
 
+#=======================================================================================================================================
+# Inclusiones 
+#=======================================================================================================================================
+
 #agent
     path('', include('agent.urls')),
     
@@ -42,5 +47,37 @@ urlpatterns = [
 
 #customer 
     path('', include('customer.urls')),
+
+
+#=======================================================================================================================================
+# Login 
+#=======================================================================================================================================
+
+    path('test/', panel.views.test, name='test'),
+
+    # path('login/', panel.views.login, name='inicio'),
+    path('entrar/', panel.views.entrar, name='entrar'),
+    # path('salir/', login.views.salir, name='salir'),
+    # path('crear_usuario/', login.views.crear_usuario, name='crear_usuario'),
+
+    # path('ver_perfil/', login.views.ver_perfil, name='ver_perfil'),
+    # path('modificar_perfil/', login.views.modificar_perfil, name='modificar_perfil'),
+
+
+#=======================================================================================================================================
+# Reset de password
+#=======================================================================================================================================
+
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name='login/password_reset.html'),
+        name='reset_password'),
+    path('reset_password_enviado/', auth_views.PasswordResetDoneView.as_view(template_name='login/password_reset_sent.html'), 
+        name='password_reset_done'),
+    path('reset_password_confirmado/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name='login/password_reset_form.html'), 
+        name='password_reset_confirm'),
+    path('reset_password_completado/', auth_views.PasswordResetCompleteView.as_view(template_name='login/password_reset_done.html'), 
+        name='password_reset_complete'),
+
+
+
 
 ]

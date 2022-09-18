@@ -1,6 +1,12 @@
 from django.forms import ModelForm
 from django import forms
+from django.forms import ModelForm, Textarea, CheckboxInput
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
+import datetime
+
+# importaciones para usuarios
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 # Importación de modelos
 from panel.models import Page_Model, Frontend_Search_Model, Backend_Search_Model, Message_Model
@@ -97,3 +103,26 @@ class Backend_Search_Form(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})
+
+
+#=======================================================================================================================================
+# Login 
+#=======================================================================================================================================
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Ingrese el usuario...'})
+        self.fields['email'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico...'})
+        self.fields['password1'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Ingrese el password...'})
+        self.fields['password2'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Confirme el password...'})
+

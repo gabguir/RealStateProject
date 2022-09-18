@@ -14,28 +14,28 @@
 
       <li class="nav-item">
         <a class="nav-link {% if 'inmueble' in request.path %} collapsed {% endif %}" href="{% url 'listar_inmuebles'%}">
-          <i class="bx bxs-building-house"></i>
+          <i class="bi bi-house-heart"></i>
           <span>Inmuebles</span>
         </a>
       </li><!-- End Inmuebles Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'tipo_inmueble' in request.path %} collapsed {% endif %}" href="{% url 'listar_tipo_inmuebles'%}">
-          <i class="bx bxs-image"></i>
+          <i class="bi bi-building"></i>
           <span>Tipo de inmueble</span>
         </a>
       </li><!-- End Tipo de inmueble Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'agente' in request.path %} collapsed {% endif %}" href="{% url 'listar_agentes'%}">
-          <i class="bx bxs-user-rectangle"></i>
+          <i class="bi bi-people"></i>
           <span>Agentes</span>
         </a>
       </li><!-- End Agentes Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'cliente' in request.path %} collapsed {% endif %}" href="{% url 'listar_clientes'%}">
-          <i class="bx bxs-user-pin"></i>
+          <i class="bi bi-person"></i>
           <span>Clientes</span>
         </a>
       </li><!-- End Clientes Nav -->
@@ -49,27 +49,26 @@
 
       <li class="nav-item">
         <a class="nav-link {% if 'articulo' in request.path %} collapsed {% endif %}" href="{% url 'listar_articulos'%}">
-          <i class="bx bx-file"></i>
+          <i class="bi bi-file-richtext"></i>
           <span>Artículos</span>
         </a>
       </li><!-- End Artículos Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'categoria' in request.path %} collapsed {% endif %}" href="{% url 'listar_categorias'%}">
-          <i class="bx bxs-extension"></i>
+          <i class="bi bi-tags"></i>
           <span>Categorías</span>
         </a>
       </li><!-- End Categoría Nav -->
+      
+      <li class="nav-heading">Funcionalidades</li>
 
       <li class="nav-item">
         <a class="nav-link {% if 'mensaje' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes'%}">
-          <i class="bi bi-envelope"></i>
+          <i class="bi bi-envelope-paper-heart"></i>
           <span>Mensajes</span>
         </a>
       </li><!-- End Mensajes Nav -->
-
-
-      <li class="nav-heading">Búsquedas</li>
 
       <li class="nav-item">
         <a class="nav-link {% if 'frontend' in request.path %} collapsed {% endif %}" href="{% url 'listar_busquedas_frontend'%}">

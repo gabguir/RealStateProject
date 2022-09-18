@@ -3,7 +3,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="{% url 'app_panel_index' %}" class="logo d-flex align-items-center">
             <img src="{% static 'panel/img/logo.png' %}" alt="">
             
             <span class="d-none d-lg-block">YourPlace</span>
@@ -18,6 +18,13 @@
                 <button type="submit" title="Buscar"><i class="bi bi-search"></i></button>
             </form>
         </div><!-- End Search Bar -->
+
+        <div class="header-nav">
+            <a href="{% url 'inicio' %}" class="btn btn-outline-success" target="_blank">
+                <img src="{% static 'panel/img/logo.png' %}" alt="Sitio web" height="25"/>
+                    Sitio web <i class="bi bi-arrow-up-right-circle"></i>
+                </a>
+        </div><!-- End site link Bar -->
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">

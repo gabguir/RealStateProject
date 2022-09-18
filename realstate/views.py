@@ -57,6 +57,7 @@ def ver_inmueble(request, id, *args, **kwargs):
 def crear_inmueble(request, *args, **kwargs):
     '''Crear inmueble.'''
     
+    error_message = ''
     form = Realstate_Form()
     
     if request.method == 'POST':

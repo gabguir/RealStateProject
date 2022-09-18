@@ -44,7 +44,8 @@
                     </div>
                 </div>
             </div-->
-            <div class="col-lg-8 col-lg-offset-2 col-md-offset-2 text-center">
+            <div class="col-lg-8 col-lg-offset-2 col-md-offset-2">
+                {% if articulo.image_01 or articulo.image_02 or articulo.image_03 or articulo.image_04 or articulo.image_05 %}
                 <div class="img-property-slide-wrap">
                     <div class="img-property-slide">
                         {% if articulo.image_01 %}
@@ -64,7 +65,41 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                <div class="">
+                    <h2 class="heading text-primary">{{ articulo.title }}</h2>
+                    <p class="meta"><strong>Fecha:</strong> {{ articulo.date }}</p>
+                    <div class="text-black-50 alert alert-warning">
+                        {{ articulo.abstract|safe }}
+                    </div>
+                    <div class="text-black-50">
+                        {{ articulo.content|safe }}
+                    </div>
+                    
+                    <!--div class="d-block agent-box p-5">
+                        <div class="img mb-4">
+                            <img src="images/person_2-min.jpg" alt="Image" class="img-fluid">
+                        </div>
+                        <div class="text">
+                            <h3 class="mb-0">Alicia Huston</h3>
+                            <div class="meta mb-3">Real Estate</div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum quo quos omnis sed magnam id ducimus saepe</p>
+                            <ul class="list-unstyled social dark-hover d-flex">
+                                <li class="me-1"><a href="#"><span class="icon-instagram"></span></a></li>
+                                <li class="me-1"><a href="#"><span class="icon-twitter"></span></a></li>
+                                <li class="me-1"><a href="#"><span class="icon-facebook"></span></a></li>
+                                <li class="me-1"><a href="#"><span class="icon-linkedin"></span></a></li>
+    
+                            </ul>
+                        </div>
+                    </div-->
+                </div>
+
+
+
             </div>
+
+
             {% if articulo.fk_agent %}
             <div class="col-lg-4">
 
@@ -102,38 +137,6 @@
                 </div>
             </div>
             {% endif %}
-        </div>
-
-        <!-- Contenido -->
-        <div class="row">
-            <div class="col-lg-8">
-                <h2 class="heading text-primary">{{ articulo.title }}</h2>
-                <p class="meta"><strong>Fecha:</strong> {{ articulo.date }}</p>
-                <div class="text-black-50 alert alert-warning">
-                    {{ articulo.abstract|safe }}
-                </div>
-                <div class="text-black-50">
-                    {{ articulo.content|safe }}
-                </div>
-                
-                <!--div class="d-block agent-box p-5">
-                    <div class="img mb-4">
-                        <img src="images/person_2-min.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="text">
-                        <h3 class="mb-0">Alicia Huston</h3>
-                        <div class="meta mb-3">Real Estate</div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum quo quos omnis sed magnam id ducimus saepe</p>
-                        <ul class="list-unstyled social dark-hover d-flex">
-                            <li class="me-1"><a href="#"><span class="icon-instagram"></span></a></li>
-                            <li class="me-1"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="me-1"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="me-1"><a href="#"><span class="icon-linkedin"></span></a></li>
-
-                        </ul>
-                    </div>
-                </div-->
-            </div>
         </div>
 
         <hr>

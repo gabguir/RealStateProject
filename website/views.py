@@ -11,7 +11,7 @@ from customer.models import Customer_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
 
 # Importar forms desde apps de backend
-from website.forms import Message_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form
+from website.forms import Message_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, addpropertyform
 
 
 #=======================================================================================================================================
@@ -162,8 +162,10 @@ def realstates_detail(request, id):
 
 
 def addproperty(request):
+    page_content = Page_Model.objects.filter(name='addproperty')
+    
     if request.method=="POST":
-        form= addpropertyform(request.POST)
+        form = addpropertyform(request.POST)
         if form.is_valid():
             info= form.cleaned_data
             address= info["address"]
@@ -173,8 +175,14 @@ def addproperty(request):
             realstate.save()
             return render (request, "website/savedtodatabase.html", {"message":"Property created"})
     else:
-        form= addpropertyform()
-    return render(request, "website/addproperty.html", {"form":form})
+        form = addpropertyform()
+        
+    context = {
+        'page': 'Agregar propiedad',
+        'page_content': page_content,
+        'form': form
+    }
+    return render(request, "website/addproperty.html", context)
 
 
 

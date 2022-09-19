@@ -4,6 +4,8 @@ from django.urls import reverse
 
 # Importación de models
 from agent.models import Agent_Model
+from realstate.models import Realstate_Model, Realstate_Type_Model
+from blog.models import Article_Model
 
 # Importación de forms
 from agent.forms import Agent_Form
@@ -38,6 +40,8 @@ def ver_agente(request, id, *args, **kwargs):
     '''Detalle de agente.'''
     
     itemObj = Agent_Model.objects.get(id=id) 
+    agente_inmuebles = Realstate_Model.objects.filter(fk_agent=id).order_by('-date')
+    agente_articulos = Article_Model.objects.filter(fk_agent=id).order_by('-date')
     
     context = {
         'page' : 'Detalle de agente',
@@ -49,6 +53,8 @@ def ver_agente(request, id, *args, **kwargs):
         'url_ver' : 'ver_agente',
         'url_editar' : 'modificar_agente',
         'url_eliminar' : 'eliminar_agente',
+        'agente_inmuebles': agente_inmuebles,
+        'agente_articulos': agente_articulos,
         'item': itemObj
     }
     return render(request, 'panel/generic_detail.html', context)

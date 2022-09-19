@@ -27,6 +27,7 @@ class Realstate_Form(ModelForm):
             'bath_qty',
             'room_qty',
             'date',
+            'description',
             
             'image_main',
             'image_01',
@@ -47,6 +48,7 @@ class Realstate_Form(ModelForm):
         self.fields['location'].widget.attrs.update({'class':'form-control'})
         self.fields['bath_qty'].widget.attrs.update({'class':'form-control'})
         self.fields['room_qty'].widget.attrs.update({'class':'form-control'})
+        self.fields['description'].widget.attrs.update({'class':'form-control'})
         #date
         self.fields['image_main'].widget.attrs.update({'class':'form-control-file'})
         self.fields['image_01'].widget.attrs.update({'class':'form-control-file'})

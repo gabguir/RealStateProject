@@ -46,17 +46,19 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-house-heart"></i>
+                    <a href="{% url 'listar_inmuebles' %}">
+                      <i class="bi bi-house-heart"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_inmuebles }}</h6>
                     <span class="text-success small pt-1 fw-bold">{{ count_inmuebles_activos }}</span> 
-                    <span class="text-muted small pt-2 ps-1">inmuebles 
+                    <span class="text-muted small pt-2 ps-1"> 
                       <i class="bi bi-check-circle text-success"></i>
                     </span>
-                    <br />
+                    &nbsp;|&nbsp;
                     <span class="text-danger small pt-1 fw-bold">{{ count_inmuebles_inactivos }}</span> 
-                    <span class="text-muted small pt-2 ps-1">inmuebles 
+                    <span class="text-muted small pt-2 ps-1"> 
                       <i class="bi bi-x-circle text-danger"></i>
                     </span>
 
@@ -69,7 +71,7 @@
 
           <!-- Cantidad clientes -->
           <div class="col-xxl-2 col-md-6 col-xl-12">
-            <div class="card info-card revenue-card">
+            <div class="card info-card sales-card">
 
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
@@ -94,7 +96,9 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-person"></i>
+                    <a href="{% url 'listar_clientes' %}">
+                      <i class="bi bi-person"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_clientes }}</h6>
@@ -109,8 +113,7 @@
 
           <!-- Cantidad agentes -->
           <div class="col-xxl-2 col-md-6 col-xl-12">
-
-            <div class="card info-card customers-card">
+            <div class="card info-card sales-card">
 
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
@@ -135,7 +138,9 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-people"></i>
+                    <a href="{% url 'listar_agentes' %}">
+                      <i class="bi bi-people"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_agentes }}</h6>
@@ -146,13 +151,11 @@
 
               </div>
             </div>
-
           </div><!-- End agentes Card -->
 
           <!-- Cantidad artículos -->
           <div class="col-xxl-2 col-md-6 col-xl-12">
             <div class="card info-card sales-card">
-
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -175,19 +178,22 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-file-richtext"></i>
+                    <a href="{% url 'listar_articulos' %}">
+                      <i class="bi bi-file-richtext"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_articulos }}</h6>
                     <span class="text-success small pt-1 fw-bold">{{ count_articulos_activos }}</span> 
-                    <span class="text-muted small pt-2 ps-1">artículos 
+                    <span class="text-muted small pt-2 ps-1"> 
                       <i class="bi bi-check-circle text-success"></i>
                     </span>
-                    <br />
+                    &nbsp;|&nbsp;
                     <span class="text-danger small pt-1 fw-bold">{{ count_articulos_inactivos }}</span> 
-                    <span class="text-muted small pt-2 ps-1">artículos 
+                    <span class="text-muted small pt-2 ps-1"> 
                       <i class="bi bi-x-circle text-danger"></i>
                     </span>
+
 
                   </div>
                 </div>
@@ -222,7 +228,9 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-tags"></i>
+                    <a href="{% url 'listar_categorias' %}">
+                      <i class="bi bi-tags"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_categorias }}</h6>
@@ -258,7 +266,9 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-envelope-paper-heart"></i>
+                    <a href="{% url 'listar_mensajes' %}">
+                      <i class="bi bi-envelope-paper-heart"></i>
+                    </a>
                   </div>
                   <div class="ps-3">
                     <h6>{{ count_mensajes }}</h6>
@@ -300,7 +310,9 @@
             
                                 <div class="card-header card-header-text card-header-info">
                                   <div class="card-text">
-                                  <h3 class="card-title"><i class="{{ item.icon }}"></i> {{ item.object_title }}</h3>
+                                  <h3 class="card-title">
+                                    <i class="{{ item.icon }}"></i>&nbsp; {{ item.object_title }}
+                                  </h3>
                                   </div>
                                 </div>
                                 <div class="card-body text-muted small">
@@ -310,8 +322,8 @@
                                     {% if item.url_crear %}
                                     <a href="{% url item.url_crear %}" class="btn btn-outline-success btn-round rounded-pill"> 
                                       <i class="bi bi-plus-circle"></i>&nbsp;
-                                      <span class="text">Crear Nuevo</span>
-                                    </a>
+                                      <span class="text">Crear</span>
+                                    </a>&nbsp;&nbsp;
                                     {% endif %}
                                     <a href="{% url item.url_listar %}" class="btn btn-outline-primary btn-round rounded-pill"> 
                                       <span class="text">Ver todo</span>&nbsp;
@@ -348,7 +360,9 @@
             
                                 <div class="card-header card-header-text card-header-info">
                                   <div class="card-text">
-                                  <h3 class="card-title"><i class="{{ item.icon }}"></i> {{ item.object_title }}</h3>
+                                  <h3 class="card-title">
+                                    <i class="{{ item.icon }}"></i>&nbsp; {{ item.object_title }}
+                                  </h3>
                                   </div>
                                 </div>
                                 <div class="card-body text-muted small">
@@ -413,7 +427,13 @@
               <div class="post-item clearfix">
                 <img src="{{ item.image_main.url }}" alt="">
                 <h4><a href="{% url 'ver_inmueble' item.id %}">{{ item.name }}</a></h4>
-                <p><strong>Dirección:</strong> {{ item.address }} <br>
+                <p>
+                  {% if item.draft == False %}
+                    <span class="badge badge-success">Activo</span><br>
+                  {% elif item.draft == True %}
+                    <span class="badge badge-warning">Borrador</span><br>
+                  {% endif %}
+                  <strong>Dirección:</strong> {{ item.address }} <br>
                   <strong>Localización:</strong> {{ item.location }} <br>
                   <strong>Tipo inmueble:</strong> {{ item.fk_tipo_inmueble }}<br>
                   <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a></p>
@@ -442,7 +462,7 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Mensajes recientes <span>| Today</span></h5>
+            <h5 class="card-title">Mensajes recientes <span></span></h5>
             <div class="activity">
 
               {% for item in mensajes %}
@@ -454,7 +474,8 @@
                     <a href="{% url 'ver_mensaje' item.id %}">
                     {{ item.subject }}
                     </a>
-                  </strong>
+                  </strong> <br>
+                  {{ item.created }}
                 </div>
               </div><!-- End activity item-->
               {% endfor %}
@@ -492,6 +513,11 @@
                 <img src="{{ item.image_main.url }}" alt="">
                 <h4><a href="{% url 'ver_articulo' item.id %}">{{ item.name }}</a></h4>
                 <p>
+                  {% if item.draft == False %}
+                    <span class="badge badge-success">Activo</span><br>
+                  {% elif item.draft == True %}
+                    <span class="badge badge-warning">Borrador</span><br>
+                  {% endif %}
                   <strong>Fecha:</strong> {{ item.date }} <br>
                   <strong>Categoría:</strong> <a href="{% url 'ver_categoria' item.fk_categoria.id %}">{{ item.fk_categoria }}</a><br>
                   <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a>

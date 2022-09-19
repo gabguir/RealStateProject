@@ -119,9 +119,9 @@ def app_panel_index(request, *args, **kwargs):
     count_categorias = Category_Model.objects.all().count()
     count_mensajes = Message_Model.objects.all().count()
 
-    inmuebles_activos = Realstate_Model.objects.filter(draft=False)
-    articulos_activos = Article_Model.objects.filter(draft=False)
-    mensajes = Message_Model.objects.all()
+    inmuebles_activos = Realstate_Model.objects.order_by('-date')[:3]
+    articulos_activos = Article_Model.objects.order_by('-date')[:3]
+    mensajes = Message_Model.objects.all().order_by('-created')[:3]
 
     context = {
         'page' : 'Inicio',
@@ -549,4 +549,15 @@ def eliminar_busqueda_backend(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
+
+
+
+
+def blank(request, *args, **kwargs):
+    '''Test'''
+    
+    context = {
+        'page' : 'Blank',
+    }
+    return render(request, 'panel/blank.html', context)
 

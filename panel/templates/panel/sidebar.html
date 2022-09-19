@@ -130,7 +130,7 @@
       </li><!-- End Error 404 Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if 'blank' in request.path %} collapsed {% endif %}" href="#">
+        <a class="nav-link {% if 'blank' in request.path %} collapsed {% endif %}" href="{% url 'blank' %}">
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>

@@ -12,10 +12,15 @@
   <div class="pagetitle">
   <h1>{{ page }}</h1>
     {% include 'panel/breadcrumb.html' %}
-    {% include 'panel/add_menu.html' %}
   </div><!-- End Page Title -->
 
   <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        {% include 'panel/add_menu.html' %}
+      </div>  
+    </div>  
+
     <div class="row">
       <div class="col-lg-12">
         {% if object_list %}
@@ -69,10 +74,10 @@
                               <span class="badge badge-info">{{ item.fk_tipo_inmueble }}</span>
                             {% endif %}
                             {% if item.bath_qty %}
-                              <span class="badge badge-success">{{ item.bath_qty }}</span>
+                              <span class="badge badge-success">{{ item.bath_qty }} baños</span>
                             {% endif %}
                             {% if item.room_qty %}
-                              <span class="badge badge-warning">{{ item.room_qty }}</span>
+                              <span class="badge badge-primary">{{ item.room_qty }} hab.</span>
                             {% endif %}
                           </p>
                         </div>
@@ -98,9 +103,15 @@
         {% endif %}
 
       </div> <!-- end col-12-->
-      {% include 'panel/add_menu.html' %}
+      
 
     </div>
+    <div class="row">
+      <div class="col-lg-12">
+        {% include 'panel/add_menu.html' %}
+      </div>  
+    </div>  
+
   </section>
 
 </main><!-- End #main -->

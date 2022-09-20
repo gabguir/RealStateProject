@@ -433,6 +433,7 @@
                   {% elif item.draft == True %}
                     <span class="badge badge-warning">Borrador</span><br>
                   {% endif %}
+                  <strong>Fecha:</strong> {{ item.date }} <br>
                   <strong>Dirección:</strong> {{ item.address }} <br>
                   <strong>Localización:</strong> {{ item.location }} <br>
                   <strong>Tipo inmueble:</strong> {{ item.fk_tipo_inmueble }}<br>

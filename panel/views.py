@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, request
 from django.urls import reverse
+from urllib.parse import urlencode
 from django.db.models import Q
 
 # importación de funcionalidad para creación de usuarios
@@ -288,8 +289,25 @@ def listar_paginas(request, *args, **kwargs):
     '''Lista páginas.'''
     
     object_list = Page_Model.objects.all() # Lista de objetos
-    
-    context = {
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
+        context = {
         'page' : 'Páginas',
         'icon' : 'bx bxs-file',
         'singular' : 'página',
@@ -299,6 +317,9 @@ def listar_paginas(request, *args, **kwargs):
         'url_ver' : 'ver_pagina',
         'url_editar' : 'modificar_pagina',
         'url_eliminar' : 'eliminar_pagina',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list.html', context)
@@ -333,7 +354,12 @@ def crear_pagina(request, *args, **kwargs):
         form = Page_Form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('listar_paginas')
+            
+            base_url = reverse('listar_paginas')  
+            query_string =  urlencode({'success_create': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            #return redirect('listar_paginas')
 
     context = {
         'page' : 'Crear página',
@@ -360,7 +386,11 @@ def modificar_pagina(request, id, *args, **kwargs):
         form = Page_Form(request.POST, request.FILES, instance=itemObj)
         if form.is_valid():
             form.save()
-            return redirect('listar_paginas')
+            base_url = reverse('listar_paginas')  
+            query_string =  urlencode({'success_edit': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            #return redirect('listar_paginas')
 
     context = {
         'page' : 'Editar página',
@@ -385,7 +415,11 @@ def eliminar_pagina(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_paginas')
+        base_url = reverse('listar_paginas')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_paginas')
 
     context = {
         'page' : 'Eliminar página',
@@ -412,7 +446,24 @@ def listar_mensajes(request, *args, **kwargs):
     '''Lista mensajes.'''
     
     object_list = Message_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Mensajes de Contacto',
         'icon' : 'bx bx-file',
@@ -423,6 +474,9 @@ def listar_mensajes(request, *args, **kwargs):
         'url_ver' : 'ver_mensaje',
         'url_editar' : 'modificar_mensaje',
         'url_eliminar' : 'eliminar_mensaje',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list_mini.html', context)
@@ -455,7 +509,11 @@ def eliminar_mensaje(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_mensajes')
+        base_url = reverse('listar_mensajes')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_mensajes')
 
     context = {
         'page' : 'Eliminar Mensajes de Contacto',
@@ -483,13 +541,33 @@ def listar_busquedas_frontend(request, *args, **kwargs):
     '''Lista búsquedas.'''
     
     object_list = Frontend_Search_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Búsquedas de artículos en el sitio web',
         'singular' : 'búsqueda',
         'plural' : 'búsquedas',
         'url_activo_index' : 'listar_busquedas_frontend',
         'url_eliminar' : 'eliminar_busqueda_frontend',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list_search.html', context)
@@ -499,13 +577,33 @@ def listar_busquedas_backend(request, *args, **kwargs):
     '''Lista búsquedas.'''
     
     object_list = Backend_Search_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Búsquedas de panel de administración',
         'singular' : 'búsqueda',
         'plural' : 'búsquedas',
         'url_activo_index' : 'listar_busquedas_backend',
         'url_eliminar' : 'eliminar_busqueda_backend',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list_search.html', context)
@@ -518,7 +616,11 @@ def eliminar_busqueda_frontend(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_busquedas_frontend')
+        base_url = reverse('listar_busquedas_frontend')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_busquedas_frontend')
 
     context = {
         'page' : 'Eliminar búsqueda de sitio web',
@@ -538,7 +640,11 @@ def eliminar_busqueda_backend(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_busquedas_backend')
+        base_url = reverse('listar_busquedas_backend')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_busquedas_backend')
 
     context = {
         'page' : 'Eliminar búsqueda de panel de administración',

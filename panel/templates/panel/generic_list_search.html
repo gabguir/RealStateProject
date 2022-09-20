@@ -18,11 +18,32 @@
   <section class="section">
     <div class="row">
       <div class="col-lg-12">
+
         {% if object_list %}
           <div class="card">
-            <div class="card-header">
-            </div>
+
             <div class="card-body">
+              <br>
+
+              {% if success_create == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-plus-circle"></i>
+                  El registro fue <strong>agregado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_edit == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-pencil-square"></i>
+                  El registro fue <strong>editado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_delete == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-trash3"></i>
+                  El registro fue <strong>eliminado</strong> correctamente.
+                </div>
+              {% endif %}
+
               <h5 class="card-title">Lista de {{ plural|capfirst }}</h5>
 
               <table class="table table-striped">

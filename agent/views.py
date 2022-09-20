@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, request
 from django.urls import reverse
+from urllib.parse import urlencode
 
 # Importación de models
 from agent.models import Agent_Model
@@ -20,7 +21,24 @@ def listar_agentes(request, *args, **kwargs):
     '''Lista agentes.'''
     
     object_list = Agent_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Agentes',
         'icon' : 'bx bxs-user-rectangle',
@@ -31,6 +49,9 @@ def listar_agentes(request, *args, **kwargs):
         'url_ver' : 'ver_agente',
         'url_editar' : 'modificar_agente',
         'url_eliminar' : 'eliminar_agente',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list.html', context)
@@ -69,7 +90,12 @@ def crear_agente(request, *args, **kwargs):
         form = Agent_Form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('listar_agentes')
+            
+            base_url = reverse('listar_agentes')  
+            query_string =  urlencode({'success_create': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            # return redirect('listar_agentes')
 
     context = {
         'page' : 'Crear agente',
@@ -96,7 +122,11 @@ def modificar_agente(request, id, *args, **kwargs):
         form = Agent_Form(request.POST, request.FILES, instance=itemObj)
         if form.is_valid():
             form.save()
-            return redirect('listar_agentes')
+            base_url = reverse('listar_agentes')  
+            query_string =  urlencode({'success_edit': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            # return redirect('listar_agentes')
 
     context = {
         'page' : 'Editar agente',
@@ -121,7 +151,11 @@ def eliminar_agente(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_agentes')
+        base_url = reverse('listar_agentes')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_agentes')
 
     context = {
         'page' : 'Eliminar agente',

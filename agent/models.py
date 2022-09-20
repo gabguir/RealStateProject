@@ -22,7 +22,7 @@ class Agent_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos '''
         verbose_name = 'Agente'
         verbose_name_plural = 'Agentes'
-        ordering = ['id']
+        ordering = ['-id']
     
     def __str__(self):
         return self.name

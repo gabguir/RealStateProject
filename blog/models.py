@@ -31,7 +31,7 @@ class Article_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
         verbose_name = 'Artículo'
         verbose_name_plural = 'Artículos'
-        ordering = ['id']
+        ordering = ['-date']
 
     def __str__(self):
         return self.name
@@ -49,7 +49,7 @@ class Category_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
         verbose_name = 'Categoría'
         verbose_name_plural = 'Categorías'
-        ordering = ['id']
+        ordering = ['-id']
 
     def __str__(self):
         return self.name
@@ -68,7 +68,7 @@ class Category_Model(models.Model):
 #         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
 #         verbose_name = 'Imagen de artículo'
 #         verbose_name_plural = 'Imágenes de artículos'
-#         ordering = ['id']
+#         ordering = ['-date']
 
 #     def __str__(self):
 #         return self.name

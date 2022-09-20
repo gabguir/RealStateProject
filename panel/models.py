@@ -28,7 +28,7 @@ class Page_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
         verbose_name = 'Página'
         verbose_name_plural = 'Páginas'
-        ordering = ['id']
+        ordering = ['-date']
 
     def __str__(self):
         return self.name
@@ -50,7 +50,7 @@ class Message_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
         verbose_name = 'Mensaje'
         verbose_name_plural = 'Mensajes'
-        ordering = ['id']
+        ordering = ['-created']
 
     def __str__(self):
         return self.subject
@@ -70,7 +70,7 @@ class Frontend_Search_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
         verbose_name = 'Búsqueda Frontend'
         verbose_name_plural = 'Búsquedas Frontend'
-        ordering = ['id']
+        ordering = ['-created']
 
     def __str__(self):
         return self.name
@@ -91,7 +91,7 @@ class Backend_Search_Model(models.Model):
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
         verbose_name = 'Búsqueda Backend'
         verbose_name_plural = 'Búsquedas Backend'
-        ordering = ['id']
+        ordering = ['-created']
 
     def __str__(self):
         return self.name

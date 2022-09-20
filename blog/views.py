@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, request
 from django.urls import reverse
+from urllib.parse import urlencode
 
 # Importación de models
 from blog.models import Article_Model, Category_Model
@@ -19,7 +20,24 @@ def listar_articulos(request, *args, **kwargs):
     '''Lista artículos.'''
     
     object_list = Article_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Artículos',
         'icon' : 'bx bx-file',
@@ -30,6 +48,9 @@ def listar_articulos(request, *args, **kwargs):
         'url_ver' : 'ver_articulo',
         'url_editar' : 'modificar_articulo',
         'url_eliminar' : 'eliminar_articulo',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list.html', context)
@@ -64,7 +85,12 @@ def crear_articulo(request, *args, **kwargs):
         form = Article_Form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('listar_articulos')
+            
+            base_url = reverse('listar_articulos')  
+            query_string =  urlencode({'success_create': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            #return redirect('listar_articulos')
 
     context = {
         'page' : 'Crear Artículo',
@@ -92,7 +118,11 @@ def modificar_articulo(request, id, *args, **kwargs):
         form = Article_Form(request.POST, request.FILES, instance=itemObj)
         if form.is_valid():
             form.save()
-            return redirect('listar_articulos')
+            base_url = reverse('listar_articulos')  
+            query_string =  urlencode({'success_edit': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            # return redirect('listar_articulos')
 
     context = {
         'page' : 'Editar Artículo',
@@ -167,7 +197,11 @@ def eliminar_articulo(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_articulos')
+        base_url = reverse('listar_articulos')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_articulos')
 
     context = {
         'page' : 'Eliminar Artículo',
@@ -195,7 +229,24 @@ def listar_categorias(request, *args, **kwargs):
     '''Lista categorías.'''
     
     object_list = Category_Model.objects.all() # Lista de objetos
-    
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
     context = {
         'page' : 'Categorías',
         'icon' : 'bx bxs-extension',
@@ -206,6 +257,9 @@ def listar_categorias(request, *args, **kwargs):
         'url_ver' : 'ver_categoria',
         'url_editar' : 'modificar_categoria',
         'url_eliminar' : 'eliminar_categoria',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
         'object_list': object_list
     }
     return render(request, 'panel/generic_list.html', context)
@@ -240,7 +294,12 @@ def crear_categoria(request, *args, **kwargs):
         form = Category_Form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('listar_categorias')
+            
+            base_url = reverse('listar_categorias')  
+            query_string =  urlencode({'success_create': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            # return redirect('listar_categorias')
 
     context = {
         'page' : 'Crear categoría',
@@ -267,7 +326,11 @@ def modificar_categoria(request, id, *args, **kwargs):
         form = Category_Form(request.POST, request.FILES, instance=itemObj)
         if form.is_valid():
             form.save()
-            return redirect('listar_categorias')
+            base_url = reverse('listar_categorias')  
+            query_string =  urlencode({'success_edit': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            # return redirect('listar_categorias')
 
     context = {
         'page' : 'Editar categoría',
@@ -292,7 +355,11 @@ def eliminar_categoria(request, id, *args, **kwargs):
     
     if request.method == 'POST':
         itemObj.delete()
-        return redirect('listar_categorias')
+        base_url = reverse('listar_categorias')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_categorias')
 
     context = {
         'page' : 'Eliminar categoría',

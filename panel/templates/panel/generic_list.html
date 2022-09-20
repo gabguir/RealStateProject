@@ -15,19 +15,37 @@
   </div><!-- End Page Title -->
 
   <section class="section">
-    <div class="row">
-      <div class="col-lg-12">
-        {% include 'panel/add_menu.html' %}
-      </div>  
-    </div>  
 
     <div class="row">
       <div class="col-lg-12">
-        {% if object_list %}
+
+
           <div class="card">
-            <div class="card-header">
-            </div>
+
             <div class="card-body">
+
+              {% include 'panel/add_menu.html' %}
+
+              {% if success_create == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-plus-circle"></i>
+                  El registro fue <strong>agregado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_edit == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-pencil-square"></i>
+                  El registro fue <strong>editado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_delete == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-trash3"></i>
+                  El registro fue <strong>eliminado</strong> correctamente.
+                </div>
+              {% endif %}
+
+              {% if object_list %}
               <h5 class="card-title">Lista de {{ plural|capfirst }}</h5>
 
               <table class="table table-striped">
@@ -57,16 +75,16 @@
                         <div class="col-md-10">
                           <p>
                             <a href="{% url url_ver item.id %}"> <strong>{{ item.name }}</strong></a> <br />
-                            {% if 'articulo' in request.path %} 
-                              {% if item.draft == False %}
-                                <span class="badge badge-success">Activo</span>
-                              {% else %}
-                                <span class="badge badge-warning">Borrador</span>
-                              {% endif %}
-                              {% if item.fk_categoria %}
-                                <span class="badge badge-info">{{ item.fk_categoria }}</span>
-                              {% endif %}
+
+                            {% if item.draft == False %}
+                              <span class="badge badge-success">Activo</span>
+                            {% else %}
+                              <span class="badge badge-warning">Borrador</span>
                             {% endif %}
+                            {% if item.fk_categoria %}
+                              <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                            {% endif %}
+
                             {% if item.date %}
                               <span class="badge badge-default">{{ item.date }}</span>
                             {% endif %}
@@ -91,27 +109,21 @@
                   {% endfor %}
                 </tbody>
               </table>
+              {% else %}
 
+                <div class="alert alert-warning fade show" role="alert">
+                  No existen registros.
+                </div>
+      
+              {% endif %}
+
+              {% include 'panel/add_menu.html' %}
             </div>
           </div>
-        {% else %}
-
-          <div class="alert alert-warning fade show" role="alert">
-            No existen registros.
-          </div>
-
-        {% endif %}
 
       </div> <!-- end col-12-->
-      
 
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        {% include 'panel/add_menu.html' %}
-      </div>  
-    </div>  
-
   </section>
 
 </main><!-- End #main -->

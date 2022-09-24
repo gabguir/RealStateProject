@@ -9,7 +9,8 @@ urlpatterns = [
     path('agentes/', agents, name="agents"),
     path('nosotros/', about, name="about"),
     path('contacto/', contact, name="contact"),
-    
+    path("accounts/", include("django.contrib.auth.urls"), name="login"),  # new
+
     #artículos
     path('blog/', blog, name="blog"),
     path('blog/<int:id>/', blog_detail, name='blog_detail'),

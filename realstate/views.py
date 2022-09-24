@@ -323,4 +323,3 @@ def eliminar_tipo_inmueble(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
-

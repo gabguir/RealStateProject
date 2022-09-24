@@ -64,11 +64,18 @@
       <li class="nav-heading">Funcionalidades</li>
 
       <li class="nav-item">
-        <a class="nav-link {% if 'mensaje' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes'%}">
+        <a class="nav-link {% if 'intern' in request.path %} collapsed {% endif %}" href="#">
           <i class="bi bi-envelope-paper-heart"></i>
-          <span>Mensajes</span>
+          <span>Mensajes internos</span>
         </a>
-      </li><!-- End Mensajes Nav -->
+      </li><!-- End Mensajes internos Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'contact' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_contacto'%}">
+          <i class="bi bi-envelope-paper-heart"></i>
+          <span>Mensajes desde el sitio web</span>
+        </a>
+      </li><!-- End Mensajes contacto Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'frontend' in request.path %} collapsed {% endif %}" href="{% url 'listar_busquedas_frontend'%}">
@@ -135,6 +142,13 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'salir' in request.path %} collapsed {% endif %}" href="{% url 'salir' %}">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Salir</span>
+        </a>
+      </li><!-- End Salir Page Nav -->
 
     </ul>
 

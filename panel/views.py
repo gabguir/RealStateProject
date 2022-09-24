@@ -5,35 +5,36 @@ from urllib.parse import urlencode
 from django.db.models import Q
 
 # importación de funcionalidad para creación de usuarios
-#from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
 # importación de funcionalidad para login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-#from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 #from django.contrib import messages
 #from django.contrib.auth.models import Group
 
 # importar custom decorators
-#from login.decorators import authenticated_user, allowed_users
+from panel.decorators import authenticated_user, allowed_users
 
 # Importar modelos desde apps de backend
 from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
 from customer.models import Customer_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
-from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Model
+from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Contact_Model
 
 # Importación de forms
 from agent.forms import Agent_Form
 from blog.forms import Article_Form, Category_Form
 from customer.forms import Customer_Form
 from realstate.forms import Realstate_Form, Realstate_Type_Form
-from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Form, CustomUserCreationForm
+from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Contact_Form, CustomUserCreationForm
 
 #=======================================================================================================================================
 # Vista de inicio
 #=======================================================================================================================================
-
+@login_required
 def app_panel_index(request, *args, **kwargs):
     '''Lista de elementos con las que se pueden realizar acciones.'''
     elementos = [
@@ -92,7 +93,7 @@ def app_panel_index(request, *args, **kwargs):
             'object_title' : 'Mensajes',
             'icon' : 'bi bi-envelope-paper-heart',
             'object_description' : 'Revisar o eliminar mensajes.',
-            'url_listar' : 'listar_mensajes',
+            'url_listar' : 'listar_mensajes_contacto',
         },
         
         {
@@ -118,11 +119,11 @@ def app_panel_index(request, *args, **kwargs):
     count_articulos_activos = Article_Model.objects.filter(draft=False).count()
     count_articulos_inactivos = Article_Model.objects.filter(draft=True).count()
     count_categorias = Category_Model.objects.all().count()
-    count_mensajes = Message_Model.objects.all().count()
+    count_mensajes_contacto = Message_Contact_Model.objects.all().count()
 
     inmuebles_activos = Realstate_Model.objects.order_by('-date')[:3]
     articulos_activos = Article_Model.objects.order_by('-date')[:3]
-    mensajes = Message_Model.objects.all().order_by('-created')[:3]
+    mensajes_contacto = Message_Contact_Model.objects.all().order_by('-created')[:3]
 
     context = {
         'page' : 'Inicio',
@@ -136,16 +137,16 @@ def app_panel_index(request, *args, **kwargs):
         'count_articulos_activos': count_articulos_activos,
         'count_articulos_inactivos': count_articulos_inactivos,
         'count_categorias': count_categorias,
-        'count_mensajes': count_mensajes,
+        'count_mensajes_contacto': count_mensajes_contacto,
         'inmuebles': inmuebles_activos,
         'articulos': articulos_activos,
-        'mensajes': mensajes,
+        'mensajes_contacto': mensajes_contacto,
         'elementos' : elementos,
         'funcionalidades' : funcionalidades,
     }
     return render(request, 'panel/app_index.html', context)
 
-
+@login_required
 def resultados_busqueda(request, *args, **kwargs):
     '''Muestra resultados de búsqueda.'''
     form = Backend_Search_Form()
@@ -229,6 +230,16 @@ def resultados_busqueda(request, *args, **kwargs):
     return render(request, 'panel/search_result.html', context)
 
 
+def ayuda(request, *args, **kwargs):
+    '''Ayuda'''
+    
+    context = {
+        'page' : 'Ayuda',
+        #'object_list': object_list,
+    }
+    return render(request, 'panel/ayuda.html', context)
+    
+
 
 #=======================================================================================================================================
 # Login
@@ -248,26 +259,61 @@ def test(request, *args, **kwargs):
 
 
 #@authenticated_user
+#@login_required
 def entrar(request, *args, **kwargs):
     '''Página de Login de la plataforma. '''
-
+    # Sacar al usuario que ingresa a esta vista
+    #logout(request)
+    
+    # Mensajes para el usuario
+    status = ''
+    
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        
+        form = AuthenticationForm(request, data = request.POST)
+        
+        if form.is_valid():
+            
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
-        # autenticar al usuario
-        user = authenticate(request, username=username, password=password)
+            # autenticar al usuario
+            user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            # loguear al ususario con el usuario recién creado
-            login(request, user)
-            return redirect('inicio')
-
+            if user is not None:
+                # loguear al usuario con el usuario recién creado
+                login(request, user)
+                return redirect('app_panel_index')
+            else:
+                base_url = reverse('entrar')  
+                query_string =  urlencode({'status': 'ERROR'})  
+                url = '{}?{}'.format(base_url, query_string)  
+                return redirect(url) 
+                #return redirect('entrar')
         else:
-            messages.info(request, 'Ocurrió un error: usuario o password incorrecto.')
+            base_url = reverse('entrar')  
+            query_string =  urlencode({'status': 'ERROR'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            #return redirect('entrar')
+
+    if request.method == 'GET':
+        status_get = request.GET.get('status')
+        print(f'status_get: {status_get}')
+        if status_get == 'ERROR':
+            status = 'ERROR'
+            
+        status_get = request.GET.get('status')
+        print(f'status_get: {status_get}')
+        if status_get == 'SALIR':
+            status = 'SALIR'
+        
+    form = AuthenticationForm()
 
     context = {
-        'page': 'Acceso',
+        'page': 'Acceso / Login',
+        'status': status,
+        'form': form,
     }
     
 
@@ -284,7 +330,7 @@ def salir(request, *args, **kwargs):
 # Vistas para Páginas
 #=======================================================================================================================================
 
-
+@login_required
 def listar_paginas(request, *args, **kwargs):
     '''Lista páginas.'''
     
@@ -324,7 +370,7 @@ def listar_paginas(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required
 def ver_pagina(request, id, *args, **kwargs):
     '''Detalle de página.'''
     
@@ -344,7 +390,7 @@ def ver_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required
 def crear_pagina(request, *args, **kwargs):
     '''Crear página.'''
     
@@ -375,7 +421,7 @@ def crear_pagina(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
     
-    
+@login_required
 def modificar_pagina(request, id, *args, **kwargs):
     '''Editar página.'''
     
@@ -407,7 +453,7 @@ def modificar_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-
+@login_required
 def eliminar_pagina(request, id, *args, **kwargs):
     '''Eliminar página.'''
     
@@ -442,10 +488,10 @@ def eliminar_pagina(request, id, *args, **kwargs):
 # Vistas para Mensajes
 #=======================================================================================================================================
 
-def listar_mensajes(request, *args, **kwargs):
+def listar_mensajes_contacto(request, *args, **kwargs):
     '''Lista mensajes.'''
     
-    object_list = Message_Model.objects.all() # Lista de objetos
+    object_list = Message_Contact_Model.objects.all() # Lista de objetos
     # Mensajes para el usuario
     success_create = ''
     success_edit = ''
@@ -469,11 +515,11 @@ def listar_mensajes(request, *args, **kwargs):
         'icon' : 'bx bx-file',
         'singular' : 'mensaje',
         'plural' : 'mensajes',
-        'url_listar' : 'listar_mensajes',
-        'url_crear' : 'crear_mensaje',
-        'url_ver' : 'ver_mensaje',
-        'url_editar' : 'modificar_mensaje',
-        'url_eliminar' : 'eliminar_mensaje',
+        'url_listar' : 'listar_mensajes_contacto',
+        'url_crear' : 'crear_mensaje_contacto',
+        'url_ver' : 'ver_mensaje_contacto',
+        'url_editar' : 'modificar_mensaje_contacto',
+        'url_eliminar' : 'eliminar_mensaje_contacto',
         'success_create': success_create,
         'success_edit': success_edit,
         'success_delete': success_delete,
@@ -482,34 +528,34 @@ def listar_mensajes(request, *args, **kwargs):
     return render(request, 'panel/generic_list_mini.html', context)
 
 
-def ver_mensaje(request, id, *args, **kwargs):
+def ver_mensaje_contacto(request, id, *args, **kwargs):
     '''Detalle de mensaje.'''
     
-    itemObj = Message_Model.objects.get(id=id) 
+    itemObj = Message_Contact_Model.objects.get(id=id) 
     
     context = {
         'page' : 'Detalle de Mensajes de Contacto',
         'icon' : 'bx bx-file',
         'singular' : 'mensaje',
         'plural' : 'mensajes',
-        'url_listar' : 'listar_mensajes',
-        'url_crear' : 'crear_mensaje',
-        'url_ver' : 'ver_mensaje',
-        'url_editar' : 'modificar_mensaje',
-        'url_eliminar' : 'eliminar_mensaje',
+        'url_listar' : 'listar_mensajes_contacto',
+        'url_crear' : 'crear_mensaje_contacto',
+        'url_ver' : 'ver_mensaje_contacto',
+        'url_editar' : 'modificar_mensaje_contacto',
+        'url_eliminar' : 'eliminar_mensaje_contacto',
         'item': itemObj
     }
     return render(request, 'panel/generic_detail_mini.html', context)
 
     
-def eliminar_mensaje(request, id, *args, **kwargs):
+def eliminar_mensaje_contacto(request, id, *args, **kwargs):
     '''Eliminar mensaje.'''
     
-    itemObj = Message_Model.objects.get(id=id) 
+    itemObj = Message_Contact_Model.objects.get(id=id) 
     
     if request.method == 'POST':
         itemObj.delete()
-        base_url = reverse('listar_mensajes')  
+        base_url = reverse('listar_mensajes_contacto')  
         query_string =  urlencode({'success_delete': 'OK'})  
         url = '{}?{}'.format(base_url, query_string)  
         return redirect(url) 
@@ -520,11 +566,11 @@ def eliminar_mensaje(request, id, *args, **kwargs):
         'icon' : 'bx bx-file',
         'singular' : 'mensaje',
         'plural' : 'mensajes',
-        'url_listar' : 'listar_mensajes',
-        'url_crear' : 'crear_mensaje',
-        'url_ver' : 'ver_mensaje',
-        'url_editar' : 'modificar_mensaje',
-        'url_eliminar' : 'eliminar_mensaje',
+        'url_listar' : 'listar_mensajes_contacto',
+        'url_crear' : 'crear_mensaje_contacto',
+        'url_ver' : 'ver_mensaje_contacto',
+        'url_editar' : 'modificar_mensaje_contacto',
+        'url_eliminar' : 'eliminar_mensaje_contacto',
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
@@ -657,6 +703,7 @@ def eliminar_busqueda_backend(request, id, *args, **kwargs):
     return render(request, 'panel/generic_delete_object.html', context)
 
 
+#=======================================================================================================================================
 
 
 def blank(request, *args, **kwargs):

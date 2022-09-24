@@ -254,7 +254,7 @@
                   <li class="dropdown-header text-start">
                     <h6>Filtro</h6>
                   </li>
-                  <li><a class="dropdown-item" href="{% url 'listar_mensajes' %}">
+                  <li><a class="dropdown-item" href="{% url 'listar_mensajes_contacto' %}">
                     <i class="bi bi-list-ul"></i>
                     Ver todos</a>
                   </li>
@@ -266,12 +266,12 @@
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <a href="{% url 'listar_mensajes' %}">
+                    <a href="{% url 'listar_mensajes_contacto' %}">
                       <i class="bi bi-envelope-paper-heart"></i>
                     </a>
                   </div>
                   <div class="ps-3">
-                    <h6>{{ count_mensajes }}</h6>
+                    <h6>{{ count_mensajes_contacto }}</h6>
                     <!--span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span-->
 
                   </div>
@@ -455,7 +455,7 @@
               <li class="dropdown-header text-start">
                 <h6>Filtro</h6>
               </li>
-              <li><a class="dropdown-item" href="{% url 'listar_mensajes' %}">
+              <li><a class="dropdown-item" href="{% url 'listar_mensajes_contacto' %}">
                 <i class="bi bi-list-ul"></i>
                 Ver todos</a>
               </li>
@@ -466,13 +466,13 @@
             <h5 class="card-title">Mensajes recientes <span></span></h5>
             <div class="activity">
 
-              {% for item in mensajes %}
+              {% for item in mensajes_contacto %}
               <div class="activity-item d-flex">
                 <div class="activite-label">{{ item.name }}</div>
                 <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
                 <div class="activity-content">
                   <strong>
-                    <a href="{% url 'ver_mensaje' item.id %}">
+                    <a href="{% url 'ver_mensaje_contacto' item.id %}">
                     {{ item.subject }}
                     </a>
                   </strong> <br>

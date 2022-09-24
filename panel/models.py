@@ -39,7 +39,7 @@ class Page_Model(models.Model):
 # Message
 #=======================================================================================================================================
 
-class Message_Model(models.Model):
+class Message_Contact_Model(models.Model):
     name = models.CharField(max_length=250, verbose_name='Nombre [*]')
     email = models.EmailField(max_length=250, verbose_name='Email [*]')
     subject = models.CharField(max_length=250, verbose_name='Asunto [*]')

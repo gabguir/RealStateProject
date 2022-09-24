@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 
 from realstate.models import Realstate_Model
-from panel.models import Message_Model, Frontend_Search_Model
+from panel.models import Message_Contact_Model, Frontend_Search_Model
 
 #=======================================================================================================================================
 # Propiedades
@@ -20,9 +20,9 @@ class addpropertyform(forms.Form):
 # Funcionalidades del sitio 
 #=======================================================================================================================================
 
-class Message_Form(ModelForm):
+class Message_Contact_Form(ModelForm):
     class Meta:
-        model = Message_Model
+        model = Message_Contact_Model
         fields = [
             'name',
             'email',
@@ -31,7 +31,7 @@ class Message_Form(ModelForm):
         ]
         
     def __init__(self, *args, **kwargs):
-        super(Message_Form, self).__init__(*args, **kwargs)
+        super(Message_Contact_Form, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})

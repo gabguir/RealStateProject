@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Login | Panel de Administración</title>
+  <title>Acceso | Panel de Administración</title>
   
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -49,7 +49,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                <a href="{% url 'app_panel_index' %}" class="logo d-flex align-items-center w-auto">
                   <img src="{% static 'panel/img/logo.png' %}" alt="">
                   <span class="d-none d-lg-block">{{ page }}</span>
                 </a>
@@ -64,29 +64,40 @@
                     <p class="text-center small">Ingresa tu nombre de usuario <br> y tu contraseña para entrar.</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  {% if status == 'ERROR' %}
+                  <div class="alert alert-danger">
+                    <i class="bi bi-shield-fill-exclamation"></i>
+                    Ocurrió un error. <br /> 
+                    Complete todos los campos correctamente.
+                    {{ form.non_field_errors }}
+                  </div>
+                  {% endif %}
+                  {% if status == 'SALIR' %}
+                  <div class="alert alert-success">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Saliste de tu cuenta exitosamente.
+                  </div>
+                  {% endif %}
 
+                  <form action="" method="POST" class="row g-3 needs-validation">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Usuario</label>
                       <div class="input-group has-validation">
 
                         <input type="text" name="username" class="form-control" id="username" required>
-                        <div class="invalid-feedback">Por favor ingrese su usuario.</div>
+                        <!--div class="invalid-feedback">Por favor ingrese su usuario.</div-->
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Por favor ingrese su password!</div>
+                      <!--div class="invalid-feedback">Por favor ingrese su password!</div-->
                     </div>
 
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
-                    </div>
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Entrar</button>
                     </div>

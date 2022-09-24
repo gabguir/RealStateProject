@@ -4,14 +4,14 @@ from django.urls import reverse
 from django.db.models import Q
 
 # Importar models desde apps de backend
-from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Model
+from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Contact_Model
 from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
 from customer.models import Customer_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
 
 # Importar forms desde apps de backend
-from website.forms import Message_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, addpropertyform
+from website.forms import Message_Contact_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, addpropertyform
 
 
 #=======================================================================================================================================
@@ -63,11 +63,11 @@ def contact(request):
     page_content = Page_Model.objects.filter(name='contact')
     
     '''Crear mensaje.'''
-    form = Message_Form()
+    form = Message_Contact_Form()
     error_message = ''
     success_message = ''
     if request.method == 'POST':
-        form = Message_Form(request.POST)
+        form = Message_Contact_Form(request.POST)
         if form.is_valid():
             info = form.cleaned_data
             name = info['name']
@@ -75,7 +75,7 @@ def contact(request):
             subject = info['subject']
             message = info['message']
             
-            mensaje = Message_Model(
+            mensaje = Message_Contact_Model(
                 name = name, 
                 email = email,
                 subject = subject,
@@ -223,11 +223,16 @@ def resultados_busqueda_inmuebles(request, *args, **kwargs):
             vacio = True
         else:
             vacio = False
-            result_realstate = Realstate_Model.objects.distinct().filter(
+            result_realstate = Realstate_Model.objects.filter(
                 Q(name__icontains=termino_busqueda) |  
                 Q(address__icontains=termino_busqueda) |
-                Q(location__icontains=termino_busqueda)
+                Q(location__icontains=termino_busqueda) | 
+                Q(description__icontains=termino_busqueda)
                 ).filter(draft=False).order_by('date')
+            # result_realstate = Realstate_Model.objects.filter(name__icontains=termino_busqueda).filter(address__icontains=termino_busqueda).filter(location__icontains=termino_busqueda).filter(description__icontains=termino_busqueda).filter(draft=False).order_by('date')
+
+    print(f'termino_busqueda: {termino_busqueda}')
+    print(f'result_realstate: {result_realstate}')
 
     context = {
         'page': 'Resultados de búsqueda',

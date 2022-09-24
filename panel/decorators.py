@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 def authenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('inicio')
+            return redirect('app_panel_index')
         else:
             return view_func(request, *args, **kwargs)
 
@@ -26,7 +26,7 @@ def allowed_users(allowed_roles=[]):
                 return view_func(request, *args, **kwargs)
             else: 
                 #return HttpResponse('Sin autorización para ver esta página.')
-                return render(request, 'login/no_autorizado.html')
+                return render(request, 'login/error_404.html')
 
         return wrapper_func
     return decorator

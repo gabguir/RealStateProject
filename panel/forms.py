@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 # Importación de modelos
-from panel.models import Page_Model, Frontend_Search_Model, Backend_Search_Model, Message_Model
+from panel.models import Page_Model, Frontend_Search_Model, Backend_Search_Model, Message_Contact_Model
 
 
 
@@ -50,9 +50,9 @@ class Page_Form(ModelForm):
 # Message 
 #=======================================================================================================================================
 
-class Message_Form(ModelForm):
+class Message_Contact_Form(ModelForm):
     class Meta:
-        model = Message_Model
+        model = Message_Contact_Model
         fields = [
             'name',
             'email',
@@ -61,7 +61,7 @@ class Message_Form(ModelForm):
         ]
         
     def __init__(self, *args, **kwargs):
-        super(Message_Form, self).__init__(*args, **kwargs)
+        super(Message_Contact_Form, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})

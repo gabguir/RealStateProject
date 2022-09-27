@@ -9,7 +9,6 @@ urlpatterns = [
     path('agentes/', agents, name="agents"),
     path('nosotros/', about, name="about"),
     path('contacto/', contact, name="contact"),
-    path("accounts/", include("django.contrib.auth.urls"), name="login"),  # new
 
     #artículos
     path('blog/', blog, name="blog"),
@@ -23,5 +22,8 @@ urlpatterns = [
     path('addproperty/', addproperty, name="addproperty"),
     #path('search/', search, name="search"),
     path('resultado_busqueda/', resultados_busqueda_inmuebles, name="resultados_busqueda_inmuebles"),
+
+    #login
+    path("accounts/", include("django.contrib.auth.urls"), name="login"), 
 
 ]

@@ -64,16 +64,23 @@
       <li class="nav-heading">Funcionalidades</li>
 
       <li class="nav-item">
-        <a class="nav-link {% if 'intern' in request.path %} collapsed {% endif %}" href="#">
+        <a class="nav-link {% if 'mensajes_agente' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_agente'%}">
           <i class="bi bi-envelope-paper-heart"></i>
-          <span>Mensajes internos</span>
+          <span>Mensajes de Agentes</span>
         </a>
       </li><!-- End Mensajes internos Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if 'contact' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_contacto'%}">
+        <a class="nav-link {% if 'mensajes_propiedad' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_inmueble'%}">
           <i class="bi bi-envelope-paper-heart"></i>
-          <span>Mensajes desde el sitio web</span>
+          <span>Mensajes de Propiedades</span>
+        </a>
+      </li><!-- End Mensajes internos Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'mensajes_contacto' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_contacto'%}">
+          <i class="bi bi-envelope-paper-heart"></i>
+          <span>Mensajes de Contacto</span>
         </a>
       </li><!-- End Mensajes contacto Nav -->
 
@@ -100,6 +107,14 @@
           <span>Perfil</span>
         </a>
       </li><!-- End Profile Page Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'usuarios' in request.path %} collapsed {% endif %}" href="{% url 'profiles' %}">
+          <i class="bi bi-people"></i>
+          <span>Usuarios</span>
+        </a>
+      </li><!-- End Users Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'faq' in request.path %} collapsed {% endif %}" href="#">

@@ -37,7 +37,7 @@
 	<div class="section">
 		<div class="container">
 			<div class="row justify-content-between">
-				<div class="col-lg-7">
+				<div class="col-lg-8">
 					<div class="img-property-slide-wrap">
 						<div class="img-property-slide">
 							{% if inmueble.image_01 %}
@@ -91,10 +91,12 @@
 					{% if inmueble.fk_agent %}
 					<div class="d-block agent-box p-5">
 						<div class="img mb-4">
-							<img src="{{ inmueble.fk_agent.image_main.url }}" alt="{{ inmueble.fk_agent.name }}" class="img-fluid">
+							<a href="{% url 'agents_detail' inmueble.fk_agent.id %}">
+								<img src="{{ inmueble.fk_agent.image_main.url }}" alt="{{ inmueble.fk_agent.name }}" class="img-fluid">
+							</a>
 						</div>
 						<div class="text">
-							<h3 class="mb-0">{{ inmueble.fk_agent.name }}</h3>
+							<h3 class="mb-0"><a href="{% url 'agents_detail' inmueble.fk_agent.id %}">{{ inmueble.fk_agent.name }}</a></h3>
 							<div class="meta mb-3">Agente inmobiliario</div>
 							<div>{{ inmueble.fk_agent.description|safe }}</div>
 							<ul class="list-unstyled social dark-hover d-flex">
@@ -124,6 +126,54 @@
 					{% endif %}
 				</div>
 
+			</div>
+			<hr />
+
+			<div class="row">
+
+				<div class="col-sm-8 col-md-8 col-lg-8 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+					<h3 class="mb-0">Consulte por esta propiedad</h3><br />
+					<div class="mb-3">
+						<p>Todos los campos son obligatorios.</p>
+						<form action="" method="POST" role="form" class="contactForm">
+						{% csrf_token %}
+						{% if success_message%}
+							<div class="alert alert-success">
+								<i class="bi bi-send-check-fill"></i>
+								Su mensaje ha sido enviado. Gracias!
+							</div>
+						{% endif %}
+						{% if error_message%}
+							<div class="alert alert-danger">
+								<i class="bi bi-shield-fill-exclamation"></i>
+								Ocurrió un error. <br /> 
+								Complete todos los campos correctamente.
+							</div>
+						{% endif %}
+							<div class="row">
+								<div class="col-6 mb-3">
+									<input name="name" id="name" type="text" class="form-control" placeholder="Nombre">
+								</div>
+								<div class="col-6 mb-3">
+									<input name="email" id="email" type="email" class="form-control" placeholder="Correo Electrónico">
+
+								</div>
+								<div class="col-12 mb-3">
+									<input name="subject" id="subject" type="text" class="form-control" placeholder="Asunto"
+									value="Consulta sobre: {{ inmueble.name }}">
+								</div>
+								<div class="col-12 mb-3">
+									<textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+									<input id="fk_realstate" name="fk_realstate" type="hidden" value="{{ inmueble.id }}">
+								</div>
+
+								<div class="col-12">
+									<input type="submit" value="Enviar mensaje" class="btn btn-primary">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

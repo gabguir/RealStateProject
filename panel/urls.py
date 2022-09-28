@@ -34,6 +34,17 @@ urlpatterns = [
     path('mensajes_contacto/', panel.views.listar_mensajes_contacto, name='listar_mensajes_contacto'),
     path('mensajes_contacto/<int:id>/', panel.views.ver_mensaje_contacto, name='ver_mensaje_contacto'),
     path('mensajes_contacto/eliminar/<int:id>/', panel.views.eliminar_mensaje_contacto, name='eliminar_mensaje_contacto'),
+    
+#agent_message
+    path('mensajes_agente/', panel.views.listar_mensajes_agente, name='listar_mensajes_agente'),
+    path('mensajes_agente/crear/', panel.views.crear_mensaje_agente, name='crear_mensaje_agente'),
+    path('mensajes_agente/<int:id>/', panel.views.ver_mensaje_agente, name='ver_mensaje_agente'),
+    path('mensajes_agente/eliminar/<int:id>/', panel.views.eliminar_mensaje_agente, name='eliminar_mensaje_agente'),
+    
+#realstate_message
+    path('mensajes_propiedad/', panel.views.listar_mensajes_inmueble, name='listar_mensajes_inmueble'),
+    path('mensajes_propiedad/<int:id>/', panel.views.ver_mensaje_inmueble, name='ver_mensaje_inmueble'),
+    path('mensajes_propiedad/eliminar/<int:id>/', panel.views.eliminar_mensaje_inmueble, name='eliminar_mensaje_inmueble'),
 
 #JS-Catalog para mostrar widget admin para fechas y horas
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catalog'),
@@ -41,6 +52,9 @@ urlpatterns = [
 #=======================================================================================================================================
 # Inclusiones 
 #=======================================================================================================================================
+
+#users
+    path('', include('users.urls')),
 
 #agent
     path('', include('agent.urls')),

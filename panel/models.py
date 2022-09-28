@@ -8,7 +8,7 @@ from django.utils import timezone
 import calendar, datetime
 
 from ckeditor.fields import RichTextField
-
+from agent.models import Agent_Model
 
 
 #=======================================================================================================================================
@@ -36,7 +36,7 @@ class Page_Model(models.Model):
     
 
 #=======================================================================================================================================
-# Message
+# Message_Contact
 #=======================================================================================================================================
 
 class Message_Contact_Model(models.Model):
@@ -48,8 +48,32 @@ class Message_Contact_Model(models.Model):
 
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
-        verbose_name = 'Mensaje'
-        verbose_name_plural = 'Mensajes'
+        verbose_name = 'Mensaje Form Contacto'
+        verbose_name_plural = 'Mensajes Form Contacto'
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.subject
+
+
+
+
+#=======================================================================================================================================
+# Message_Agent
+#=======================================================================================================================================
+
+class Message_Agent_Model(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Asunto [*]')
+    message = models.TextField(verbose_name='Mensaje [*]')
+    #agent_sender = models.CharField(max_length=250, verbose_name='Nombre [*]')
+    agent_sender = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Remitente [*]')
+    agent_receiver = models.ForeignKey('agent.Agent_Model', on_delete=models.DO_NOTHING, verbose_name='Destinatario [*]') 
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha de creación')
+
+    class Meta:
+        ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
+        verbose_name = 'Mensaje de Agente'
+        verbose_name_plural = 'Mensajes de Agentes'
         ordering = ['-created']
 
     def __str__(self):

@@ -36,12 +36,12 @@
                     {% for item in agentes %}
                     <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="h-100 person">
-
-                            <img src="{{ item.image_main.url }}" alt="{{ item.name }}"
-                            class="img-fluid">
+                            <a href="{% url 'agents_detail' item.id %}">
+                                <img src="{{ item.image_main.url }}" alt="{{ item.name }}" class="img-fluid">
+                            </a>
 
                             <div class="person-contents">
-                                <h2 class="mb-0"><a href="#">{{ item.name }}</a></h2>
+                                <h2 class="mb-0"><a href="{% url 'agents_detail' item.id %}">{{ item.name }}</a></h2>
                                 <span class="meta d-block mb-3">Agente inmobiliario</span>
                                 {{ item.description|safe }}
 

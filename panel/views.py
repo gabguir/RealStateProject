@@ -21,20 +21,20 @@ from panel.decorators import authenticated_user, allowed_users
 from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
 from customer.models import Customer_Model
-from realstate.models import Realstate_Model, Realstate_Type_Model
-from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Contact_Model
+from realstate.models import Realstate_Model, Realstate_Type_Model, Message_Realstate_Model
+from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model, Message_Contact_Model, Message_Agent_Model
 
 # Importación de forms
 from agent.forms import Agent_Form
 from blog.forms import Article_Form, Category_Form
 from customer.forms import Customer_Form
-from realstate.forms import Realstate_Form, Realstate_Type_Form
-from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Contact_Form, CustomUserCreationForm
+from realstate.forms import Realstate_Form, Realstate_Type_Form, Message_Realstate_Form
+from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Message_Contact_Form, CustomUserCreationForm, Message_Agent_Form
 
 #=======================================================================================================================================
 # Vista de inicio
 #=======================================================================================================================================
-@login_required
+# @login_required
 def app_panel_index(request, *args, **kwargs):
     '''Lista de elementos con las que se pueden realizar acciones.'''
     elementos = [
@@ -146,7 +146,7 @@ def app_panel_index(request, *args, **kwargs):
     }
     return render(request, 'panel/app_index.html', context)
 
-@login_required
+# @login_required
 def resultados_busqueda(request, *args, **kwargs):
     '''Muestra resultados de búsqueda.'''
     form = Backend_Search_Form()
@@ -259,7 +259,7 @@ def test(request, *args, **kwargs):
 
 
 #@authenticated_user
-#@login_required
+# @login_required
 def entrar(request, *args, **kwargs):
     '''Página de Login de la plataforma. '''
     # Sacar al usuario que ingresa a esta vista
@@ -330,7 +330,7 @@ def salir(request, *args, **kwargs):
 # Vistas para Páginas
 #=======================================================================================================================================
 
-@login_required
+# @login_required
 def listar_paginas(request, *args, **kwargs):
     '''Lista páginas.'''
     
@@ -370,7 +370,7 @@ def listar_paginas(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-@login_required
+# @login_required
 def ver_pagina(request, id, *args, **kwargs):
     '''Detalle de página.'''
     
@@ -390,7 +390,7 @@ def ver_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-@login_required
+# @login_required
 def crear_pagina(request, *args, **kwargs):
     '''Crear página.'''
     
@@ -421,7 +421,7 @@ def crear_pagina(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
     
-@login_required
+# @login_required
 def modificar_pagina(request, id, *args, **kwargs):
     '''Editar página.'''
     
@@ -453,7 +453,7 @@ def modificar_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-@login_required
+# @login_required
 def eliminar_pagina(request, id, *args, **kwargs):
     '''Eliminar página.'''
     
@@ -485,7 +485,7 @@ def eliminar_pagina(request, id, *args, **kwargs):
 
 
 #=======================================================================================================================================
-# Vistas para Mensajes
+# Vistas para Mensajes de sección de contacto
 #=======================================================================================================================================
 
 def listar_mensajes_contacto(request, *args, **kwargs):
@@ -576,6 +576,217 @@ def eliminar_mensaje_contacto(request, id, *args, **kwargs):
     return render(request, 'panel/generic_delete_object.html', context)
     
 
+
+
+#=======================================================================================================================================
+# Vistas para Mensajes de inmuebles
+#=======================================================================================================================================
+
+def listar_mensajes_inmueble(request, *args, **kwargs):
+    '''Lista mensajes.'''
+    
+    object_list = Message_Realstate_Model.objects.all() # Lista de objetos
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
+    context = {
+        'page' : 'Mensajes de Contacto de Propiedades',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_inmueble',
+        'url_ver' : 'ver_mensaje_inmueble',
+        'url_eliminar' : 'eliminar_mensaje_inmueble',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
+        'object_list': object_list
+    }
+    return render(request, 'panel/generic_list_mini.html', context)
+
+
+def ver_mensaje_inmueble(request, id, *args, **kwargs):
+    '''Detalle de mensaje.'''
+    
+    itemObj = Message_Realstate_Model.objects.get(id=id) 
+    
+    context = {
+        'page' : 'Detalle de Mensaje de Propiedad',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_inmueble',
+        'url_ver' : 'ver_mensaje_inmueble',
+        'url_eliminar' : 'eliminar_mensaje_inmueble',
+        'item': itemObj
+    }
+    return render(request, 'panel/generic_detail_mini.html', context)
+
+    
+def eliminar_mensaje_inmueble(request, id, *args, **kwargs):
+    '''Eliminar mensaje.'''
+    
+    itemObj = Message_Realstate_Model.objects.get(id=id) 
+    
+    if request.method == 'POST':
+        itemObj.delete()
+        base_url = reverse('listar_mensajes_inmueble')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_mensajes')
+
+    context = {
+        'page' : 'Eliminar Mensajes de Propiedad',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_inmueble',
+        'url_ver' : 'ver_mensaje_inmueble',
+        'url_eliminar' : 'eliminar_mensaje_inmueble',
+        'item': itemObj,
+    }
+    return render(request, 'panel/generic_delete_object.html', context)
+    
+
+
+#=======================================================================================================================================
+# Vistas para Mensajes de Agentes
+#=======================================================================================================================================
+
+def listar_mensajes_agente(request, *args, **kwargs):
+    '''Lista mensajes.'''
+    
+    object_list = Message_Agent_Model.objects.all() # Lista de objetos
+    # Mensajes para el usuario
+    success_create = ''
+    success_edit = ''
+    success_delete = ''
+    if request.method == 'GET':
+        success_create_get = request.GET.get('success_create')
+        print(f'success_create_get: {success_create_get}')
+        if success_create_get == 'OK':
+            success_create = 'OK'
+        success_edit_get = request.GET.get('success_edit')
+        print(f'success_edit_get: {success_edit_get}')
+        if success_edit_get == 'OK':
+            success_edit = 'OK'
+        success_delete_get = request.GET.get('success_delete')
+        print(f'success_delete_get: {success_delete_get}')
+        if success_delete_get == 'OK':
+            success_delete = 'OK'
+            
+    context = {
+        'page' : 'Mensajes de Contacto de Agente',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_agente',
+        'url_crear' : 'crear_mensaje_agente',
+        'url_ver' : 'ver_mensaje_agente',
+        'url_eliminar' : 'eliminar_mensaje_agente',
+        'success_create': success_create,
+        'success_edit': success_edit,
+        'success_delete': success_delete,
+        'object_list': object_list
+    }
+    return render(request, 'panel/generic_list_noedit.html', context)
+
+
+def ver_mensaje_agente(request, id, *args, **kwargs):
+    '''Detalle de mensaje.'''
+    
+    itemObj = Message_Agent_Model.objects.get(id=id) 
+    
+    context = {
+        'page' : 'Detalle de Mensajes de Agente',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_agente',
+        'url_crear' : 'crear_mensaje_agente',
+        'url_ver' : 'ver_mensaje_agente',
+        'url_eliminar' : 'eliminar_mensaje_agente',
+        'item': itemObj
+    }
+    return render(request, 'panel/generic_detail_mini.html', context)
+
+
+
+def crear_mensaje_agente(request, *args, **kwargs):
+    '''Crear mensaje.'''
+    
+    form = Message_Agent_Form()
+    
+    if request.method == 'POST':
+        form = Message_Agent_Form(request.POST, request.FILES)
+        if form.is_valid():
+            
+            form.agent_sender = request.user
+            form.save()
+            
+            base_url = reverse('listar_mensajes_agente')  
+            query_string =  urlencode({'success_create': 'OK'})  
+            url = '{}?{}'.format(base_url, query_string)  
+            return redirect(url) 
+            #return redirect('listar_paginas')
+
+    context = {
+        'page' : 'Crear Mensaje de Agente',
+        'icon' : 'bx bxs-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_agente',
+        'url_crear' : 'crear_mensaje_agente',
+        'url_ver' : 'ver_mensaje_agente',
+        'url_eliminar' : 'eliminar_mensaje_agente',
+        'form': form
+    }
+    return render(request, 'panel/generic_form.html', context)
+    
+    
+    
+def eliminar_mensaje_agente(request, id, *args, **kwargs):
+    '''Eliminar mensaje.'''
+    
+    itemObj = Message_Agent_Model.objects.get(id=id) 
+    
+    if request.method == 'POST':
+        itemObj.delete()
+        base_url = reverse('listar_mensajes_agente')  
+        query_string =  urlencode({'success_delete': 'OK'})  
+        url = '{}?{}'.format(base_url, query_string)  
+        return redirect(url) 
+        # return redirect('listar_mensajes')
+
+    context = {
+        'page' : 'Eliminar Mensajes de Agente',
+        'icon' : 'bx bx-file',
+        'singular' : 'mensaje',
+        'plural' : 'mensajes',
+        'url_listar' : 'listar_mensajes_agente',
+        'url_crear' : 'crear_mensaje_agente',
+        'url_ver' : 'ver_mensaje_agente',
+        'url_eliminar' : 'eliminar_mensaje_agente',
+        'item': itemObj,
+    }
+    return render(request, 'panel/generic_delete_object.html', context)
+    
 
 
 

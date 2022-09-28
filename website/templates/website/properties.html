@@ -50,6 +50,14 @@
 												<span class="caption">{{ item.bath_qty }} baños</span>
 											</span>
 										</div>
+										<div class="specs d-flex mb-4">
+											<span class="d-block d-flex align-items-center me-3">
+												<a href="{% url 'agents_detail' item.fk_agent.id %}">
+													<span class="bi bi-person"></span>
+													<span class="caption">{{ item.fk_agent }}</span>
+												</a>
+											</span>
+										</div>
 
 										<a href="{% url 'realstates_detail' item.id %}" class="btn btn-primary py-2 px-3">
 											<i class="bi bi-card-checklist"></i>
@@ -79,7 +87,7 @@
 				</div>
 
 			</div>
-			<div class="row align-items-center py-5">
+			<!--div class="row align-items-center py-5">
 				<div class="col-lg-3">
 					Pagination (1 of 10)
 				</div>
@@ -92,10 +100,13 @@
 						<a href="#">5</a>
 					</div>
 				</div>
-			</div>
+			</div-->
 		</div>
 	</div>
 	{% endif %}
+
+
+
 
 	{% endblock content %}
 

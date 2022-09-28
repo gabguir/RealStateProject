@@ -1,5 +1,5 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 
 #=======================================================================================================================================
@@ -7,7 +7,7 @@ from ckeditor.fields import RichTextField
 #=======================================================================================================================================
 
 class Agent_Model(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Nombre [*]')
+    name = models.CharField(max_length=250, verbose_name='Nombre [*]')
     email = models.EmailField(max_length=254, verbose_name='Correo electrónico [*]')
     image_main = models.ImageField(upload_to='img_agent/', default='', verbose_name='Imagen [*]')
     description = RichTextField(null=True, blank=True, verbose_name='Descripción')
@@ -17,6 +17,7 @@ class Agent_Model(models.Model):
     url_linkedin = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Linkedin')
     url_instagram = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Instagram')
     # fk_user
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Usuario')
         
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos '''
@@ -25,4 +26,5 @@ class Agent_Model(models.Model):
         ordering = ['-id']
     
     def __str__(self):
+        # return str(self.user.username)
         return self.name

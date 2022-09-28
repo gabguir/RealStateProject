@@ -3,11 +3,11 @@ from django import forms
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 
 # Importación de modelos
-from realstate.models import Realstate_Model, Realstate_Type_Model
+from realstate.models import Realstate_Model, Realstate_Type_Model, Message_Realstate_Model
 from agent.models import Agent_Model
 
 #=======================================================================================================================================
-# Property 
+# Realstate_Model 
 #=======================================================================================================================================
 
 class Realstate_Form(ModelForm):
@@ -82,3 +82,26 @@ class Realstate_Type_Form(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})
+
+
+#=======================================================================================================================================
+# Message_Realstate_Model 
+#=======================================================================================================================================
+
+class Message_Realstate_Form(ModelForm):
+    class Meta:
+        model = Message_Realstate_Model
+        fields = [
+            'name',
+            'email',
+            'subject',
+            'message',
+            'fk_realstate',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super(Message_Realstate_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
+

@@ -8,8 +8,10 @@
                             Your Place</a>
 
                         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                            <li class="active"><a href="{% url 'inicio' %}">Inicio</a></li>
-                            <li class="has-children">
+                            <li class="{% if 'inicio' in request.path %} active {% endif %}"><a href="{% url 'inicio' %}">Inicio</a></li>
+                            <li class="{% if 'propiedades' in request.path %} active {% endif %}"><a href="{% url 'realstates' %}">Propiedades</a></li>
+                            {% comment "Funcionalidad eliminada" %}
+                            <!--li class="has-children">
                                 <a href="{% url 'realstates' %}">Propiedades</a>
                                 <ul class="dropdown">
                                     <li><a href="{% url 'addproperty' %}">Publicar propiedades</a></li>
@@ -20,11 +22,12 @@
                                     <hr />
                                     <li><a href="#">Arrendar propiedades</a></li>
                                 </ul>
-                            </li>
-                            <li><a href="{% url 'agents' %}">Agentes</a></li>
-                            <li><a href="{% url 'about' %}">Nosotros</a></li>
-                            <li><a href="{% url 'blog' %}">Blog</a></li>
-                            <li><a href="{% url 'contact' %}">Contacto</a></li>
+                            </li-->
+                            {% endcomment %}
+                            <li class="{% if 'agentes' in request.path %} active {% endif %}"><a href="{% url 'agents' %}">Agentes</a></li>
+                            <li class="{% if 'nosotros' in request.path %} active {% endif %}"><a href="{% url 'about' %}">Nosotros</a></li>
+                            <li class="{% if 'blog' in request.path %} active {% endif %}"><a href="{% url 'blog' %}">Blog</a></li>
+                            <li class="{% if 'contact' in request.path %} active {% endif %}"><a href="{% url 'contact' %}">Contacto</a></li>
                         </ul>
 
                         <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">

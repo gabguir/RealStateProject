@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 # Importación de modelos
-from panel.models import Page_Model, Frontend_Search_Model, Backend_Search_Model, Message_Contact_Model
+from panel.models import Page_Model, Frontend_Search_Model, Backend_Search_Model, Message_Contact_Model, Message_Agent_Model
 
 
 
@@ -47,7 +47,7 @@ class Page_Form(ModelForm):
         
 
 #=======================================================================================================================================
-# Message 
+# Message_Contact
 #=======================================================================================================================================
 
 class Message_Contact_Form(ModelForm):
@@ -66,8 +66,32 @@ class Message_Contact_Form(ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})
             
-            
-            
+
+
+#=======================================================================================================================================
+# Message_Agent 
+#=======================================================================================================================================
+
+class Message_Agent_Form(ModelForm):
+    class Meta:
+        model = Message_Agent_Model
+        fields = [
+            'name',
+            'message',
+            'agent_sender',
+            'agent_receiver',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super(Message_Agent_Form, self).__init__(*args, **kwargs)
+
+        # for name, field in self.fields.items():
+        #     field.widget.attrs.update({'class':'form-control'})
+        self.fields['name'].widget.attrs.update({'class':'form-control'})
+        self.fields['message'].widget.attrs.update({'class':'form-control'})
+        self.fields['agent_receiver'].widget.attrs.update({'class':'form-control'})
+        self.fields['agent_sender'].widget = forms.HiddenInput()
+
 #=======================================================================================================================================
 # Frontend_Search 
 #=======================================================================================================================================

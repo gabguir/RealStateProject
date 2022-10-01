@@ -81,7 +81,7 @@ Seguir los siguientes pasos para la instalación local.
 
 6. Iniciar el servidor
 	- `python3 manage.py runserver`
-	- Iniciar en un puerto específico (:9500):`python3 manage.py runserver 9500`
+	- Iniciar en un puerto específico (:8000):`python3 manage.py runserver 8000`
 
 
 ## Datos de contexto 📦
@@ -91,12 +91,46 @@ _Datos de contexto para el uso del sitio web_
 
 ### Acceso a sección de administración de Django
 
-- [http://localhost:8000/admin/](http://localhost:8000/admin/)
+URL de acceso: [http://localhost:8000/admin/](http://localhost:8000/admin/)
 - Usuario: `admin`
-- Password: `abc123456`
+	- Password: `abc123456`
+
+### Usuarios panel de control
+URL de acceso: [http://localhost:8000/panel/](http://localhost:8000/panel/)
+
+- Usuario: `admin`
+	- Password: `abc123456`
+
+- Usuario: `donald`
+	- Password: `user.123456`
+
+- Usuario: `goofy`
+	- Password: `user.123456`
+
+- Usuario: `mickey`
+	- Password: `user.123456`
 
 
-### Funcionalidades
+### Funcionalidades Frontend
+URL de acceso: [http://localhost:8000/](http://localhost:8000/)
+
+1. Buscador de inmuebles desde la sección "Home"
+	- Permite hacer una búsqueda al ingresar la ciudad donde te encontras (el alcance sólo abarca a Mallorca en este momento) y trae todos los inmuebles disponibles.
+
+2. Sección "Agents"
+   - Muestra el nombre de los agentes activos. 
+   - Contenidos pendientes.
+
+3. Opción About
+   - Muestra un resumen del propósito del sitio y sus funcionalidades.
+   - Contenidos pendientes.
+
+4. Opción Addproperty
+   - Permite agregar nuevas propiedades, ingresando dirección, precio y ubicación. 
+   - En este caso, por ahora la ubicación es siempre Mallorca, ya que al realizar una búsqueda desde "Home", filtra todas las viviendas disponibles.
+
+### Funcionalidades Backend [COMPLETAR]
+URL de acceso: [http://localhost:8000/panel/](http://localhost:8000/panel/)
 
 1. Buscador de inmuebles desde la sección "Home"
 	- Permite hacer una búsqueda al ingresar la ciudad donde te encontras (el alcance sólo abarca a Mallorca en este momento) y trae todos los inmuebles disponibles.

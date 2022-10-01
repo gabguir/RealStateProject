@@ -65,38 +65,34 @@
                     <td> 
 
                       <div class="row">
-                        <div class="col-md-2">
                         {% if item.image_main %}
+                        <div class="col-md-2">
                           <div class="text-center">
                             <img class="img img-thumbnail" src="{{ item.image_main.url }}" width="75" alt="{{ item.name }}" />
                           </div>
-                        {% endif %}
                         </div>
                         <div class="col-md-10">
+                        {% else %}
+                        <div class="col-md-12">
+                        {% endif %}
+                        
                           <p>
                             <a href="{% url url_ver item.id %}"> <strong>{{ item.name }}</strong></a> <br />
 
-                            {% if item.draft == False %}
-                              <span class="badge badge-success">Activo</span>
-                            {% else %}
-                              <span class="badge badge-warning">Borrador</span>
+                            {% if item.agent_sender %}
+                              <strong>Agente remitente: </strong>
+                              <span class="badge badge-default">{{ item.agent_sender }}</span><br />
                             {% endif %}
-                            {% if item.fk_categoria %}
-                              <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                            {% if item.agent_receiver %}
+                              <strong>Agente destinatario: </strong>
+                              <span class="badge badge-info">{{ item.agent_receiver }}</span><br />
                             {% endif %}
 
-                            {% if item.date %}
-                              <span class="badge badge-default">{{ item.date }}</span>
+
+                            {% if item.created %}
+                              <span class="badge badge-warning">{{ item.created }}</span><br />
                             {% endif %}
-                            {% if item.fk_tipo_inmueble %}
-                              <span class="badge badge-info">{{ item.fk_tipo_inmueble }}</span>
-                            {% endif %}
-                            {% if item.bath_qty %}
-                              <span class="badge badge-success">{{ item.bath_qty }} baños</span>
-                            {% endif %}
-                            {% if item.room_qty %}
-                              <span class="badge badge-primary">{{ item.room_qty }} hab.</span>
-                            {% endif %}
+
                           </p>
                         </div>
                       </div>

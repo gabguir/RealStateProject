@@ -3,6 +3,13 @@ from django.http import HttpResponse, request
 from django.urls import reverse
 from urllib.parse import urlencode
 
+# importación de funcionalidad para login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import Group
+# importar custom decorators
+from panel.decorators import authenticated_user, allowed_users
+
 # Importación de models
 from realstate.models import Realstate_Model, Realstate_Type_Model
 
@@ -14,7 +21,7 @@ from realstate.forms import Realstate_Form, Realstate_Type_Form
 # Vistas para Inmuebles
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
 def listar_inmuebles(request, *args, **kwargs):
     '''Lista inmuebles.'''
     
@@ -54,7 +61,7 @@ def listar_inmuebles(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required(login_url='entrar')
 def ver_inmueble(request, id, *args, **kwargs):
     '''Detalle de inmueble.'''
     
@@ -74,7 +81,7 @@ def ver_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required(login_url='entrar')
 def crear_inmueble(request, *args, **kwargs):
     '''Crear inmueble.'''
     
@@ -107,7 +114,7 @@ def crear_inmueble(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
     
-    
+@login_required(login_url='entrar')
 def modificar_inmueble(request, id, *args, **kwargs):
     '''Editar inmueble.'''
     
@@ -139,7 +146,7 @@ def modificar_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-
+@login_required(login_url='entrar')
 def eliminar_inmueble(request, id, *args, **kwargs):
     '''Eliminar inmueble.'''
     
@@ -173,7 +180,8 @@ def eliminar_inmueble(request, id, *args, **kwargs):
 # Vistas para Categorías
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def listar_tipo_inmuebles(request, *args, **kwargs):
     '''Lista inmuebles.'''
     
@@ -213,7 +221,8 @@ def listar_tipo_inmuebles(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def ver_tipo_inmueble(request, id, *args, **kwargs):
     '''Detalle de inmueble.'''
     
@@ -233,7 +242,8 @@ def ver_tipo_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def crear_tipo_inmueble(request, *args, **kwargs):
     '''Crear inmueble.'''
     
@@ -264,7 +274,8 @@ def crear_tipo_inmueble(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_form.html', context)
     
-    
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def modificar_tipo_inmueble(request, id, *args, **kwargs):
     '''Editar inmueble.'''
     
@@ -296,7 +307,8 @@ def modificar_tipo_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_form.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def eliminar_tipo_inmueble(request, id, *args, **kwargs):
     '''Eliminar inmueble.'''
     

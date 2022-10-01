@@ -3,6 +3,13 @@ from django.http import HttpResponse, request
 from django.urls import reverse
 from urllib.parse import urlencode
 
+# importación de funcionalidad para login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import Group
+# importar custom decorators
+from panel.decorators import authenticated_user, allowed_users
+
 # Importación de models
 from agent.models import Agent_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
@@ -16,7 +23,8 @@ from agent.forms import Agent_Form
 # Vistas para Agentes
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def listar_agentes(request, *args, **kwargs):
     '''Lista agentes.'''
     
@@ -57,6 +65,8 @@ def listar_agentes(request, *args, **kwargs):
     return render(request, 'panel/generic_list.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def ver_agente(request, id, *args, **kwargs):
     '''Detalle de agente.'''
     
@@ -81,6 +91,8 @@ def ver_agente(request, id, *args, **kwargs):
     return render(request, 'panel/generic_detail.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def crear_agente(request, *args, **kwargs):
     '''Crear agente.'''
     
@@ -110,8 +122,10 @@ def crear_agente(request, *args, **kwargs):
         'form': form
     }
     return render(request, 'panel/generic_file_form.html', context)
-    
-    
+
+
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def modificar_agente(request, id, *args, **kwargs):
     '''Editar agente.'''
     
@@ -144,6 +158,8 @@ def modificar_agente(request, id, *args, **kwargs):
     return render(request, 'panel/generic_file_form.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def eliminar_agente(request, id, *args, **kwargs):
     '''Eliminar agente.'''
     

@@ -51,12 +51,13 @@ def agents(request):
 
 def agents_detail(request, id):
     '''Detalle de Agentes.'''
-    
+    page_content = Page_Model.objects.filter(name='agents')
     agente = Agent_Model.objects.get(id=id) 
     inmuebles_list = Realstate_Model.objects.filter(draft=False).filter(fk_agent=id).order_by('-date')[:3] 
     articulos_list = Article_Model.objects.filter(draft=False).filter(fk_agent=id).order_by('-date')[:3] 
     context = {
         'page' : 'Agente',
+        'page_content': page_content,
         'inmuebles': inmuebles_list,
         'articulos': articulos_list,
         'agente': agente,

@@ -51,9 +51,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'agent.apps.AgentConfig',
     'blog.apps.BlogConfig',
-    'customer.apps.CustomerConfig',
     'realstate.apps.RealStateConfig',
     'panel.apps.PanelConfig',
+    'customer.apps.CustomerConfig',
 
 ]
 

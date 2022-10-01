@@ -3,6 +3,13 @@ from django.http import HttpResponse, request
 from django.urls import reverse
 from urllib.parse import urlencode
 
+# importación de funcionalidad para login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import Group
+# importar custom decorators
+from panel.decorators import authenticated_user, allowed_users
+
 # Importación de models
 from customer.models import Customer_Model
 
@@ -14,7 +21,7 @@ from customer.forms import Customer_Form
 # Vistas para Clientes
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
 def listar_clientes(request, *args, **kwargs):
     '''Lista clientes.'''
     
@@ -54,7 +61,7 @@ def listar_clientes(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required(login_url='entrar')
 def ver_cliente(request, id, *args, **kwargs):
     '''Detalle de cliente.'''
     
@@ -74,7 +81,7 @@ def ver_cliente(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required(login_url='entrar')
 def crear_cliente(request, *args, **kwargs):
     '''Crear cliente.'''
     
@@ -105,7 +112,7 @@ def crear_cliente(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
     
-    
+@login_required(login_url='entrar')
 def modificar_cliente(request, id, *args, **kwargs):
     '''Editar cliente.'''
     
@@ -137,7 +144,7 @@ def modificar_cliente(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-
+@login_required(login_url='entrar')
 def eliminar_cliente(request, id, *args, **kwargs):
     '''Eliminar cliente.'''
     

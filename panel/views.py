@@ -11,8 +11,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-#from django.contrib import messages
-#from django.contrib.auth.models import Group
+from django.contrib import messages
+from django.contrib.auth.models import Group
 
 # importar custom decorators
 from panel.decorators import authenticated_user, allowed_users
@@ -34,7 +34,8 @@ from panel.forms import Page_Form, Backend_Search_Form, Frontend_Search_Form, Me
 #=======================================================================================================================================
 # Vista de inicio
 #=======================================================================================================================================
-# @login_required
+
+@login_required(login_url='entrar')
 def app_panel_index(request, *args, **kwargs):
     '''Lista de elementos con las que se pueden realizar acciones.'''
     elementos = [
@@ -90,12 +91,23 @@ def app_panel_index(request, *args, **kwargs):
     ]
     funcionalidades = [
         {
-            'object_title' : 'Mensajes',
+            'object_title' : 'Mensajes de agentes',
             'icon' : 'bi bi-envelope-paper-heart',
-            'object_description' : 'Revisar o eliminar mensajes.',
+            'object_description' : 'Revisar o eliminar mensajes de agentes.',
+            'url_listar' : 'listar_mensajes_agente',
+        },
+        {
+            'object_title' : 'Mensajes de propiedades',
+            'icon' : 'bi bi-envelope-paper-heart',
+            'object_description' : 'Revisar o eliminar mensajes de propiedades.',
+            'url_listar' : 'listar_mensajes_inmueble',
+        },
+        {
+            'object_title' : 'Mensajes de contacto',
+            'icon' : 'bi bi-envelope-paper-heart',
+            'object_description' : 'Revisar o eliminar mensajesde contacto.',
             'url_listar' : 'listar_mensajes_contacto',
         },
-        
         {
             'object_title' : 'Búsqueda de sitio web',
             'icon' : 'bi bi-search',
@@ -146,7 +158,8 @@ def app_panel_index(request, *args, **kwargs):
     }
     return render(request, 'panel/app_index.html', context)
 
-# @login_required
+
+@login_required(login_url='entrar')
 def resultados_busqueda(request, *args, **kwargs):
     '''Muestra resultados de búsqueda.'''
     form = Backend_Search_Form()
@@ -230,6 +243,7 @@ def resultados_busqueda(request, *args, **kwargs):
     return render(request, 'panel/search_result.html', context)
 
 
+@login_required(login_url='entrar')
 def ayuda(request, *args, **kwargs):
     '''Ayuda'''
     
@@ -245,7 +259,7 @@ def ayuda(request, *args, **kwargs):
 # Login
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
 def test(request, *args, **kwargs):
     '''Test'''
     
@@ -257,9 +271,7 @@ def test(request, *args, **kwargs):
     return render(request, 'login/register_user.html', context)
 
 
-
-#@authenticated_user
-# @login_required
+@authenticated_user
 def entrar(request, *args, **kwargs):
     '''Página de Login de la plataforma. '''
     # Sacar al usuario que ingresa a esta vista
@@ -320,7 +332,6 @@ def entrar(request, *args, **kwargs):
     return render(request, 'login/login.html', context)
 
 
-
 def salir(request, *args, **kwargs):
     logout(request)
     return redirect('entrar')
@@ -330,7 +341,7 @@ def salir(request, *args, **kwargs):
 # Vistas para Páginas
 #=======================================================================================================================================
 
-# @login_required
+@login_required(login_url='entrar')
 def listar_paginas(request, *args, **kwargs):
     '''Lista páginas.'''
     
@@ -370,7 +381,8 @@ def listar_paginas(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-# @login_required
+
+@login_required(login_url='entrar')
 def ver_pagina(request, id, *args, **kwargs):
     '''Detalle de página.'''
     
@@ -390,7 +402,8 @@ def ver_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-# @login_required
+
+@login_required(login_url='entrar')
 def crear_pagina(request, *args, **kwargs):
     '''Crear página.'''
     
@@ -420,8 +433,9 @@ def crear_pagina(request, *args, **kwargs):
         'form': form
     }
     return render(request, 'panel/generic_file_form.html', context)
-    
-# @login_required
+
+
+@login_required(login_url='entrar')
 def modificar_pagina(request, id, *args, **kwargs):
     '''Editar página.'''
     
@@ -453,7 +467,8 @@ def modificar_pagina(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-# @login_required
+
+@login_required(login_url='entrar')
 def eliminar_pagina(request, id, *args, **kwargs):
     '''Eliminar página.'''
     
@@ -488,6 +503,7 @@ def eliminar_pagina(request, id, *args, **kwargs):
 # Vistas para Mensajes de sección de contacto
 #=======================================================================================================================================
 
+@login_required(login_url='entrar')
 def listar_mensajes_contacto(request, *args, **kwargs):
     '''Lista mensajes.'''
     
@@ -528,6 +544,7 @@ def listar_mensajes_contacto(request, *args, **kwargs):
     return render(request, 'panel/generic_list_mini.html', context)
 
 
+@login_required(login_url='entrar')
 def ver_mensaje_contacto(request, id, *args, **kwargs):
     '''Detalle de mensaje.'''
     
@@ -547,7 +564,8 @@ def ver_mensaje_contacto(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail_mini.html', context)
 
-    
+
+@login_required(login_url='entrar')
 def eliminar_mensaje_contacto(request, id, *args, **kwargs):
     '''Eliminar mensaje.'''
     
@@ -582,6 +600,7 @@ def eliminar_mensaje_contacto(request, id, *args, **kwargs):
 # Vistas para Mensajes de inmuebles
 #=======================================================================================================================================
 
+@login_required(login_url='entrar')
 def listar_mensajes_inmueble(request, *args, **kwargs):
     '''Lista mensajes.'''
     
@@ -620,6 +639,7 @@ def listar_mensajes_inmueble(request, *args, **kwargs):
     return render(request, 'panel/generic_list_mini.html', context)
 
 
+@login_required(login_url='entrar')
 def ver_mensaje_inmueble(request, id, *args, **kwargs):
     '''Detalle de mensaje.'''
     
@@ -637,7 +657,8 @@ def ver_mensaje_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail_mini.html', context)
 
-    
+
+@login_required(login_url='entrar')
 def eliminar_mensaje_inmueble(request, id, *args, **kwargs):
     '''Eliminar mensaje.'''
     
@@ -662,13 +683,14 @@ def eliminar_mensaje_inmueble(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
-    
+
 
 
 #=======================================================================================================================================
 # Vistas para Mensajes de Agentes
 #=======================================================================================================================================
 
+@login_required(login_url='entrar')
 def listar_mensajes_agente(request, *args, **kwargs):
     '''Lista mensajes.'''
     
@@ -708,6 +730,7 @@ def listar_mensajes_agente(request, *args, **kwargs):
     return render(request, 'panel/generic_list_noedit.html', context)
 
 
+@login_required(login_url='entrar')
 def ver_mensaje_agente(request, id, *args, **kwargs):
     '''Detalle de mensaje.'''
     
@@ -727,7 +750,7 @@ def ver_mensaje_agente(request, id, *args, **kwargs):
     return render(request, 'panel/generic_detail_mini.html', context)
 
 
-
+@login_required(login_url='entrar')
 def crear_mensaje_agente(request, *args, **kwargs):
     '''Crear mensaje.'''
     
@@ -758,9 +781,9 @@ def crear_mensaje_agente(request, *args, **kwargs):
         'form': form
     }
     return render(request, 'panel/generic_form.html', context)
-    
-    
-    
+
+
+@login_required(login_url='entrar')
 def eliminar_mensaje_agente(request, id, *args, **kwargs):
     '''Eliminar mensaje.'''
     
@@ -786,7 +809,7 @@ def eliminar_mensaje_agente(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
-    
+
 
 
 
@@ -794,6 +817,8 @@ def eliminar_mensaje_agente(request, id, *args, **kwargs):
 # Vistas para Búsquedas
 #=======================================================================================================================================
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def listar_busquedas_frontend(request, *args, **kwargs):
     '''Lista búsquedas.'''
     
@@ -830,6 +855,8 @@ def listar_busquedas_frontend(request, *args, **kwargs):
     return render(request, 'panel/generic_list_search.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def listar_busquedas_backend(request, *args, **kwargs):
     '''Lista búsquedas.'''
     
@@ -866,6 +893,8 @@ def listar_busquedas_backend(request, *args, **kwargs):
     return render(request, 'panel/generic_list_search.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def eliminar_busqueda_frontend(request, id, *args, **kwargs):
     '''Eliminar búsqueda.'''
     
@@ -890,6 +919,8 @@ def eliminar_busqueda_frontend(request, id, *args, **kwargs):
     return render(request, 'panel/generic_delete_object.html', context)
 
 
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def eliminar_busqueda_backend(request, id, *args, **kwargs):
     '''Eliminar búsqueda.'''
     
@@ -916,7 +947,8 @@ def eliminar_busqueda_backend(request, id, *args, **kwargs):
 
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def blank(request, *args, **kwargs):
     '''Test'''
     

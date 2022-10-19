@@ -26,12 +26,11 @@ def allowed_users(allowed_roles=[]):
                 return view_func(request, *args, **kwargs)
             else: 
                 #return HttpResponse('Sin autorización para ver esta página.')
-                return render(request, 'login/error_404.html')
+                return render(request, 'login/404.html')
 
         return wrapper_func
     return decorator
 
-    # Grupos de uusuarios
+    # Grupos de usuarios
     # admin
-    # cliente
     # agente

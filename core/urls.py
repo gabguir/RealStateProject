@@ -27,10 +27,8 @@ urlpatterns = [
     # inclusión de urls de website
     path('', include('website.urls')),
     
-    
     # inclusión de urls de panel
     path('panel/', include('panel.urls')),
-    
     
 ]
 

@@ -25,7 +25,7 @@
                 <p><strong>Estado:</strong> 
                   {% if item.draft == False %}
                     <span class="badge badge-success">Activo</span>
-                  {% else %}
+                  {% elif item.draft == True %}
                     <span class="badge badge-warning">Borrador</span>
                   {% endif %}
                 </p>
@@ -132,6 +132,15 @@
                 <p><strong>Mensaje:</strong></p>
                 <div>{{ item.message }}</div>
                   {% endif %}
+                  {% if item.agent_sender %}
+                <p><strong>Agente remitente:</strong>
+                {{ item.agent_sender }}</p>
+                  {% endif %}
+                  {% if item.agent_receiver %}
+                <p><strong>Agente destinatario:</strong>
+                {{ item.agent_receiver }}</p>
+                  {% endif %}
+
 
                 <!-- Image -->
 

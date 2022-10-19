@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 
-from realstate.models import Realstate_Model
+from realstate.models import Realstate_Model, Message_Realstate_Model
 from panel.models import Message_Contact_Model, Frontend_Search_Model
 
 #=======================================================================================================================================
@@ -19,6 +19,28 @@ class addpropertyform(forms.Form):
 #=======================================================================================================================================
 # Funcionalidades del sitio 
 #=======================================================================================================================================
+
+class Message_Realstate_Form(ModelForm):
+    class Meta:
+        model = Message_Realstate_Model
+        fields = [
+            'name',
+            'email',
+            'subject',
+            'message',
+            'fk_realstate',
+            'fk_agent',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super(Message_Realstate_Form, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'form-control'})
+            
+        self.fields['fk_agent'].widget = forms.HiddenInput()
+
+
 
 class Message_Contact_Form(ModelForm):
     class Meta:

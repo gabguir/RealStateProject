@@ -12,6 +12,8 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
+      <li class="nav-heading">Propiedades</li>
+
       <li class="nav-item">
         <a class="nav-link {% if 'inmueble' in request.path %} collapsed {% endif %}" href="{% url 'listar_inmuebles'%}">
           <i class="bi bi-house-heart"></i>
@@ -19,26 +21,30 @@
         </a>
       </li><!-- End Inmuebles Nav -->
 
+      {% if 'admin' in request.user.groups.all.0.name %}
       <li class="nav-item">
         <a class="nav-link {% if 'tipo_inmueble' in request.path %} collapsed {% endif %}" href="{% url 'listar_tipo_inmuebles'%}">
           <i class="bi bi-building"></i>
           <span>Tipo de inmueble</span>
         </a>
       </li><!-- End Tipo de inmueble Nav -->
-
+      
       <li class="nav-item">
         <a class="nav-link {% if 'agente' in request.path %} collapsed {% endif %}" href="{% url 'listar_agentes'%}">
           <i class="bi bi-people"></i>
           <span>Agentes</span>
         </a>
       </li><!-- End Agentes Nav -->
-
-      <li class="nav-item">
+      {% endif %}
+      
+      <!--li class="nav-item">
         <a class="nav-link {% if 'cliente' in request.path %} collapsed {% endif %}" href="{% url 'listar_clientes'%}">
           <i class="bi bi-person"></i>
           <span>Clientes</span>
         </a>
-      </li><!-- End Clientes Nav -->
+      </li>< End Clientes Nav -->
+
+      <li class="nav-heading">Blog</li>
       
       <li class="nav-item">
         <a class="nav-link {% if 'pagina' in request.path %} collapsed {% endif %}" href="{% url 'listar_paginas'%}">
@@ -53,30 +59,40 @@
           <span>Artículos</span>
         </a>
       </li><!-- End Artículos Nav -->
-
+      
       <li class="nav-item">
         <a class="nav-link {% if 'categoria' in request.path %} collapsed {% endif %}" href="{% url 'listar_categorias'%}">
           <i class="bi bi-tags"></i>
           <span>Categorías</span>
         </a>
       </li><!-- End Categoría Nav -->
+
       
       <li class="nav-heading">Funcionalidades</li>
 
       <li class="nav-item">
-        <a class="nav-link {% if 'intern' in request.path %} collapsed {% endif %}" href="#">
+        <a class="nav-link {% if 'mensajes_agente' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_agente'%}">
           <i class="bi bi-envelope-paper-heart"></i>
-          <span>Mensajes internos</span>
+          <span>Mensajes de Agentes</span>
         </a>
       </li><!-- End Mensajes internos Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {% if 'contact' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_contacto'%}">
+        <a class="nav-link {% if 'mensajes_propiedad' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_inmueble'%}">
           <i class="bi bi-envelope-paper-heart"></i>
-          <span>Mensajes desde el sitio web</span>
+          <span>Mensajes de Propiedades</span>
+        </a>
+      </li><!-- End Mensajes internos Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link {% if 'mensajes_contacto' in request.path %} collapsed {% endif %}" href="{% url 'listar_mensajes_contacto'%}">
+          <i class="bi bi-envelope-paper-heart"></i>
+          <span>Mensajes de Contacto</span>
         </a>
       </li><!-- End Mensajes contacto Nav -->
+      {% if 'admin' in request.user.groups.all.0.name %}
 
+      
       <li class="nav-item">
         <a class="nav-link {% if 'frontend' in request.path %} collapsed {% endif %}" href="{% url 'listar_busquedas_frontend'%}">
           <i class="bi bi-search"></i>
@@ -90,16 +106,25 @@
           <span>Búsqueda de panel admin</span>
         </a>
       </li><!-- End Búsqueda de panel admin Nav -->
+      {% endif %}
 
 
       <li class="nav-heading">Configuración</li>
 
       <li class="nav-item">
-        <a class="nav-link {% if 'perfil' in request.path %} collapsed {% endif %}" href="#">
+        <a class="nav-link {% if 'perfil' in request.path %} collapsed {% endif %}" href="{% url 'ver_perfil' %}">
           <i class="bi bi-person"></i>
           <span>Perfil</span>
         </a>
       </li><!-- End Profile Page Nav -->
+
+      {% comment %}
+      <li class="nav-item">
+        <a class="nav-link {% if 'usuarios' in request.path %} collapsed {% endif %}" href="{% url 'profiles' %}">
+          <i class="bi bi-people"></i>
+          <span>Usuarios</span>
+        </a>
+      </li><!-- End Users Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link {% if 'faq' in request.path %} collapsed {% endif %}" href="#">
@@ -142,6 +167,7 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav -->
+      {% endcomment %}
 
       <li class="nav-item">
         <a class="nav-link {% if 'salir' in request.path %} collapsed {% endif %}" href="{% url 'salir' %}">

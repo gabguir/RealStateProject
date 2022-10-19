@@ -26,6 +26,12 @@
                 </a>
         </div><!-- End site link Bar -->
 
+        <div class="header-nav">
+        {% if 'admin' in request.user.groups.all.0.name %}
+
+        {% endif %}
+        </div><!-- End site link Bar -->
+
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
@@ -40,43 +46,23 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <!--img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"-->
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.user }}</span>
+                        <img src="{{ info_agente.image_main.url }}" alt="{{ info_agente.name }}" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ info_agente.name }} [{{ info_agente.id }}]</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ request.user }}</h6>
-                            <span>Real State Agent</span>
+                            <h6>{{ info_agente.name }}</h6>
+                            <span>Agente inmobiliario</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'ver_perfil' %}">
                                 <i class="bi bi-person"></i>
-                                <span>My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class="bi bi-gear"></i>
-                                <span>Account Settings</span>
-                            </a>
-                            </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class="bi bi-question-circle"></i>
-                                <span>Need Help?</span>
+                                <span>Perfil</span>
                             </a>
                         </li>
                         <li>

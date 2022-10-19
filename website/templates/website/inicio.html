@@ -74,6 +74,14 @@
                                                     <span class="caption">{{ item.bath_qty }} baños</span>
                                                 </span>
                                             </div>
+                                            <div class="specs d-flex mb-4">
+                                                <span class="d-block d-flex align-items-center me-3">
+                                                    <a href="{% url 'agents_detail' item.fk_agent.id %}">
+                                                        <span class="bi bi-person"></span>
+                                                        <span class="caption">{{ item.fk_agent }}</span>
+                                                    </a>
+                                                </span>
+                                            </div>
     
                                             <a href="{% url 'realstates_detail' item.id %}" class="btn btn-primary py-2 px-3">
                                                 <i class="bi bi-card-checklist"></i>
@@ -116,7 +124,7 @@
                         <h2 class="font-weight-bold text-primary heading">Últimos Artículos</h2>
                     </div>
                     <div class="col-lg-6 text-lg-end">
-                        <p><a href="{% url 'blog' %}" target="_blank" class="btn btn-primary text-white py-3 px-4">
+                        <p><a href="{% url 'blog' %}" class="btn btn-primary text-white py-3 px-4">
                             <i class="bi bi-file-richtext"></i>
                             Ver todos los artículos
                         </a></p>
@@ -143,13 +151,15 @@
                                     <div class="d-block mb-2 text-black-50">{{ item.abstract|safe }}</div>
     
                                     <div class="specs d-flex mb-4">
-                                        <!--span class="d-block d-flex align-items-center me-3">
-                                            <span class="icon-bed me-2"></span>
-                                            <span class="caption">{{ autor }}</span>
-                                        </span-->
-                                        <span class="d-block d-flex align-items-center">
+                                        <span class="d-block d-flex align-items-center me-3">
                                             <span class="bi bi-calendar3"></span> &nbsp;&nbsp;
                                             <span class="caption">{{ item.date }}</span>
+                                        </span> | &nbsp;
+                                        <span class="d-block d-flex align-items-center">
+                                            <a href="{% url 'agents_detail' item.fk_agent.id %}">
+                                                <span class="bi bi-person"></span>
+                                                <span class="caption">{{ item.fk_agent }}</span>
+                                            </a>
                                         </span>
                                     </div>
 
@@ -206,12 +216,12 @@
                     {% for item in agentes %}
                     <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="h-100 person">
-
-                            <img src="{{ item.image_main.url }}" alt="{{ item.name }}"
-                            class="img-fluid">
+                            <a href="{% url 'agents_detail' item.id %}">
+                                <img src="{{ item.image_main.url }}" alt="{{ item.name }}" class="img-fluid">
+                            </a>
 
                             <div class="person-contents">
-                                <h2 class="mb-0"><a href="#">{{ item.name }}</a></h2>
+                                <h2 class="mb-0"><a href="{% url 'agents_detail' item.id %}">{{ item.name }}</a></h2>
                                 <span class="meta d-block mb-3">Agente inmobiliario</span>
                                 {{ item.description|safe }}
 
@@ -223,17 +233,17 @@
                                     {% endif %}
                                     {% if item.url_facebook %}
                                         <li class="list-inline-item">
-                                            <a href="#"><span class="icon-facebook"></span></a>
+                                            <a href="{{ item.url_facebook }}"><span class="icon-facebook"></span></a>
                                         </li>
                                     {% endif %}
                                     {% if item.url_linkedin %}
                                         <li class="list-inline-item">
-                                            <a href="#"><span class="icon-linkedin"></span></a>
+                                            <a href="{{ item.url_linkedin }}"><span class="icon-linkedin"></span></a>
                                         </li>
                                     {% endif %}
                                     {% if item.url_instagram %}
                                         <li class="list-inline-item">
-                                            <a href="#"><span class="icon-instagram"></span></a>
+                                            <a href="{{ item.url_instagram }}"><span class="icon-instagram"></span></a>
                                         </li>
                                     {% endif %}
 

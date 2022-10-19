@@ -8,11 +8,12 @@ from panel.models import Page_Model, Backend_Search_Model, Frontend_Search_Model
 from agent.models import Agent_Model
 from blog.models import Article_Model, Category_Model
 from customer.models import Customer_Model
-from realstate.models import Realstate_Model, Realstate_Type_Model
+from realstate.models import Realstate_Model, Realstate_Type_Model, Message_Realstate_Model
 
 # Importar forms desde apps de backend
-from website.forms import Message_Contact_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, addpropertyform
+from website.forms import Message_Contact_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, Message_Realstate_Form, addpropertyform
 
+from panel.utils import info_header_agente
 
 #=======================================================================================================================================
 # Páginas del sitio
@@ -48,6 +49,21 @@ def agents(request):
     }
     return render(request, "website/agents.html", context)
 
+
+def agents_detail(request, id):
+    '''Detalle de Agentes.'''
+    page_content = Page_Model.objects.filter(name='agents')
+    agente = Agent_Model.objects.get(id=id) 
+    inmuebles_list = Realstate_Model.objects.filter(draft=False).filter(fk_agent=id).order_by('-date')[:3] 
+    articulos_list = Article_Model.objects.filter(draft=False).filter(fk_agent=id).order_by('-date')[:3] 
+    context = {
+        'page' : 'Agente',
+        'page_content': page_content,
+        'inmuebles': inmuebles_list,
+        'articulos': articulos_list,
+        'agente': agente,
+    }
+    return render(request, 'website/agents_detail.html', context)
 
 def about(request):
     page_content = Page_Model.objects.filter(name='about')
@@ -152,8 +168,54 @@ def realstates(request):
 def realstates_detail(request, id):
     itemObj = Realstate_Model.objects.get(id=id) 
     # print(itemObj)
+    info_agente = itemObj.fk_agent
+    # info_agente = info_header_agente(request)
+    print(f'agent_sender: {info_agente.id}')
+    
+    '''Crear mensaje.'''
+    form = Message_Realstate_Form()
+    error_message = ''
+    success_message = ''
+    if request.method == 'POST':
+        form = Message_Realstate_Form(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
+            name = info['name']
+            email = info['email']
+            subject = info['subject']
+            message = info['message']
+            fk_realstate = info['fk_realstate']
+            fk_agent = info['fk_agent']
+            
+            mensaje = Message_Realstate_Model(
+                name = name, 
+                email = email,
+                subject = subject,
+                message = message,
+                fk_realstate = fk_realstate,
+                fk_agent = fk_agent,
+            )
+
+            mensaje.save()
+            #return redirect('app_blog_index')
+            success_message = 'OK'
+            #mensaje exitoso
+        
+        else:
+            #mensaje invalido
+            print("form invalido")
+            error_message = 'ERROR'
+            
+    # form = Message_Realstate_Form(initial={
+    #     'fk_agent': info_agente.id, 
+    # })
+    
     context = {
         'page' : 'Propiedades',
+        'form': form,
+        'info_agente': info_agente,
+        'success_message' : success_message,
+        'error_message' : error_message,
         'inmueble': itemObj,
     }
     

@@ -1,0 +1,133 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+  </div><!-- End Page Title -->
+
+  <section class="section">
+
+    <div class="row">
+      <div class="col-lg-12">
+
+
+          <div class="card">
+
+            <div class="card-body">
+
+              {% include 'panel/add_menu.html' %}
+
+              {% if success_create == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-plus-circle"></i>
+                  El registro fue <strong>agregado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_edit == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-pencil-square"></i>
+                  El registro fue <strong>editado</strong> correctamente.
+                </div>
+              {% endif %}
+              {% if success_delete == 'OK' %}
+                <div class="alert alert-success fade show" role="alert">
+                  <i class="bi bi-trash3"></i>
+                  El registro fue <strong>eliminado</strong> correctamente.
+                </div>
+              {% endif %}
+
+              {% if object_list %}
+              <h5 class="card-title">Lista de {{ plural|capfirst }}</h5>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>{{ plural|capfirst }}</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  {% for item in object_list %}
+                  <tr>
+                    <td> {{ item.id }} </td>
+
+                    <td> 
+
+                      <div class="row">
+                        {% if item.image_main %}
+                        <div class="col-md-2">
+                          <div class="text-center">
+                            <img class="img img-thumbnail" src="{{ item.image_main.url }}" width="75" alt="{{ item.name }}" />
+                          </div>
+                        </div>
+                        <div class="col-md-10">
+                        {% else %}
+                        <div class="col-md-12">
+                        {% endif %}
+                        
+                          <p>
+                            <a href="{% url url_ver item.id %}"> <strong>{{ item.name }}</strong></a> <br />
+
+                            {% if item.agent_sender %}
+                              <strong>Agente remitente: </strong>
+                              <span class="badge badge-default">{{ item.agent_sender }}</span><br />
+                            {% endif %}
+                            {% if item.agent_receiver %}
+                              <strong>Agente destinatario: </strong>
+                              <span class="badge badge-info">{{ item.agent_receiver }}</span><br />
+                            {% endif %}
+
+
+                            {% if item.created %}
+                              <span class="badge badge-warning">{{ item.created }}</span><br />
+                            {% endif %}
+
+                          </p>
+                        </div>
+                      </div>
+
+                    </td>
+                    <td>
+                        <a href="{% url url_ver item.id %}" class="btn btn-primary btn-round btn-icon waves-effect waves-classic" title="Revisar" data-toggle="tooltip" data-original-title="Revisar">
+                            <i class="ri-link-m"></i></a>
+                        <a href="{% url url_eliminar item.id %}" class="btn btn-danger btn-round btn-icon waves-effect waves-classic" title="Eliminar" data-toggle="tooltip" data-original-title="Eliminar">
+                            <i class="ri-delete-bin-fill"></i></a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+
+                <div class="alert alert-warning fade show" role="alert">
+                  No existen registros.
+                </div>
+      
+              {% endif %}
+
+              {% include 'panel/add_menu.html' %}
+            </div>
+          </div>
+
+      </div> <!-- end col-12-->
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

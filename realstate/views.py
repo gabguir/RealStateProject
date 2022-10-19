@@ -3,7 +3,17 @@ from django.http import HttpResponse, request
 from django.urls import reverse
 from urllib.parse import urlencode
 
+# importación de funcionalidad para login
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import Group
+# importar custom decorators
+from panel.decorators import authenticated_user, allowed_users
+
+from panel.utils import info_header_agente
+
 # Importación de models
+from agent.models import Agent_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
 
 # Importación de forms
@@ -14,7 +24,7 @@ from realstate.forms import Realstate_Form, Realstate_Type_Form
 # Vistas para Inmuebles
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
 def listar_inmuebles(request, *args, **kwargs):
     '''Lista inmuebles.'''
     
@@ -37,9 +47,12 @@ def listar_inmuebles(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Inmuebles',
         'icon' : 'bx bxs-building-house',
+        'info_agente': info_agente,
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -54,15 +67,18 @@ def listar_inmuebles(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required(login_url='entrar')
 def ver_inmueble(request, id, *args, **kwargs):
     '''Detalle de inmueble.'''
     
     itemObj = Realstate_Model.objects.get(id=id) 
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de inmueble',
         'icon' : 'bx bxs-building-house',
+        'info_agente': info_agente,
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -74,7 +90,7 @@ def ver_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required(login_url='entrar')
 def crear_inmueble(request, *args, **kwargs):
     '''Crear inmueble.'''
     
@@ -92,9 +108,12 @@ def crear_inmueble(request, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear inmueble',
         'icon' : 'bx bxs-building-house',
+        'info_agente': info_agente,
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -107,7 +126,7 @@ def crear_inmueble(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
     
-    
+@login_required(login_url='entrar')
 def modificar_inmueble(request, id, *args, **kwargs):
     '''Editar inmueble.'''
     
@@ -124,9 +143,12 @@ def modificar_inmueble(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar inmueble',
         'icon' : 'bx bxs-building-house',
+        'info_agente': info_agente,
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -139,7 +161,7 @@ def modificar_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_file_form.html', context)
 
-
+@login_required(login_url='entrar')
 def eliminar_inmueble(request, id, *args, **kwargs):
     '''Eliminar inmueble.'''
     
@@ -153,9 +175,12 @@ def eliminar_inmueble(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar inmueble',
         'icon' : 'bx bxs-building-house',
+        'info_agente': info_agente,
         'singular' : 'inmueble',
         'plural' : 'inmuebles',
         'url_listar' : 'listar_inmuebles',
@@ -173,7 +198,8 @@ def eliminar_inmueble(request, id, *args, **kwargs):
 # Vistas para Categorías
 #=======================================================================================================================================
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def listar_tipo_inmuebles(request, *args, **kwargs):
     '''Lista inmuebles.'''
     
@@ -196,9 +222,12 @@ def listar_tipo_inmuebles(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Tipo de inmuebles',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'tipo de inmueble',
         'plural' : 'tipos de inmueble',
         'url_listar' : 'listar_tipo_inmuebles',
@@ -213,15 +242,19 @@ def listar_tipo_inmuebles(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_list.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def ver_tipo_inmueble(request, id, *args, **kwargs):
     '''Detalle de inmueble.'''
     
     itemObj = Realstate_Type_Model.objects.get(id=id) 
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de tipo de inmueble',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'tipo de inmueble',
         'plural' : 'tipos de inmueble',
         'url_listar' : 'listar_tipo_inmuebles',
@@ -233,7 +266,8 @@ def ver_tipo_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_detail.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def crear_tipo_inmueble(request, *args, **kwargs):
     '''Crear inmueble.'''
     
@@ -250,9 +284,12 @@ def crear_tipo_inmueble(request, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_tipo_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear tipo de inmueble',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'tipo de inmueble',
         'plural' : 'tipo de inmuebles',
         'url_listar' : 'listar_tipo_inmuebles',
@@ -264,7 +301,8 @@ def crear_tipo_inmueble(request, *args, **kwargs):
     }
     return render(request, 'panel/generic_form.html', context)
     
-    
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def modificar_tipo_inmueble(request, id, *args, **kwargs):
     '''Editar inmueble.'''
     
@@ -281,9 +319,12 @@ def modificar_tipo_inmueble(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_tipo_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar tipo de inmueble',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'tipo de inmueble',
         'plural' : 'tipo de inmuebles',
         'url_listar' : 'listar_tipo_inmuebles',
@@ -296,7 +337,8 @@ def modificar_tipo_inmueble(request, id, *args, **kwargs):
     }
     return render(request, 'panel/generic_form.html', context)
 
-
+@login_required(login_url='entrar')
+@allowed_users(allowed_roles=['admin'])
 def eliminar_tipo_inmueble(request, id, *args, **kwargs):
     '''Eliminar inmueble.'''
     
@@ -310,9 +352,12 @@ def eliminar_tipo_inmueble(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_tipo_inmuebles')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar tipo de inmueble',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'tipo de inmueble',
         'plural' : 'tipos de inmueble',
         'url_listar' : 'listar_tipo_inmuebles',
@@ -323,3 +368,4 @@ def eliminar_tipo_inmueble(request, id, *args, **kwargs):
         'item': itemObj,
     }
     return render(request, 'panel/generic_delete_object.html', context)
+

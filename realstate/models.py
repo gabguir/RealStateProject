@@ -42,7 +42,7 @@ class Realstate_Model(models.Model):
 
 
 #=======================================================================================================================================
-# Category
+# Realstate_Type
 #=======================================================================================================================================
 
 class Realstate_Type_Model(models.Model):
@@ -57,3 +57,28 @@ class Realstate_Type_Model(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+
+#=======================================================================================================================================
+# Message_Realstate
+#=======================================================================================================================================
+
+class Message_Realstate_Model(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Nombre [*]')
+    email = models.EmailField(max_length=250, verbose_name='Email [*]')
+    subject = models.CharField(max_length=250, verbose_name='Asunto [*]')
+    message = models.TextField(verbose_name='Mensaje [*]')
+    fk_realstate = models.ForeignKey('Realstate_Model', on_delete=models.DO_NOTHING, verbose_name='Inmueble [*]') 
+    fk_agent = models.ForeignKey('agent.Agent_Model', on_delete=models.DO_NOTHING, verbose_name='Agente [*]') 
+    
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha de creación')
+
+    class Meta:
+        ''' Define el nombre singular y plural, y el ordenamiento de los elementos. '''
+        verbose_name = 'Mensaje desde inmueble'
+        verbose_name_plural = 'Mensajes desde inmuebles'
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.subject

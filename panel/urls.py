@@ -25,10 +25,9 @@ urlpatterns = [
     path('paginas/modificar/<int:id>/', panel.views.modificar_pagina, name='modificar_pagina'),
     path('paginas/eliminar/<int:id>/', panel.views.eliminar_pagina, name='eliminar_pagina'),
 
-#message
-    # path('mensajes/', panel.views.listar_mensajes, name='listar_mensajes'),
-    # path('mensajes/<int:id>/', panel.views.ver_mensaje, name='ver_mensaje'),
-    # path('mensajes/eliminar/<int:id>/', panel.views.eliminar_mensaje, name='eliminar_mensaje'),
+#perfil
+    path('ver_perfil/', panel.views.ver_perfil, name='ver_perfil'),
+    path('editar_perfil/', panel.views.editar_perfil, name='editar_perfil'),
 
 #contact_message
     path('mensajes_contacto/', panel.views.listar_mensajes_contacto, name='listar_mensajes_contacto'),
@@ -54,7 +53,7 @@ urlpatterns = [
 #=======================================================================================================================================
 
 #users
-    path('', include('users.urls')),
+    #path('', include('users.urls')),
 
 #agent
     path('', include('agent.urls')),

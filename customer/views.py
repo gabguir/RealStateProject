@@ -10,8 +10,11 @@ from django.contrib.auth.models import Group
 # importar custom decorators
 from panel.decorators import authenticated_user, allowed_users
 
+from panel.utils import info_header_agente
+
 # Importación de models
 from customer.models import Customer_Model
+from agent.models import Agent_Model
 
 # Importación de forms
 from customer.forms import Customer_Form
@@ -44,9 +47,12 @@ def listar_clientes(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Clientes',
         'icon' : 'bx bxs-user-pin',
+        'info_agente': info_agente,
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -67,9 +73,12 @@ def ver_cliente(request, id, *args, **kwargs):
     
     itemObj = Customer_Model.objects.get(id=id) 
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de cliente',
         'icon' : 'bx bxs-user-pin',
+        'info_agente': info_agente,
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -98,9 +107,12 @@ def crear_cliente(request, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_clientes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear cliente',
         'icon' : 'bx bxs-user-pin',
+        'info_agente': info_agente,
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -129,9 +141,12 @@ def modificar_cliente(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_clientes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar cliente',
         'icon' : 'bx bxs-user-pin',
+        'info_agente': info_agente,
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',
@@ -158,9 +173,12 @@ def eliminar_cliente(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_clientes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar cliente',
         'icon' : 'bx bxs-user-pin',
+        'info_agente': info_agente,
         'singular' : 'cliente',
         'plural' : 'clientes',
         'url_listar' : 'listar_clientes',

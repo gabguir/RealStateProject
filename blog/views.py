@@ -10,9 +10,11 @@ from django.contrib.auth.models import Group
 # importar custom decorators
 from panel.decorators import authenticated_user, allowed_users
 
+from panel.utils import info_header_agente
+
 # Importación de models
-from blog.models import Article_Model, Category_Model
 from agent.models import Agent_Model
+from blog.models import Article_Model, Category_Model
 
 # Importación de forms
 from blog.forms import Article_Form, Category_Form
@@ -45,9 +47,12 @@ def listar_articulos(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Artículos',
         'icon' : 'bx bx-file',
+        'info_agente': info_agente,
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -68,9 +73,12 @@ def ver_articulo(request, id, *args, **kwargs):
     
     itemObj = Article_Model.objects.get(id=id) 
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de Artículo',
         'icon' : 'bx bx-file',
+        'info_agente': info_agente,
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -99,9 +107,12 @@ def crear_articulo(request, *args, **kwargs):
             return redirect(url) 
             #return redirect('listar_articulos')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear Artículo',
         'icon' : 'bx bx-file',
+        'info_agente': info_agente,
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -131,9 +142,12 @@ def modificar_articulo(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_articulos')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar Artículo',
         'icon' : 'bx bx-file',
+        'info_agente': info_agente,
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -160,9 +174,12 @@ def eliminar_articulo(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_articulos')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar Artículo',
         'icon' : 'bx bx-file',
+        'info_agente': info_agente,
         'singular' : 'artículo',
         'plural' : 'artículos',
         'url_listar' : 'listar_articulos',
@@ -182,7 +199,6 @@ def eliminar_articulo(request, id, *args, **kwargs):
 #=======================================================================================================================================
 
 @login_required(login_url='entrar')
-@allowed_users(allowed_roles=['admin'])
 def listar_categorias(request, *args, **kwargs):
     '''Lista categorías.'''
     
@@ -205,9 +221,12 @@ def listar_categorias(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Categorías',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -223,15 +242,17 @@ def listar_categorias(request, *args, **kwargs):
     return render(request, 'panel/generic_list.html', context)
 
 @login_required(login_url='entrar')
-@allowed_users(allowed_roles=['admin'])
 def ver_categoria(request, id, *args, **kwargs):
     '''Detalle de categoría.'''
     
     itemObj = Category_Model.objects.get(id=id) 
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de categoría',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -244,7 +265,6 @@ def ver_categoria(request, id, *args, **kwargs):
     return render(request, 'panel/generic_detail.html', context)
 
 @login_required(login_url='entrar')
-@allowed_users(allowed_roles=['admin'])
 def crear_categoria(request, *args, **kwargs):
     '''Crear categoría.'''
     
@@ -261,9 +281,12 @@ def crear_categoria(request, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_categorias')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear categoría',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -276,7 +299,6 @@ def crear_categoria(request, *args, **kwargs):
     return render(request, 'panel/generic_form.html', context)
     
 @login_required(login_url='entrar')
-@allowed_users(allowed_roles=['admin'])
 def modificar_categoria(request, id, *args, **kwargs):
     '''Editar categoría.'''
     
@@ -293,9 +315,12 @@ def modificar_categoria(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_categorias')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar categoría',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',
@@ -309,7 +334,6 @@ def modificar_categoria(request, id, *args, **kwargs):
     return render(request, 'panel/generic_form.html', context)
 
 @login_required(login_url='entrar')
-@allowed_users(allowed_roles=['admin'])
 def eliminar_categoria(request, id, *args, **kwargs):
     '''Eliminar categoría.'''
     
@@ -323,9 +347,12 @@ def eliminar_categoria(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_categorias')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar categoría',
         'icon' : 'bx bxs-extension',
+        'info_agente': info_agente,
         'singular' : 'categoría',
         'plural' : 'categorías',
         'url_listar' : 'listar_categorias',

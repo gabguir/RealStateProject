@@ -13,6 +13,7 @@ from realstate.models import Realstate_Model, Realstate_Type_Model, Message_Real
 # Importar forms desde apps de backend
 from website.forms import Message_Contact_Form, Frontend_Article_Search_Form, Frontend_Realstate_Search_Form, Message_Realstate_Form, addpropertyform
 
+from panel.utils import info_header_agente
 
 #=======================================================================================================================================
 # Páginas del sitio
@@ -167,6 +168,10 @@ def realstates(request):
 def realstates_detail(request, id):
     itemObj = Realstate_Model.objects.get(id=id) 
     # print(itemObj)
+    info_agente = itemObj.fk_agent
+    # info_agente = info_header_agente(request)
+    print(f'agent_sender: {info_agente.id}')
+    
     '''Crear mensaje.'''
     form = Message_Realstate_Form()
     error_message = ''
@@ -180,6 +185,7 @@ def realstates_detail(request, id):
             subject = info['subject']
             message = info['message']
             fk_realstate = info['fk_realstate']
+            fk_agent = info['fk_agent']
             
             mensaje = Message_Realstate_Model(
                 name = name, 
@@ -187,6 +193,7 @@ def realstates_detail(request, id):
                 subject = subject,
                 message = message,
                 fk_realstate = fk_realstate,
+                fk_agent = fk_agent,
             )
 
             mensaje.save()
@@ -198,10 +205,15 @@ def realstates_detail(request, id):
             #mensaje invalido
             print("form invalido")
             error_message = 'ERROR'
+            
+    # form = Message_Realstate_Form(initial={
+    #     'fk_agent': info_agente.id, 
+    # })
     
     context = {
         'page' : 'Propiedades',
         'form': form,
+        'info_agente': info_agente,
         'success_message' : success_message,
         'error_message' : error_message,
         'inmueble': itemObj,

@@ -111,41 +111,104 @@ URL de acceso: [http://localhost:8000/panel/](http://localhost:8000/panel/)
 	- Password: `user.123456`
 
 
-### Funcionalidades Frontend
+### Funcionalidades Sitio Web
 URL de acceso: [http://localhost:8000/](http://localhost:8000/)
 
-1. Buscador de inmuebles desde la sección "Home"
-	- Permite hacer una búsqueda al ingresar la ciudad donde te encontras (el alcance sólo abarca a Mallorca en este momento) y trae todos los inmuebles disponibles.
+1. Buscador de inmuebles desde la sección "Inicio"
+	- Permite hacer una búsqueda que muestra todos los inmuebles disponibles coincidentes con los términos de búsqueda.
 
-2. Sección "Agents"
-   - Muestra el nombre de los agentes activos. 
-   - Contenidos pendientes.
+2. Sección "Propiedades"
+	- Muestra los datos de de los inmuebles activos. 
+	- Presenta un acceso a la vista de detalle de inmuebles.
+	- Cada propiedad tiene un formulario de contacto para solicitar más información de ese inmueble.
 
-3. Opción About
-   - Muestra un resumen del propósito del sitio y sus funcionalidades.
-   - Contenidos pendientes.
+3. Sección "Agentes"
+	- Muestra los datos de los agentes activos. 
 
-4. Opción Addproperty
-   - Permite agregar nuevas propiedades, ingresando dirección, precio y ubicación. 
-   - En este caso, por ahora la ubicación es siempre Mallorca, ya que al realizar una búsqueda desde "Home", filtra todas las viviendas disponibles.
+4. Sección "Nosotros"
+	- Muestra el contenido de la página.
 
-### Funcionalidades Backend [COMPLETAR]
+5. Sección "Blog"
+	- Muestra los datos de los artículos activos. 
+	- Presenta un acceso a la vista de detalle de artículos.
+
+6. Opción "Contacto"
+	- Muestra el contenido de la página y el formulario de contacto.
+
+
+### Funcionalidades Panel de Administración 
 URL de acceso: [http://localhost:8000/panel/](http://localhost:8000/panel/)
 
-1. Buscador de inmuebles desde la sección "Home"
-	- Permite hacer una búsqueda al ingresar la ciudad donde te encontras (el alcance sólo abarca a Mallorca en este momento) y trae todos los inmuebles disponibles.
 
-2. Sección "Agents"
-   - Muestra el nombre de los agentes activos. 
-   - Contenidos pendientes.
+1. Acceso a través de formulario de login
+	- Permite acceder al panel de administración.
+	- Muestra información diferenciada entre usuarios del grupo "Agent" y "Admin"
 
-3. Opción About
-   - Muestra un resumen del propósito del sitio y sus funcionalidades.
-   - Contenidos pendientes.
+2. Sección de búsqueda
+	- Formulario de búsqueda de elementos en el panel de administración. 
 
-4. Opción Addproperty
-   - Permite agregar nuevas propiedades, ingresando dirección, precio y ubicación. 
-   - En este caso, por ahora la ubicación es siempre Mallorca, ya que al realizar una búsqueda desde "Home", filtra todas las viviendas disponibles.
+3. Sección "Inmuebles"
+	- Muestra una lista con los inmuebles activos. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+4. Sección "Tipo de inmueble"
+	- Muestra una lista con los tipos de inmueble. 
+	- Pueden acceder sólo usuarios de tipo Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+5. Sección "Agentes"
+	- Muestra una lista con los agentes. 
+	- Pueden acceder sólo usuarios de tipo Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+6. Sección "Páginas"
+	- Muestra una lista con las páginas. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+7. Sección "Artículos"
+	- Muestra una lista con los artículos activos. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+8. Sección "Categorías"
+	- Muestra una lista con las categorías de artículos. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de creación, ver detalle, modificación, eliminación.
+
+9. Sección "Mensajes de agentes"
+	- Muestra una lista con los mensajes de agentes. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de creación, ver detalle y eliminación.
+
+10. Sección "Mensajes de propiedades"
+	- Muestra una lista con los mensajes de propiedades. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de ver detalle y eliminación.
+
+11. Sección "Mensajes de contacto"
+	- Muestra una lista con los mensajes de contacto. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de ver detalle y eliminación.
+
+12. Sección "Búsqueda de sitio web"
+	- Muestra una lista con los términos de búsqueda del sitio web. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de ver detalle y eliminación.
+
+13. Sección "Búsqueda de panel admin"
+	- Muestra una lista con los términos de búsqueda del panel de administración. 
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de ver detalle y eliminación.
+
+14. Sección "Perfil"
+	- Muestra los datos del perfil de agente.
+	- Pueden acceder usuarios de tipo Agente y Admin.
+	- Se pueden realizar acciones de ver detalle y modificación de perfil.
+
+15. Sección "Salir"
+	- Permite cerrar la sesión y salir del panel de administración.
 
 
 ## Herramientas de construcción 🛠️
@@ -157,9 +220,7 @@ _Estas son las herramientas que hemos utilizado en nuestro proyecto_
 
 ## Autores ✒️
 
-* **[Gabo Araya](https://github.com/Gabo-araya/)** - *Backend y documentación*
-* **[Gabriel Guiridlan](https://github.com/gabguir/)** - *Frontend y login*
-* **[Franco Fumiere](#)** - *Frontend y login*
+* **[Gabo Araya](https://github.com/Gabo-araya/)** - *Sitio web, panel de administración y documentación*
 
 
 

@@ -23,6 +23,7 @@ class Page_Model(models.Model):
     content = RichTextField(verbose_name='Contenido [*]')
     date = models.DateField(null=True, blank=True, verbose_name='Fecha')
     image_main = models.ImageField(null=True, blank=True, upload_to='img_page/', default='', verbose_name='Imagen principal')
+    draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
     
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos.'''
@@ -66,7 +67,8 @@ class Message_Agent_Model(models.Model):
     name = models.CharField(max_length=250, verbose_name='Asunto [*]')
     message = models.TextField(verbose_name='Mensaje [*]')
     #agent_sender = models.CharField(max_length=250, verbose_name='Nombre [*]')
-    agent_sender = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Remitente [*]')
+    agent_sender = models.IntegerField(verbose_name='Remitente [*]')
+    #agent_sender = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Remitente [*]')
     agent_receiver = models.ForeignKey('agent.Agent_Model', on_delete=models.DO_NOTHING, verbose_name='Destinatario [*]') 
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha de creación')
 
@@ -77,7 +79,8 @@ class Message_Agent_Model(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return self.subject
+        # return self.name
+        return f'{self.name} - REC: {self.agent_receiver} - SEND: {self.agent_sender}'
 
 
 

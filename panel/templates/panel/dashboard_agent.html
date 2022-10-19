@@ -1,0 +1,475 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1><i class="{{ icon }}"></i> {{ page }}</h1>
+  </div><!-- End Page Title -->
+
+
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+
+          <!-- Cantidad inmuebles -->
+          <div class="col-xxl-3 col-md-6 col-xl-12">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filtro</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="{% url 'listar_inmuebles' %}">
+                    <i class="bi bi-list-ul"></i>
+                    Ver todos</a>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'crear_inmueble' %}">
+                    <i class="bi bi-plus-circle"></i> 
+                    Agregar </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Inmuebles <span></span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <a href="{% url 'listar_inmuebles' %}">
+                      <i class="bi bi-house-heart"></i>
+                    </a>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ count_inmuebles }}</h6>
+                    <span class="text-success small pt-1 fw-bold">{{ count_inmuebles_activos }}</span> 
+                    <span class="text-muted small pt-2 ps-1"> 
+                      <i class="bi bi-check-circle text-success"></i>
+                    </span>
+                    &nbsp;|&nbsp;
+                    <span class="text-danger small pt-1 fw-bold">{{ count_inmuebles_inactivos }}</span> 
+                    <span class="text-muted small pt-2 ps-1"> 
+                      <i class="bi bi-x-circle text-danger"></i>
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End inmuebles Card -->
+
+
+          <!-- Cantidad mensajes Agentes -->
+          <div class="col-xxl-3 col-md-6 col-xl-12">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filtro</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'listar_mensajes_agente' %}">
+                    <i class="bi bi-list-ul"></i>
+                    Ver todos</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Mensajes Agentes<span></span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <a href="{% url 'listar_mensajes_agente' %}">
+                      <i class="bi bi-envelope-paper-heart"></i>
+                    </a>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ count_mensajes_agente }}</h6>
+                    <!--span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span-->
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End mensajes Agentes -->
+
+
+          <!-- Cantidad mensajes Propiedades -->
+          <div class="col-xxl-3 col-md-6 col-xl-12">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filtro</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'listar_mensajes_inmueble' %}">
+                    <i class="bi bi-list-ul"></i>
+                    Ver todos</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Mensajes Propiedades<span></span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <a href="{% url 'listar_mensajes_inmueble' %}">
+                      <i class="bi bi-envelope-paper-heart"></i>
+                    </a>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ count_mensajes_inmueble }}</h6>
+                    <!--span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span-->
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End mensajes Propiedades -->
+
+
+
+          <!-- Cantidad mensajes Contacto -->
+          <div class="col-xxl-3 col-md-6 col-xl-12">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filtro</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'listar_mensajes_contacto' %}">
+                    <i class="bi bi-list-ul"></i>
+                    Ver todos</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Mensajes Contacto<span></span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <a href="{% url 'listar_mensajes_contacto' %}">
+                      <i class="bi bi-envelope-paper-heart"></i>
+                    </a>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ count_mensajes_contacto }}</h6>
+                    <!--span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span-->
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End mensajes Contacto -->
+
+
+
+        </div>
+      </div><!-- End Left side columns -->
+
+    </div>
+
+
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-4">
+        <!-- Mensajes de agentes recientes -->
+        <div class="card">
+
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filtro</h6>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'listar_mensajes_agente' %}">
+                <i class="bi bi-list-ul"></i>
+                Ver todos</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Mensajes de agentes recientes <span></span></h5>
+            <div class="activity">
+
+              {% if mensajes_agente%}
+                {% for item in mensajes_agente %}
+                <div class="activity-item d-flex">
+                  <div class="activite-label">
+                    <strong>De:</strong> 
+                    {% for agent in agentes_activos %}
+                      {% if agent.id == item.agent_sender %}
+                        {{ agent.name }}
+                      {% endif %}
+                    {% endfor %}
+                    <br>
+                    <strong>Para:</strong> {{ item.agent_receiver }}
+                  </div>
+                  <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                  <div class="activity-content">
+                    <strong>
+                      <a href="{% url 'ver_mensaje_agente' item.agent_receiver.id %}">
+                      {{ item.name }}
+                      </a>
+                    </strong> <br>
+                    {{ item.created }}
+                  </div>
+                </div><!-- End activity item-->
+                {% endfor %}
+              {% else %}
+                <!-- Sin registros -->
+                {% include 'panel/sin_registros.html' %}
+              {% endif %}
+            </div>
+          </div>
+        </div><!-- End Recent Activity -->
+
+        
+      </div><!-- End Left side columns -->
+
+      <!-- center columns -->
+      <div class="col-lg-4">
+        <!-- Mensajes de propiedades recientes -->
+        <div class="card">
+
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filtro</h6>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'listar_mensajes_inmueble' %}">
+                <i class="bi bi-list-ul"></i>
+                Ver todos</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Mensajes de propiedades recientes <span></span></h5>
+            <div class="activity">
+              
+              {% if mensajes_inmueble %}
+                {% for item in mensajes_inmueble %}
+                <div class="activity-item d-flex">
+                  <div class="activite-label">{{ item.name }}</div>
+                  <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
+                  <div class="activity-content">
+                    <strong>
+                      <a href="{% url 'ver_mensaje_inmueble' item.id %}">
+                      {{ item.subject }}
+                      </a>
+                    </strong> <br>
+                    {{ item.created }}
+                  </div>
+                </div><!-- End activity item-->
+                {% endfor %}
+              {% else %}
+                <!-- Sin registros -->
+                {% include 'panel/sin_registros.html' %}
+              {% endif %}
+
+            </div>
+          </div>
+        </div><!-- End Recent Activity -->
+
+        
+      </div><!-- End center columns -->
+
+      <!-- Right side columns -->
+      <div class="col-lg-4">
+
+        <!-- Mensajes de contacto recientes -->
+        <div class="card">
+
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filtro</h6>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'listar_mensajes_contacto' %}">
+                <i class="bi bi-list-ul"></i>
+                Ver todos</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Mensajes de contacto recientes <span></span></h5>
+            <div class="activity">
+
+              {% if mensajes_contacto %}
+                {% for item in mensajes_contacto %}
+                <div class="activity-item d-flex">
+                  <div class="activite-label">{{ item.name }}</div>
+                  <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
+                  <div class="activity-content">
+                    <strong>
+                      <a href="{% url 'ver_mensaje_contacto' item.id %}">
+                      {{ item.subject }}
+                      </a>
+                    </strong> <br>
+                    {{ item.created }}
+                  </div>
+                </div><!-- End activity item-->
+                {% endfor %}
+              {% else %}
+                <!-- Sin registros -->
+                {% include 'panel/sin_registros.html' %}
+              {% endif %}
+
+            </div>
+          </div>
+        </div><!-- End Recent Activity -->
+
+      </div><!-- End Right side columns -->
+
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Inmuebles recientes -->
+        <div class="card">
+
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filtro</h6>
+              </li>
+
+              <li><a class="dropdown-item" href="{% url 'listar_inmuebles' %}">
+                <i class="bi bi-list-ul"></i>
+                Ver todos</a>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'crear_inmueble' %}">
+                <i class="bi bi-plus-circle"></i> 
+                Agregar </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Inmuebles recientes</h5>
+
+            <div class="news">
+
+              {% if inmuebles %}
+                {% for item in inmuebles %}
+                <div class="post-item clearfix">
+                  <img src="{{ item.image_main.url }}" alt="">
+                  <h4><a href="{% url 'ver_inmueble' item.id %}">{{ item.name }}</a></h4>
+                  <p>
+                    {% if item.draft == False %}
+                      <span class="badge badge-success">Activo</span><br>
+                    {% elif item.draft == True %}
+                      <span class="badge badge-warning">Borrador</span><br>
+                    {% endif %}
+                    <strong>Fecha:</strong> {{ item.date }} <br>
+                    <strong>Dirección:</strong> {{ item.address }} <br>
+                    <strong>Localización:</strong> {{ item.location }} <br>
+                    <strong>Tipo inmueble:</strong> {{ item.fk_tipo_inmueble }}<br>
+                    <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a></p>
+                </div>
+                {% endfor %}
+              {% else %}
+                <!-- Sin registros -->
+                {% include 'panel/sin_registros.html' %}
+              {% endif %}
+              
+
+            </div><!-- End sidebar recent posts-->
+
+          </div>
+        </div><!-- End Inmuebles recientes -->
+      </div>
+      <div class="col-md-6">
+        <!-- Artículos recientes -->
+        <div class="card">
+
+          <div class="filter">
+            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                <h6>Filtro</h6>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'listar_articulos' %}">
+                <i class="bi bi-list-ul"></i>
+                Ver todos</a>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'crear_articulo' %}">
+                <i class="bi bi-plus-circle"></i> 
+                Agregar </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Artículos recientes</h5>
+
+            <div class="news">
+
+              {% if articulos %}
+                {% for item in articulos %}
+                <div class="post-item clearfix">
+                  <img src="{{ item.image_main.url }}" alt="">
+                  <h4><a href="{% url 'ver_articulo' item.id %}">{{ item.name }}</a></h4>
+                  <p>
+                    {% if item.draft == False %}
+                      <span class="badge badge-success">Activo</span><br>
+                    {% elif item.draft == True %}
+                      <span class="badge badge-warning">Borrador</span><br>
+                    {% endif %}
+                    <strong>Fecha:</strong> {{ item.date }} <br>
+                    <strong>Categoría:</strong> <a href="{% url 'ver_categoria' item.fk_categoria.id %}">{{ item.fk_categoria }}</a><br>
+                    <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a>
+                  </p>
+                </div>
+                {% endfor %}
+              {% else %}
+                <!-- Sin registros -->
+                {% include 'panel/sin_registros.html' %}
+              {% endif %}
+
+            </div><!-- End sidebar recent posts-->
+
+          </div>
+        </div><!-- End Artículos recientes -->
+      </div>
+    </div>
+
+
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

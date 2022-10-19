@@ -10,6 +10,9 @@ from django.contrib.auth.models import Group
 # importar custom decorators
 from panel.decorators import authenticated_user, allowed_users
 
+
+from panel.utils import info_header_agente
+
 # Importación de models
 from agent.models import Agent_Model
 from realstate.models import Realstate_Model, Realstate_Type_Model
@@ -47,9 +50,12 @@ def listar_agentes(request, *args, **kwargs):
         if success_delete_get == 'OK':
             success_delete = 'OK'
             
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Agentes',
         'icon' : 'bx bxs-user-rectangle',
+        'info_agente': info_agente,
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -74,9 +80,12 @@ def ver_agente(request, id, *args, **kwargs):
     agente_inmuebles = Realstate_Model.objects.filter(fk_agent=id).order_by('-date')
     agente_articulos = Article_Model.objects.filter(fk_agent=id).order_by('-date')
     
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Detalle de agente',
         'icon' : 'bx bxs-user-rectangle',
+        'info_agente': info_agente,
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -109,9 +118,12 @@ def crear_agente(request, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_agentes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Crear agente',
         'icon' : 'bx bxs-user-rectangle',
+        'info_agente': info_agente,
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -142,9 +154,12 @@ def modificar_agente(request, id, *args, **kwargs):
             return redirect(url) 
             # return redirect('listar_agentes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Editar agente',
         'icon' : 'bx bxs-user-rectangle',
+        'info_agente': info_agente,
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',
@@ -173,9 +188,12 @@ def eliminar_agente(request, id, *args, **kwargs):
         return redirect(url) 
         # return redirect('listar_agentes')
 
+    info_agente = info_header_agente(request)
+
     context = {
         'page' : 'Eliminar agente',
         'icon' : 'bx bxs-user-rectangle',
+        'info_agente': info_agente,
         'singular' : 'agente',
         'plural' : 'agentes',
         'url_listar' : 'listar_agentes',

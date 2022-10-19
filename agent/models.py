@@ -18,7 +18,8 @@ class Agent_Model(models.Model):
     url_instagram = models.CharField(max_length=250, null=True, blank=True, default='', verbose_name='Instagram')
     # fk_user
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Usuario')
-        
+    draft = models.BooleanField(null=True, blank=True, default=True, verbose_name='Borrador')
+    
     class Meta:
         ''' Define el nombre singular y plural, y el ordenamiento de los elementos '''
         verbose_name = 'Agente'

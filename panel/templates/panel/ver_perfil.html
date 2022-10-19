@@ -1,0 +1,352 @@
+{% extends "panel/base_admin.html" %}
+{% load static %}
+{% block title %} {{ page }} {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+  <h1>{{ page }}</h1>
+    {% include 'panel/breadcrumb.html' %}
+  </div><!-- End Page Title -->
+
+  <section class="section">
+
+        <!-- col-8 / col-4 -->
+        <div class="row">
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+
+                {% if success_edit == 'OK' %}
+                    <div class="alert alert-success fade show" role="alert">
+                        <i class="bi bi-pencil-square"></i>
+                        El registro fue <strong>editado</strong> correctamente.
+                    </div>
+                {% endif %}
+
+                  <br>
+                  <div class="card-text text-center">
+                    <a href="{% url 'editar_perfil' %}" class="btn btn-info btn-round waves-effect waves-classic" title="Editar Perfil">
+                      <i class="ri-edit-2-fill"></i> Editar Perfil</a>
+                  </div>
+                
+                  {% if item.image_main %}
+                  <!--div class="text-center">
+                    <br>
+                    <a href="{{ item.image_main.url }}" target="_blank">
+                      <img class="img img-thumbnail card-img-top" src="{{ item.image_main.url }}" alt="{{ item.name }}" />
+                    </a>
+                    <br>
+                  </div-->
+                  {% endif %}
+                  
+                  {% if item.title %}
+                    <h2 class="card-title"> {{ item.title }} </h2>
+                  {% else %}
+                    <h2 class="card-title"> {{ item.name }} </h2>
+                  {% endif %}
+                  {% if item.subtitle %}
+                    <p class="text-center">{{ item.subtitle }}</p>
+                  {% endif %}
+
+                  <p>
+                    {% if item.date %}
+                    <strong>Fecha:</strong> {{ item.date }}
+                    {% endif %}
+                    {% if item.draft == False %}
+                      <span class="badge badge-success">Activo</span>
+                    {% elif item.draft == True %}
+                      <span class="badge badge-warning">Borrador</span>
+                    {% endif %}
+                    {% if item.fk_categoria %}
+                      <span class="badge badge-info">{{ item.fk_categoria }}</span>
+                    {% endif %}
+                  </p>
+
+                {% if item.email %}
+                    <p><strong>Correo electrónico:</strong> {{ item.email }}</p>
+                {% endif %}
+
+                {% if item.url_twitter %}
+                    <p><strong>Twitter:</strong> <a href="{{ item.url_twitter }}" target="_blank">{{ item.url_twitter }}</a></p>
+                {% endif %}
+                {% if item.url_facebook %}
+                    <p><strong>Facebook:</strong> <a href="{{ item.url_facebook }}" target="_blank">{{ item.url_facebook }}</a></p>
+                {% endif %}
+                {% if item.url_linkedin %}
+                    <p><strong>Linkedin:</strong> <a href="{{ item.url_linkedin }}" target="_blank">{{ item.url_linkedin }}</a></p>
+                {% endif %}
+                {% if item.url_instagram %}
+                    <p><strong>Instagram:</strong> <a href="{{ item.url_instagram }}" target="_blank">{{ item.url_instagram }}</a></p>
+                {% endif %}
+
+                  {% if item.description %}
+                <p><strong>Descripción:</strong></p>
+                <div>{{ item.description|safe }} </div><br />
+                  {% endif %}
+
+
+                <!-- Page & Article -->
+                
+
+
+                  {% if item.abstract %}
+                <div><em>{{ item.abstract|safe }}</em></div>
+                  {% endif %}
+                  {% if item.content %}
+                <hr>
+                <div>{{ item.content|safe }}</div><br />
+                  {% endif %}
+
+
+                    <hr />
+                    <div class="card-text text-center">
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-info btn-round waves-effect waves-classic" title="Editar Perfil">
+                        <i class="ri-edit-2-fill"></i> Editar Perfil</a>
+                    </div>
+              </div>
+            </div>
+          </div> <!-- end col -->
+
+
+          <div class="col-lg-4">
+
+            <!--Ficha de item-->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Ficha de item</h5>
+
+                {% if item.name %}
+                  <p><strong>Nombre:</strong> {{ item.name }}</p>
+                {% endif %}
+                {% if item.title %}
+                  <p><strong>Título:</strong> {{ item.title }}</p>
+                {% endif %}
+                {% if item.subtitle %}
+                  <p><strong>Subtítulo:</strong> {{ item.subtitle }}</p>
+                {% endif %}
+
+                {% if item.date %}
+                  <p><strong>Fecha:</strong> {{ item.date }}</p>
+                {% endif %}
+
+                {% if 'articulo' in request.path %} 
+                  <p><strong>Estado:</strong> 
+                    {% if item.draft == False %}
+                      <span class="badge badge-success">Activo</span>
+                    {% elif item.draft == True %}
+                      <span class="badge badge-warning">Borrador</span>
+                    {% endif %}
+                  </p>
+                    {% if item.fk_categoria %}
+                      <p><strong>Categoría:</strong> 
+                        <a href="{% url 'ver_categoria' item.fk_categoria.id %}">{{ item.fk_categoria }}</a>
+                      </p>
+                    {% endif %}
+                {% endif %}
+
+              
+
+                <!-- Property -->
+                {% if item.address %}
+                  <p><strong>Dirección:</strong> {{ item.address }}</p>
+                {% endif %}
+
+                {% if item.price %}
+                  <p><strong>Precio:</strong> $ {{ item.price }}</p>
+                {% endif %}
+
+                {% if item.location %}
+                  <p><strong>Localización:</strong> {{ item.location }}</p>
+                {% endif %}
+              
+
+
+              <div> <!-- end card-body -->
+            </div>
+
+            <!-- image_main -->
+            {% if item.image_main %}
+              <div class="card">
+                <a href="{{ item.image_main.url }}" target="_blank">
+                  <img class="img card-img-top" src="{{ item.image_main.url }}" alt="{{ item.name }}" />
+                </a>
+                <div class="card-body">
+                <h5 class="card-title">Imagen principal</h5>
+                <p>
+                  <strong>URL:</strong> 
+                    <a href="{{ item.image_main.url }}" target="_blank">{{ item.image_main.url }}</a>
+                </p>
+                </div>
+              </div>
+            {% endif %}
+
+            <!-- Carrusel imágenes -->
+            {% if item.image_01 or item.image_02 or item.image_03 or item.image_04 or item.image_05 %}
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Imágenes asociados</h5>
+    
+                  <!-- Slides with controls -->
+                  <div id="carouselItemIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      {% if item.image_01 %}
+                      <div class="carousel-item active">
+                        <img src="{{ item.image_01.url }}" class="d-block w-100">
+                      </div>
+                      {% endif %}
+                      {% if item.image_02 %}
+                      <div class="carousel-item active">
+                        <img src="{{ item.image_02.url }}" class="d-block w-100">
+                      </div>
+                      {% endif %}
+                      {% if item.image_03 %}
+                      <div class="carousel-item active">
+                        <img src="{{ item.image_03.url }}" class="d-block w-100">
+                      </div>
+                      {% endif %}
+                      {% if item.image_04 %}
+                      <div class="carousel-item active">
+                        <img src="{{ item.image_04.url }}" class="d-block w-100">
+                      </div>
+                      {% endif %}
+                      {% if item.image_05 %}
+                      <div class="carousel-item active">
+                        <img src="{{ item.image_05.url }}" class="d-block w-100">
+                      </div>
+                      {% endif %}
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselItemIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselItemIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Siguiente</span>
+                    </button>
+    
+                  </div><!-- End Slides with controls -->
+    
+                </div>
+              </div>
+            {% endif %}
+
+
+            <!-- Agente asociado -->
+            {% if item.fk_agent %}
+              <div class="card">
+                <a href="{{ item.fk_agent.image_main.url }}">
+                  <img class="img img-thumbnail card-img-top" src="{{ item.fk_agent.image_main.url }}" alt="{{ item.fk_agent.name }}" />
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{% url 'ver_agente' item.fk_agent.id %}">
+                    {{ item.fk_agent.name }}
+                    </a>
+                  </h5>
+                  <div>
+                    {{ item.fk_agent.description|safe }}</strong> 
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+
+          </div> <!-- end col -->
+
+        </div> <!-- end row -->
+
+      </section>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-md-12 ml-auto mr-auto">
+
+            <!-- col-12 -->
+            <div class="row">
+              {% if agente_articulos %}
+              <div class="col-lg-6">
+                <!-- Artículos asociados -->
+                <div class="card">
+                  <div class="card-body pb-0">
+                    <h5 class="card-title">Artículos asociados</h5>
+
+                    <div class="news">
+                      {% for item in agente_articulos %}
+                      <div class="post-item clearfix">
+                        <img src="{{ item.image_main.url }}" alt="">
+                        <h4><a href="{% url 'ver_articulo' item.id %}">{{ item.name }}</a></h4>
+                        <p>                    
+                          {% if item.draft == False %}
+                            <span class="badge badge-success">Activo</span><br>
+                          {% elif item.draft == True %}
+                            <span class="badge badge-warning">Borrador</span><br>
+                          {% endif %}
+                          <strong>Fecha:</strong> {{ item.date }} <br>
+                          <strong>Categoría:</strong> <a href="{% url 'ver_categoria' item.fk_categoria.id %}">{{ item.fk_categoria }}</a><br>
+                          <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a>
+                        </p>
+                      </div>
+                      {% endfor %}
+
+                    </div><!-- End sidebar recent posts-->
+
+                  </div>
+                </div><!-- End Artículos recientes -->
+
+              </div> <!-- end col -->
+              {% endif%}
+
+              {% if agente_inmuebles %}
+              <div class="col-lg-6">
+                <!-- Artículos asociados -->
+                <div class="card">
+                  <div class="card-body pb-0">
+                    <h5 class="card-title">Inmuebles asociados</h5>
+
+                    <div class="news">
+                      {% for item in agente_inmuebles %}
+                      <div class="post-item clearfix">
+                        <img src="{{ item.image_main.url }}" alt="">
+                        <h4><a href="{% url 'ver_inmueble' item.id %}">{{ item.name }}</a></h4>
+                        <p>                    
+                          {% if item.draft == False %}
+                            <span class="badge badge-success">Activo</span><br>
+                          {% elif item.draft == True %}
+                            <span class="badge badge-warning">Borrador</span><br>
+                          {% endif %}
+                          <strong>Fecha:</strong> {{ item.date }} <br>
+                          <strong>Tipo de inmueble:</strong> <a href="{% url 'ver_tipo_inmueble' item.fk_tipo_inmueble.id %}">{{ item.fk_tipo_inmueble }}</a><br>
+                          <strong>Agente:</strong> <a href="{% url 'ver_agente' item.fk_agent.id %}">{{ item.fk_agent }}</a>
+                        </p>
+                      </div>
+                      {% endfor %}
+
+                    </div><!-- End sidebar recent posts-->
+
+                  </div>
+                </div><!-- End Artículos recientes -->
+
+              </div> <!-- end col -->
+              {% endif%}
+
+            </div> <!-- end row -->
+
+          </div>
+        </div>
+
+  </section>
+
+</main><!-- End #main -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -29,6 +29,7 @@ class Message_Realstate_Form(ModelForm):
             'subject',
             'message',
             'fk_realstate',
+            'fk_agent',
         ]
         
     def __init__(self, *args, **kwargs):
@@ -36,6 +37,8 @@ class Message_Realstate_Form(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'form-control'})
+            
+        self.fields['fk_agent'].widget = forms.HiddenInput()
 
 
 

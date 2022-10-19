@@ -70,6 +70,8 @@ class Message_Realstate_Model(models.Model):
     subject = models.CharField(max_length=250, verbose_name='Asunto [*]')
     message = models.TextField(verbose_name='Mensaje [*]')
     fk_realstate = models.ForeignKey('Realstate_Model', on_delete=models.DO_NOTHING, verbose_name='Inmueble [*]') 
+    fk_agent = models.ForeignKey('agent.Agent_Model', on_delete=models.DO_NOTHING, verbose_name='Agente [*]') 
+    
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='Fecha de creación')
 
     class Meta:

@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
 
     # Backend
-    'users.apps.UsersConfig',
+    #'users.apps.UsersConfig',
     'agent.apps.AgentConfig',
     'blog.apps.BlogConfig',
     'realstate.apps.RealStateConfig',
